@@ -7,6 +7,8 @@ author = "Ravi Wu"
 copyright = "Copyright © 2020, Ravi Wu."
 languageCode = "zh-TW"
 
+publishDir = "docs"
+
 enableRobotsTXT = true
 
 # Generate "Bearblog"-like URLs !only!, see https://bearblog.dev/.
