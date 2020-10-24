@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ravi Wu</title>
-    <link>https://raviwu.github.io/</link>
-    <description>Recent content on Ravi Wu</description>
+    <title>rails on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/rails/</link>
+    <description>Recent content in rails on Ravi Wu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-TW</language>
     <copyright>Copyright © 2020 | Ravi Wu</copyright>
-    <lastBuildDate>Sat, 09 Jul 2016 05:17:26 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>About</title>
-      <link>https://raviwu.github.io/about/</link>
-      <pubDate>Sun, 25 Oct 2020 03:38:56 +0800</pubDate>
-      
-      <guid>https://raviwu.github.io/about/</guid>
-      <description>As a team player, I encouraged trust and glued the team. I shared and learned with the team, excelling technology excellence and open to adopt new practices.</description>
-    </item>
-    
+    <lastBuildDate>Sat, 09 Jul 2016 05:17:26 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/rails/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>使用 Google Sheets API 拉資料到 Rails APP 裡</title>
       <link>https://raviwu.github.io/posts/pull-data-to-rails-from-google-sheet/</link>
@@ -57,28 +48,6 @@
       
       <guid>https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/</guid>
       <description>使用 Rails APP + Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。</description>
-    </item>
-    
-    <item>
-      <title>程設風格 | 早期終止執行</title>
-      <link>https://raviwu.github.io/posts/early-termination/</link>
-      <pubDate>Fri, 15 Apr 2016 04:22:50 +0800</pubDate>
-      
-      <guid>https://raviwu.github.io/posts/early-termination/</guid>
-      <description>剛開始寫程式的時候，以為所謂邏輯判斷就是很多個若 A 則 B 包起來的複雜地圖。這樣的程式碼，很容易因為邏輯判斷太過複雜，很難一眼就看到到底目前程式會跑到哪一個 if 分支裡面執行。
-taget = Dog.new if target.is_a?(Animal) if target.has_four_legs? if target.is_a?(Dog) puts &amp;#34;wolf!&amp;#34; else puts &amp;#34;four leg animal can say yeah&amp;#34; end else puts &amp;#34;don&amp;#39;t know what that is&amp;#34; end else puts &amp;#34;don&amp;#39;t know what that is&amp;#34; end =&amp;gt; &amp;#34;wolf!</description>
-    </item>
-    
-    <item>
-      <title>終端機工具</title>
-      <link>https://raviwu.github.io/posts/command-line-tools-notes/</link>
-      <pubDate>Sun, 27 Mar 2016 04:07:31 +0800</pubDate>
-      
-      <guid>https://raviwu.github.io/posts/command-line-tools-notes/</guid>
-      <description>轉型後端工程師的路上，看了很多教學，裝了很多套件，用過很多軟體。目前用得還算不手殘的工具只有終端機（terminal）跟文本編輯器（text editor）。
-因為要經常性切換不同的 Git Branch，MacOX 本來附掛的 terminal 顯得有點陽春，需要極大注意力才能清楚知道自己究竟目前身在何處又在哪支 branch 裡。
-先烈做了很多很棒的工具改善工作體驗與視覺效果，iTerm 2 很是不錯，搭配上一些快捷熱鍵可以有效增加效率。
-Shortcut of iTerms2 windows and tabs command + T to open new tab</description>
     </item>
     
   </channel>

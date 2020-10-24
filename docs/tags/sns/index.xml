@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sns on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/sns/</link>
+    <description>Recent content in sns on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Fri, 24 Jun 2016 05:05:44 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/sns/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 rails 上實作轉移 Parse 手機推播服務到 Amazon SNS</title>
+      <link>https://raviwu.github.io/posts/migrate-push-notification-from-parse-to-aws-sns/</link>
+      <pubDate>Fri, 24 Jun 2016 05:05:44 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/migrate-push-notification-from-parse-to-aws-sns/</guid>
+      <description>簡要說明 為了避免使用者因服務轉換而被迫強制更新，移轉過程採用漸進方式。
+如果不需要如此痛苦的同時使用兩種服務的捧油，可以參考這一篇的實作，直接用 AWS Mobile Hub 的服務做批次資料移轉。
+由於在轉換期需要同時支援兩邊服務運作，又要避免使用者重複收到相同的推播，需要實作「對同一裝置擇一服務進行推播」。本篇實作的概念是，使用者只有在用新版本的 APP 登入時，伺服器才會從 APP 取得 device_token 去註冊 Amazon SNS endpoint_arn，同時刪除 Parse 服務上的使用者的所有 Installation 紀錄。</description>
+    </item>
+    
+  </channel>
+</rss>

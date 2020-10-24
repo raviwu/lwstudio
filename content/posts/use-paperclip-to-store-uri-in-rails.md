@@ -1,6 +1,7 @@
 ---
 title: "Rails 中使用 Paperclip 存 URI 附件"
 date: 2016-05-12T04:38:49+08:00
+tags: ["coding","rails","paperclip"]
 disqus: false
 draft: false
 ---
