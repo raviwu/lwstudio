@@ -80,6 +80,11 @@ name = "Linkedin"
 icon = "linkedin"
 url = "https://www.linkedin.com/in/raviwu/"
 
+[[params.social]]
+name = "RSS"
+icon = "rss"
+url = "/index.xml"
+
 # Enable tags.
 [taxonomies]
    tag = "tags"
