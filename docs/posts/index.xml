@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-TW</language>
     <copyright>Copyright © 2020 | Ravi Wu</copyright>
-    <lastBuildDate>Fri, 15 Apr 2016 04:22:50 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 May 2016 04:38:49 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rails 中使用 Paperclip 存 URI 附件</title>
+      <link>https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/</link>
+      <pubDate>Thu, 12 May 2016 04:38:49 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/</guid>
+      <description>使用 Rails APP + Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。</description>
+    </item>
+    
     <item>
       <title>程設風格 | 早期終止執行</title>
       <link>https://raviwu.github.io/posts/early-termination/</link>
