@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ruby on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/ruby/</link>
+    <description>Recent content in ruby on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Fri, 15 Apr 2016 04:22:50 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>程設風格 | 早期終止執行</title>
+      <link>https://raviwu.github.io/posts/early-termination/</link>
+      <pubDate>Fri, 15 Apr 2016 04:22:50 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/early-termination/</guid>
+      <description>剛開始寫程式的時候，以為所謂邏輯判斷就是很多個若 A 則 B 包起來的複雜地圖。這樣的程式碼，很容易因為邏輯判斷太過複雜，很難一眼就看到到底目前程式會跑到哪一個 if 分支裡面執行。
+taget = Dog.new if target.is_a?(Animal) if target.has_four_legs? if target.is_a?(Dog) puts &amp;#34;wolf!&amp;#34; else puts &amp;#34;four leg animal can say yeah&amp;#34; end else puts &amp;#34;don&amp;#39;t know what that is&amp;#34; end else puts &amp;#34;don&amp;#39;t know what that is&amp;#34; end =&amp;gt; &amp;#34;wolf!</description>
+    </item>
+    
+  </channel>
+</rss>

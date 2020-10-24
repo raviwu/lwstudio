@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shell on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/shell/</link>
+    <description>Recent content in shell on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Sun, 27 Mar 2016 04:07:31 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>終端機工具</title>
+      <link>https://raviwu.github.io/posts/command-line-tools-notes/</link>
+      <pubDate>Sun, 27 Mar 2016 04:07:31 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/command-line-tools-notes/</guid>
+      <description>轉型後端工程師的路上，看了很多教學，裝了很多套件，用過很多軟體。目前用得還算不手殘的工具只有終端機（terminal）跟文本編輯器（text editor）。
+因為要經常性切換不同的 Git Branch，MacOX 本來附掛的 terminal 顯得有點陽春，需要極大注意力才能清楚知道自己究竟目前身在何處又在哪支 branch 裡。
+先烈做了很多很棒的工具改善工作體驗與視覺效果，iTerm 2 很是不錯，搭配上一些快捷熱鍵可以有效增加效率。
+Shortcut of iTerms2 windows and tabs command + T to open new tab</description>
+    </item>
+    
+  </channel>
+</rss>

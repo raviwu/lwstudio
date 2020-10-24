@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>終端機工具 - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="終端機工具" />
+<meta property="og:description" content="轉型後端工程師的路上，看了很多教學，裝了很多套件，用過很多軟體。目前用得還算不手殘的工具只有終端機（terminal）跟文本編輯器（text editor）。
+因為要經常性切換不同的 Git Branch，MacOX 本來附掛的 terminal 顯得有點陽春，需要極大注意力才能清楚知道自己究竟目前身在何處又在哪支 branch 裡。
+先烈做了很多很棒的工具改善工作體驗與視覺效果，iTerm 2 很是不錯，搭配上一些快捷熱鍵可以有效增加效率。
+Shortcut of iTerms2 windows and tabs command &#43; T to open new tab" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://raviwu.github.io/posts/command-line-tools-notes/" />
+<meta property="article:published_time" content="2016-03-27T04:07:31+08:00" />
+<meta property="article:modified_time" content="2016-03-27T04:07:31+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="終端機工具"/>
+<meta name="twitter:description" content="轉型後端工程師的路上，看了很多教學，裝了很多套件，用過很多軟體。目前用得還算不手殘的工具只有終端機（terminal）跟文本編輯器（text editor）。
+因為要經常性切換不同的 Git Branch，MacOX 本來附掛的 terminal 顯得有點陽春，需要極大注意力才能清楚知道自己究竟目前身在何處又在哪支 branch 裡。
+先烈做了很多很棒的工具改善工作體驗與視覺效果，iTerm 2 很是不錯，搭配上一些快捷熱鍵可以有效增加效率。
+Shortcut of iTerms2 windows and tabs command &#43; T to open new tab"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
+	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
+	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://raviwu.github.io/js/main.js"></script>
+	<script src="https://raviwu.github.io/js/abc.js"></script>
+	<script src="https://raviwu.github.io/js/xyz.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://raviwu.github.io/">
+	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
+	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">Home</a>
+			</li>
+			
+			<li>
+				<a href="/posts">All posts</a>
+			</li>
+			
+			<li>
+				<a href="/about">About</a>
+			</li>
+			
+			<li>
+				<a href="/tags">Tags</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">終端機工具</h1>
+			<div class="meta">Posted at &mdash; Mar 27, 2016</div>
+		</div>
+
+		<div class="markdown">
+			<p>轉型後端工程師的路上，看了很多教學，裝了很多套件，用過很多軟體。目前用得還算不手殘的工具只有終端機（terminal）跟文本編輯器（text editor）。</p>
+<p>因為要經常性切換不同的 Git Branch，MacOX 本來附掛的 terminal 顯得有點陽春，需要極大注意力才能清楚知道自己究竟目前身在何處又在哪支 branch 裡。</p>
+<p>先烈做了很多很棒的工具改善工作體驗與視覺效果，iTerm 2 很是不錯，搭配上一些快捷熱鍵可以有效增加效率。</p>
+<h2 id="shortcut-of-iterms2">Shortcut of iTerms2</h2>
+<h3 id="windows-and-tabs">windows and tabs</h3>
+<p><code>command + T</code> to open new tab</p>
+<p><code>shift + command + [ / ]</code> to switch between tabs</p>
+<p><code>command + W</code> to close the tab</p>
+<p><code>command + D</code> to have vertical divided windows</p>
+<p><code>command + [ / ]</code> to switch between windows</p>
+<h3 id="cursor">cursor</h3>
+<p><code>ctrl + a</code> to go to the beginning of line</p>
+<p><code>ctrl + e</code> to go to the end of line</p>
+<p><code>ctrl + f/b</code> to move the cursor</p>
+<p><code>ctrl + p</code> to get last command</p>
+<p><code>ctrl + r</code> to search history</p>
+<p><code>ctrl + d</code> to delete the current character</p>
+<p><code>ctrl + h</code> to delete previous characters from current cursor</p>
+<p><code>ctrl + w</code> to delete previous word from current cursor</p>
+<p><code>ctrl + k</code> to delete following charaters from current cursor</p>
+<p><code>command + /</code> to locate cursor position</p>
+<h3 id="font-size">font size</h3>
+<p><code>command + -/+</code> to decrease or increase the font size</p>
+<h2 id="shell">Shell</h2>
+<p>除此之外，還從預設的 <a href="http://icarus4.logdown.com/posts/177661-from-bash-to-zsh-setup-tips">bash shell（bash）轉成 z shell（zsh</a>，搭配華麗的 <a href="http://ohmyz.sh/">oh-my-zsh</a> 主題 <a href="https://gist.github.com/3712874">agnoster</a>，記得補安裝 <a href="https://github.com/powerline/fonts">PowerLine Font</a> 以免亂碼，讓後端工作也可以帶點美感，使用 Homebrew 安裝很是方便。</p>
+<p>工具貴在熟練不在多，閒暇之餘，從 <a href="https://www.learnenough.com/command-line-tutorial">Learn Enough Command Line to be Dangerous</a> 開始訓練肌肉記憶，專精之路尚遠矣。</p>
+<h3 id="see-usage-of-specific-command-man">See Usage of specific command: <code>man</code></h3>
+<p><code>man command</code> checks out the manual for the command, for instance use <code>man echo</code> to see the description of the <code>echo</code> command.</p>
+<h3 id="common-quit-from-mass-or-manufal-windows">Common quit from mass or manufal windows</h3>
+<p>Use <code>q</code> to quit the manual mode, normally <code>q</code> works for the similar mode entered by other command like <code>ri Array</code>.</p>
+<p>Use <code>ctrl + C</code> to kill current exucution of code, break the unfinit loop, etc.</p>
+<p>Use <code>echo &quot;some string&quot; &gt; file.txt</code> to through <code>&quot;some string&quot;</code> to <code>&quot;file.txt&quot;</code>. use <code>echo &quot;another thing&quot; &gt;&gt; file.txt</code> to <em>concat</em> the <code>&quot;another string&quot;</code> into the <code>&quot;file.txt&quot;</code>. By default <code>echo</code> appends <code>\n</code> to the end of the string.</p>
+<h3 id="simple-output-of-a-file-cat">Simple output of a file: <code>cat</code></h3>
+<p>Output the file content on the command line use <code>cat</code> command.</p>
+<p><code>cat file_1.txt file_2.txt &gt; combined_file.txt</code> can pass the <code>file_1.txt</code> and <code>file_2.txt</code> content to the <code>combined_file.txt</code>.</p>
+<h4 id="inspecting-a-file">Inspecting a file</h4>
+<p><code>head file_name.txt</code> list the first 10 lines of a file</p>
+<p><code>tail file_name.txt</code> list the last 10 lines of a file</p>
+<p><code>wc file_name.txt</code> list the &ldquo;line counts&rdquo;, &ldquo;word counts&rdquo;, and &ldquo;bytes&rdquo; of the file</p>
+<p><code>less file_name.txt</code> has <code>/search_word</code> function to inspect the file <a href="https://en.wikipedia.org/wiki/Less_(Unix)">less wiki page</a></p>
+<h3 id="view-the-files-within-directory-ls">View the files within directory: <code>ls</code></h3>
+<p><code>ls -l</code> list out files in long format</p>
+<p><code>ls -la</code> list out all files in long format, including the hidden files</p>
+<p><code>ls -rtl</code> list out files in long format, with reversed order by recent modify time.</p>
+<p><code>ls -lh</code> list out files in long format, with human readable file size count (K instead of bytes).</p>
+<h3 id="file-manipulation-mv-rm-cp-diff">File manipulation: <code>mv</code>, <code>rm</code>, <code>cp</code>, <code>diff</code></h3>
+<p><code>mv file_a.txt file_b.txt</code> rename <code>file_a.txt</code> to <code>file_b.txt</code></p>
+<p><code>rm file_a.txt</code> remove <code>file_a.txt</code> <code>rm -rf file_a.txt</code> force remove <code>file_a.txt</code></p>
+<p><code>cp file_a.txt file_b.txt</code> copy <code>file_a.txt</code> to <code>file_b.txt</code></p>
+<p><code>diff file_a.txt file_b.txt</code> to show the difference between two file. There won&rsquo;t be output if the two files has no difference.</p>
+<h3 id="check-if-programme-installed-which">Check if programme installed: <code>which</code></h3>
+<p><code>which ruby</code> checks whether ruby is installed in the computer</p>
+<h3 id="user-grep-to-catch-the-specified-string-in-file">user <code>grep</code> to catch the specified string in file</h3>
+<p><code>grep -i string file.txt</code> means catch all case insensitive &ldquo;string&rdquo; in &ldquo;file.txt&rdquo;</p>
+<p><code>grep string file.txt | wc</code> pipes the result of <code>grep</code> and pass it to wordcount programme</p>
+<p><code>grep -ri string directory</code> can find string from the very deep level, starts from the directory, case insentitive</p>
+<h3 id="managing-process-status-with-ps">managing process status with <code>ps</code></h3>
+<p><code>ps aux | grep string</code> in processes status shows in aux options and pipe result to grep then grep the &ldquo;string&rdquo; form ps aux result</p>
+<p><code>kill -15 &lt;pid&gt;</code> to kill the individual process with process id</p>
+<p><code>pkill -15 -f spring</code> can kill all process contains string spring</p>
+<h3 id="directories">directories</h3>
+<p>home directory is normally <code>/Users/username/</code> alias <code>~/</code></p>
+<p>use <code>sudo command</code> to get root permission for operation</p>
+<p><code>mkdir</code> to make new directory</p>
+<p><code>pwd</code> to print current working directory</p>
+<p><code>find . -name '*.txt'</code> to find files whose names match the pattern <code>*.txt</code>, starting in the current directory . and then in its subdirectories</p>
+<p><code>open file.ext</code> will open the file.ext with default programe to the .ext files</p>
+<p><code>open .</code> will then execute finder and open current directory</p>
+<h3 id="combining-commands-in-single-line">combining commands in single line</h3>
+<p><code>command line1 ; command line2 ; command line 3</code> use <code>;</code> to combine three commands in single line, and execute the three commands one after another</p>
+<p><code>command line1 &amp;&amp; command line2 &amp;&amp; command line3</code> works similar as <code>;</code> seperator, using <code>&amp;&amp;</code> can make the following command execute only if previous command successfully executed.</p>
+<h3 id="configure-the-shell">Configure the shell</h3>
+<p>edit <code>~/.zshrc</code> file with the resired configs and save it</p>
+<p><code>source .zshrc</code> to reload the config</p>
+<p><code>.bashrc</code> is the config file for bash shell</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/shell">shell</a></li>
+								
+								<li><a href="/tags/coding">coding</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+
+<script>feather.replace()</script>
+</body>
+</html>
