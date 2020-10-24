@@ -1,2 +1,0 @@
-User-Agent: *
-Sitemap: https://blog.lwstudio.org/sitemap.xml

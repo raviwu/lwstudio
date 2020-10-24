@@ -1,42 +1,90 @@
-baseURL = "https://blog.lwstudio.org/"
+baseURL = "https://raviwu.github.io/"
 
-theme = "hugo-bearblog"
-
-title = "LW Studio | Blog"
+title = "Ravi Wu"
 author = "Ravi Wu"
-copyright = "Copyright © 2020, Ravi Wu."
+copyright = "Copyright © 2020 | Ravi Wu"
 languageCode = "zh-TW"
 
 publishDir = "docs"
 
-enableRobotsTXT = true
+theme = "ezhil"
 
-# Generate "Bearblog"-like URLs !only!, see https://bearblog.dev/.
-disableKinds = ["taxonomy"]
-ignoreErrors = ["error-disable-taxonomy"]
-[permalinks]
-  blog = "/:slug/"
-  tags = "/blog/:slug"
+# Enable syntax highlighting.
+pygmentsstyle = "solarized-dark"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+# googleAnalytics = ""
+# disqusShortname = ""
+
+paginate = 10
+summaryLength = 20
 
 [params]
-  # The "description" of your website. This is used in the meta data of your generated html.
-  description = "LW Studio | Blog"
+    # Blog subtitle which appears below blog title. Supports markdown.
+    subtitle = "random thoughts and notes, beware if you want to reference"
 
-  # The path to your "favicon". This should be a square (at least 32px x 32px) png-file.
-  # Hint: It's good practise to also put a "favicon.ico"-file into your "static"-folder.
-  # favicon = "images/favicon.png"
+    # Content types which are included in home page recent posts list.
+    mainSections = ["posts"]
 
-  # These "images" are used for the structured data templates. This will show up, when
-  # services like Twitter or Slack want to generate a preview of a link to your site.
-  # See https://gohugo.io/templates/internal#twitter-cards and
-  # https://gohugo.io/templates/internal#open-graph.
-  # images = ["images/share.png"]
+    # Content types which are excludes Disqus comments.
+    disableDisqusTypes = ["page"]
 
-  # Another "title" :-). This one is used as the site_name on the Hugo's internal
-  # opengraph structured data template.
-  # See https://ogp.me/ and https://gohugo.io/templates/internal#open-graph.
-  title = "LW Studio | Blog"
+    # If social media links are enabled then enable this to fetch icons from CDN instead of hosted on your site.
+    featherIconsCDN = true
 
-  # This theme will, by default, inject a made-with-line at the bottom of the page.
-  # You can turn it off, but we would really appreciate if you don’t :-).
-  # hideMadeWithLine = true
+    # Specify favicon (icons/i.png maps to static/icons/i.png). No favicon if not defined.
+    favicon = "favicon.ico"
+
+    # Switch to dark mode or auto detect mode from OS (Optional).
+    # "dark" will set mode to dark and "auto" will switch to dark mode if OS is in dark mode.
+    mode = "dark" # "dark" or "auto"
+
+    # Custom CSS added to default styles. Files added to `static` folder is copied as it is to
+    # root by Hugo. For example if you have custom CSS file under `static/css/custom.css` then
+    # you can specify custom css path as `css/custom.css`.
+    customCSS = "css/custom.css"
+    # Custom CSS added to dark mode style.
+    customDarkCSS = "css/custom-dark.css"
+
+    # Custom list of Javascript files to load. Just like custom CSS you can place js files under
+    # `static/js` folder and specify path here as `js/script-name.js`. You can also specify full url,
+    # for example you may want to include external JS library.
+    customJS = ["js/abc.js", "js/xyz.js", "https://code.jquery.com/jquery-3.4.1.js"]
+
+# Main menu which appears below site header.
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "All posts"
+url = "/posts"
+weight = 2
+
+[[menu.main]]
+name = "About"
+url = "/about"
+weight = 3
+
+[[menu.main]]
+name = "Tags"
+url = "/tags"
+weight = 4
+
+# Social media links which shows up on site header.
+# Uses feather icons for icons. You can [search icon names from here](https://feathericons.com/).
+[[params.social]]
+name = "Github"
+icon = "github"
+url = "https://github.com/raviwu"
+
+[[params.social]]
+name = "Linkedin"
+icon = "linkedin"
+url = "https://www.linkedin.com/in/raviwu/"
+
+# Enable tags.
+[taxonomies]
+   tag = "tags"
