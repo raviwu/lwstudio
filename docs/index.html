@@ -9,7 +9,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://raviwu.github.io/" />
-<meta property="og:updated_time" content="2016-07-09T05:17:26+08:00" />
+<meta property="og:updated_time" content="2016-09-02T05:05:44+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Ravi Wu"/>
 <meta name="twitter:description" content=""/>
@@ -67,6 +67,17 @@
 			<div class="posts">
 				
 				
+				
+				<div class="post">
+					<div class="meta">Sep 2, 2016</div>
+					<a class="title" href="/posts/use-find-in-batches-during-migration/">利用 find_in_batches 在 Rails 做跨資料庫的資料移轉操作</a> &mdash;
+					<span class="description">
+						
+						在處理跨資料庫搬動並且需要一筆一筆資料去做各種運算處理時，最直覺的方式，是把表格裡的所有資料通通透過 ORM 撈到 ActiveRecord::Association 陣列裡，再用 each 去做操作：
+User.all.each do |user| user.email = &#34;assign@new.email&#34; ... end 但由於 Rails 會需要先去建立這些 objects，如果資料筆數很多的話，一次通通撈出來會佔用過多不必要的記憶體，可以使用 find_in_batches 做批次處理，減少系統 RAM 的負擔。&hellip;
+						
+					</span>
+				</div>
 				
 				<div class="post">
 					<div class="meta">Jul 9, 2016</div>
