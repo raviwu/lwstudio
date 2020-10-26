@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-TW</language>
     <copyright>Copyright © 2020 | Ravi Wu</copyright>
-    <lastBuildDate>Mon, 26 Oct 2020 11:36:46 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 26 Oct 2020 13:14:21 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go | 切片（Slice）</title>
+      <link>https://raviwu.github.io/posts/go-slice/</link>
+      <pubDate>Mon, 26 Oct 2020 13:14:21 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/go-slice/</guid>
+      <description>切片（Slice）是操作其指向之陣列（Array）的物件。
+[指標|長度|最大長度] // 切片 | [1,2,3,4,5] // 陣列 切片的初始化 // 宣告一個長度與最大長度都是 5 的字串陣列 slice1 := make([]string, 5) // 宣告一個長度為 3 最大長度為 5 的整數陣列 slice2 := make([]int, 3, 5) 長度不能大於最大長度，不然編譯器會噴錯誤。一般來說，宣告切片的同時也會同時賦值：</description>
+    </item>
+    
     <item>
       <title>Go | 陣列（Array）</title>
       <link>https://raviwu.github.io/posts/go-array/</link>
