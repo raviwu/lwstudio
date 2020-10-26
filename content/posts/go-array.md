@@ -1,7 +1,7 @@
 ---
 title: "Go | 陣列（Array）"
 date: 2020-10-26T11:36:46+08:00
-tags: ["go", "array", "coding"]
+tags: ["go", "array", "coding", "data structure"]
 disqus: false
 draft: false
 ---

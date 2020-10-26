@@ -1,7 +1,7 @@
 ---
 title: "Go | 切片（Slice）"
 date: 2020-10-26T13:14:21+08:00
-tags: ["go", "coding", "slice"]
+tags: ["go", "coding", "slice", "data structure"]
 disqus: false
 draft: false
 ---

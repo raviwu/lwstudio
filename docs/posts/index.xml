@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-TW</language>
     <copyright>Copyright © 2020 | Ravi Wu</copyright>
-    <lastBuildDate>Mon, 26 Oct 2020 13:14:21 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 26 Oct 2020 14:42:56 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go | Map</title>
+      <link>https://raviwu.github.io/posts/go-map/</link>
+      <pubDate>Mon, 26 Oct 2020 14:42:56 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/go-map/</guid>
+      <description>Go 的 map 是鍵值對的資料結構。
+// 宣告一個空白 map colors := map[string]string{} // 加入或修改鍵值對 colors[&amp;#34;Yello&amp;#34;] = &amp;#34;#cc8500&amp;#34; // 刪除鍵值（鍵不存在時並不會噴錯誤） delete(colors, &amp;#34;Red&amp;#34;) // 宣告一個空 map var numbers map[int]string numbers[1] = &amp;#34;One&amp;#34; // panic: runtime error: assignment ot entry in nil map 檢查鍵是否存在，如果指定的鍵不存在，會回傳零值給 value</description>
+    </item>
+    
     <item>
       <title>Go | 切片（Slice）</title>
       <link>https://raviwu.github.io/posts/go-slice/</link>
