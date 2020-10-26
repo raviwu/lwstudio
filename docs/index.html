@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="generator" content="Hugo 0.76.5" />
+	<meta name="generator" content="Hugo 0.75.1" />
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Ravi Wu - random thoughts and notes, beware if you want to reference </title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="alternate" type="application/rss+xml" href="https://raviwu.github.io/index.xml" title="Ravi Wu" />
@@ -9,7 +9,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://raviwu.github.io/" />
-<meta property="og:updated_time" content="2016-09-02T05:05:44+08:00" />
+<meta property="og:updated_time" content="2020-10-26T11:36:46+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Ravi Wu"/>
 <meta name="twitter:description" content=""/>
@@ -67,6 +67,18 @@
 			<div class="posts">
 				
 				
+				
+				<div class="post">
+					<div class="meta">Oct 26, 2020</div>
+					<a class="title" href="/posts/go-array/">Go | 陣列（Array）</a> &mdash;
+					<span class="description">
+						
+						Go 的陣列是連續空間內儲存了固定數目之相同型別物件的容器。當使用 var array [5]int 宣告時，陣列內儲存的型別或者長度都不能再改變，如果需要更多的空間來儲存新的物件，需要宣告一個新的陣列後把原先的值搬過去新的陣列。
+在 Go 語言中宣告新的變數且無賦值時，這些變數所指向的物件都會以其零值（Zero Value）初始化。有關於 Go 的零值，請參考這邊。常用的零值：
+   類型 零值     數值 0   布林值 false   字串 &quot;&quot;    初始化陣列的同時賦值 // 宣告一個 array1 變數的 int 陣列，長度為 5 且值依序分別為 1,2,3,4,5 array1 := [5]int{1,2,3,4,5} // 宣告一個 array2 變數的 int 陣列，長度為 5 且值依序分別為 0,1,2,0,0 array2 := [5]int{1: 1, 2: 2} // 宣告一個 array3 變數的 int 陣列，長度為取決於賦值內容 // 如以下 array3 的長度為 3 array3 := [.&hellip;
+						
+					</span>
+				</div>
 				
 				<div class="post">
 					<div class="meta">Sep 2, 2016</div>

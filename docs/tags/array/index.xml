@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>array on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/array/</link>
+    <description>Recent content in array on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Mon, 26 Oct 2020 11:36:46 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/array/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go | 陣列（Array）</title>
+      <link>https://raviwu.github.io/posts/go-array/</link>
+      <pubDate>Mon, 26 Oct 2020 11:36:46 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/go-array/</guid>
+      <description>Go 的陣列是連續空間內儲存了固定數目之相同型別物件的容器。當使用 var array [5]int 宣告時，陣列內儲存的型別或者長度都不能再改變，如果需要更多的空間來儲存新的物件，需要宣告一個新的陣列後把原先的值搬過去新的陣列。
+在 Go 語言中宣告新的變數且無賦值時，這些變數所指向的物件都會以其零值（Zero Value）初始化。有關於 Go 的零值，請參考這邊。常用的零值：
+   類型 零值     數值 0   布林值 false   字串 &amp;quot;&amp;quot;    初始化陣列的同時賦值 // 宣告一個 array1 變數的 int 陣列，長度為 5 且值依序分別為 1,2,3,4,5 array1 := [5]int{1,2,3,4,5} // 宣告一個 array2 變數的 int 陣列，長度為 5 且值依序分別為 0,1,2,0,0 array2 := [5]int{1: 1, 2: 2} // 宣告一個 array3 變數的 int 陣列，長度為取決於賦值內容 // 如以下 array3 的長度為 3 array3 := [.</description>
+    </item>
+    
+  </channel>
+</rss>
