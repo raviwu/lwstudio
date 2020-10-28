@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>specilization on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/specilization/</link>
+    <description>Recent content in specilization on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Fri, 11 Sep 2020 13:44:04 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/specilization/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>泛型 Java Functional Interface 的特規化</title>
+      <link>https://raviwu.github.io/posts/java-generic-functional-interface-specilization/</link>
+      <pubDate>Fri, 11 Sep 2020 13:44:04 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/java-generic-functional-interface-specilization/</guid>
+      <description>如果某個特殊型別的 Functional Interface 常常被使用時，有時候直接宣告型別會比較方便引用。可以透過兩種方式來做特規，介面與抽象類別：
+Generic Functional Interface
+@FunctionalInterface public interface TwoArgsProcessor&amp;lt;X&amp;gt; { X process(X arg1, X arg2); } 介面（Interface）
+@FunctionalInterface public interface TwoIntsProcessor extends TwoArgsProcessor&amp;lt;Integer&amp;gt; { } 抽象類別（Abstract Class）</description>
+    </item>
+    
+  </channel>
+</rss>

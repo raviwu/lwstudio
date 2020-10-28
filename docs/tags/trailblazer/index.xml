@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>trailblazer on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/trailblazer/</link>
+    <description>Recent content in trailblazer on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Sat, 14 Jan 2017 13:25:31 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/trailblazer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 Trailblazer 的 Policy 中透過客制 Exception 來處理複雜的「錯誤回應」</title>
+      <link>https://raviwu.github.io/posts/customize-error-handlement-in-trailblazer-policy/</link>
+      <pubDate>Sat, 14 Jan 2017 13:25:31 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/customize-error-handlement-in-trailblazer-policy/</guid>
+      <description>為了盡量貼近 Trailblazer 的設計概念，許多原先會透過 Controller before_action 去處理的權限管控，盡量都搬進 Trailblazer 的 Policy 裡。
+Policy 採用類似 Pundit 的語法，典型的 Policy 如下：
+class Thing::Policy def initialize(user, thing) @user, @thing = user, thing end def create?</description>
+    </item>
+    
+    <item>
+      <title>初探 Trailblazer 框架</title>
+      <link>https://raviwu.github.io/posts/elementary-trailblazer/</link>
+      <pubDate>Sat, 07 Jan 2017 13:23:29 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/elementary-trailblazer/</guid>
+      <description>最近公司的 Rails 專案試用了 Trailblazer 這套整理 Rails 程式碼的框架。（目前使用的是 1.1 版）
+Trailblazer 是擺在 Rails 上的一套工具，雖然有本專書可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 Nick Sutterer 設想的情況不一樣時，小小撞牆是難免的。</description>
+    </item>
+    
+  </channel>
+</rss>

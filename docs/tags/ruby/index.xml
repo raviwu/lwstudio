@@ -7,7 +7,59 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-TW</language>
     <copyright>Copyright © 2020 | Ravi Wu</copyright>
-    <lastBuildDate>Fri, 15 Apr 2016 04:22:50 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 May 2017 13:36:08 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 RSpec 裡測試 Rake Task</title>
+      <link>https://raviwu.github.io/posts/testing-rake-task-in-rspec/</link>
+      <pubDate>Sun, 07 May 2017 13:36:08 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/testing-rake-task-in-rspec/</guid>
+      <description>最近被 Rake Task 的測試設定搞得一頭霧水，簡單記錄一下測試 Rake Task 的測試設定，以及各種鬼打牆的血淚史：
+TL;DR 為了避免各種 task 載入、執行狀態等相互干擾導致 test case 會偶發性失敗，每一次執行 test case 時就去做「載入」、「卸載」會比較沒有鬼打牆狀況出現。
+# spec_helper.rb config.before(:each, rake: true) do Rails.</description>
+    </item>
+    
+    <item>
+      <title>工具 | Kindle &#34;My Clippings.txt&#34; 的轉檔 gem KCFU</title>
+      <link>https://raviwu.github.io/posts/tools-kcfu-for-kindle-clipping/</link>
+      <pubDate>Sat, 28 Jan 2017 13:33:09 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/tools-kcfu-for-kindle-clipping/</guid>
+      <description>Kindle 的剪貼簿功能雖然在 Kindle 上很好用，但真的要抽出來另外處理書摘的時候還真的麻煩，因為 My Clippings.txt 就是一個很簡單的純文字檔，每次在 Kindle 上面 hightlight / bookmark / notes 時就會依照書的 title 去新增一段特定格式的文字段落，所以如果同時看很多本的時候，打開 My Clippings.txt 會發現裡面就依照 clippings 時序夾雜著來自不同書裡的內容，得再經過一些處理才能分成不同的來源。</description>
+    </item>
+    
+    <item>
+      <title>在 Trailblazer 的 Policy 中透過客制 Exception 來處理複雜的「錯誤回應」</title>
+      <link>https://raviwu.github.io/posts/customize-error-handlement-in-trailblazer-policy/</link>
+      <pubDate>Sat, 14 Jan 2017 13:25:31 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/customize-error-handlement-in-trailblazer-policy/</guid>
+      <description>為了盡量貼近 Trailblazer 的設計概念，許多原先會透過 Controller before_action 去處理的權限管控，盡量都搬進 Trailblazer 的 Policy 裡。
+Policy 採用類似 Pundit 的語法，典型的 Policy 如下：
+class Thing::Policy def initialize(user, thing) @user, @thing = user, thing end def create?</description>
+    </item>
+    
+    <item>
+      <title>初探 Trailblazer 框架</title>
+      <link>https://raviwu.github.io/posts/elementary-trailblazer/</link>
+      <pubDate>Sat, 07 Jan 2017 13:23:29 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/elementary-trailblazer/</guid>
+      <description>最近公司的 Rails 專案試用了 Trailblazer 這套整理 Rails 程式碼的框架。（目前使用的是 1.1 版）
+Trailblazer 是擺在 Rails 上的一套工具，雖然有本專書可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 Nick Sutterer 設想的情況不一樣時，小小撞牆是難免的。</description>
+    </item>
+    
+    <item>
+      <title>筆記 | Practical Object-Oriented Design in Ruby (POODR)</title>
+      <link>https://raviwu.github.io/posts/notes-of-poodr/</link>
+      <pubDate>Tue, 03 Jan 2017 13:20:41 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/notes-of-poodr/</guid>
+      <description>Practical Object-Oriented Design in Ruby (POODR) 不會很厚，循序漸進地介紹物件導向設計的各種重要概念，而且範例用的是 Ruby 來解說，挺親切的。
+除了各種設計原則之外，也簡要解釋了 Inheritance / Module / Composition 的使用時機與差異。
+最後一章介紹測試原則，除了說明一般的測試原則之外（例如主要應測試 public interface / incoming message / outgoing command ），也很清楚地說明要怎樣去分別把不同的測試責任分在 module / test double / test class 上，以及讓 test double 與實際的程式碼同步的技巧，可以反覆閱讀的參考書。</description>
+    </item>
+    
     <item>
       <title>程設風格 | 早期終止執行</title>
       <link>https://raviwu.github.io/posts/early-termination/</link>

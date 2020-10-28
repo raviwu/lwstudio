@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rspec on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/rspec/</link>
+    <description>Recent content in rspec on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Sun, 07 May 2017 13:36:08 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/rspec/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 RSpec 裡測試 Rake Task</title>
+      <link>https://raviwu.github.io/posts/testing-rake-task-in-rspec/</link>
+      <pubDate>Sun, 07 May 2017 13:36:08 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/testing-rake-task-in-rspec/</guid>
+      <description>最近被 Rake Task 的測試設定搞得一頭霧水，簡單記錄一下測試 Rake Task 的測試設定，以及各種鬼打牆的血淚史：
+TL;DR 為了避免各種 task 載入、執行狀態等相互干擾導致 test case 會偶發性失敗，每一次執行 test case 時就去做「載入」、「卸載」會比較沒有鬼打牆狀況出現。
+# spec_helper.rb config.before(:each, rake: true) do Rails.</description>
+    </item>
+    
+  </channel>
+</rss>

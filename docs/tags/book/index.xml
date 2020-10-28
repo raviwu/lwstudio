@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>book on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/book/</link>
+    <description>Recent content in book on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Wed, 22 Feb 2017 13:28:15 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>書摘 | Soft Skills: The software developer&#39;s life manual</title>
+      <link>https://raviwu.github.io/posts/notes-soft-skills/</link>
+      <pubDate>Wed, 22 Feb 2017 13:28:15 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/notes-soft-skills/</guid>
+      <description>公司前輩分享了 Soft Skills: The software developer&amp;rsquo;s life manual 這本書，後來又在 Soft &amp;amp; Share 看到推廣介紹，抱著當休閒讀物的心情來閱讀是很不錯的。
+作者 John Z. Sonmez 在這本書中想要涵括的內容實在包山包海，如果對於人生迷惘的捧油，的確只要看了這本書所簡單介紹的內容就大概可以對人生重拾一些希望，也能循著這些主題繼續往深探索。比較特別的是，每個章節的篇幅被設計成大概一篇 Blog 文長度，所以閱讀起來的節奏感很是不錯，即使有些主題令人打哈欠，有些主題不斷地出現各種課程推銷，但都還能在睡著與失去耐心之前看完一個段落，這點是很值得效尤的閱讀設計技巧。</description>
+    </item>
+    
+    <item>
+      <title>筆記 | Practical Object-Oriented Design in Ruby (POODR)</title>
+      <link>https://raviwu.github.io/posts/notes-of-poodr/</link>
+      <pubDate>Tue, 03 Jan 2017 13:20:41 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/notes-of-poodr/</guid>
+      <description>Practical Object-Oriented Design in Ruby (POODR) 不會很厚，循序漸進地介紹物件導向設計的各種重要概念，而且範例用的是 Ruby 來解說，挺親切的。
+除了各種設計原則之外，也簡要解釋了 Inheritance / Module / Composition 的使用時機與差異。
+最後一章介紹測試原則，除了說明一般的測試原則之外（例如主要應測試 public interface / incoming message / outgoing command ），也很清楚地說明要怎樣去分別把不同的測試責任分在 module / test double / test class 上，以及讓 test double 與實際的程式碼同步的技巧，可以反覆閱讀的參考書。</description>
+    </item>
+    
+  </channel>
+</rss>

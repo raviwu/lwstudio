@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>specification on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/specification/</link>
+    <description>Recent content in specification on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Fri, 11 Sep 2020 13:46:57 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/specification/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>InputStream 、 DataInputStream 與 BufferedInputStream</title>
+      <link>https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/</link>
+      <pubDate>Fri, 11 Sep 2020 13:46:57 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/</guid>
+      <description>Java 有很多不同的 InputStream 類別，老是搞不清楚，InputStream、DataInputStream跟BufferedInputStream最近出現在我看的書的練習題裡，一些從 Java Doc (1.8) 文件中拉出來的相關連結：
+ Closeable FilterInputStream InputStream DataInputStream BufferedInputStream  InputStream是抽象類別，實踐了Closeable，所以可以當成try with resource裡的資源。類別方法裡定義了InputStream.nullInputStream()可以產生空的InputStream。另外也規範所有實作子類別必須提供public int read() throws IOException方法來回傳下一個 byte 的內容。</description>
+    </item>
+    
+  </channel>
+</rss>
