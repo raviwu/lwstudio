@@ -1,9 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="zh-TW">
+
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>產品的七個面向（The 7 Product Dimensions） - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="產品的七個面向（The 7 Product Dimensions）" />
+  <title>產品的七個面向（The 7 Product Dimensions） - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><meta property="og:title" content="產品的七個面向（The 7 Product Dimensions）" />
 <meta property="og:description" content="從 More Agile Testing 裡讀到各種方法論，在這邊隨機筆記一下。這次探討的是用 The seven product dimensions 來協助更全面性地探討規劃中的產品開發。
 七個可以在團隊中詢問的面向分別是：
  使用者（User）：使用、評價或者是從此產品受益的對象。不限於自然人。如果是自然人的話，使用 Personas 來勾勒出使用者是不錯的方法。 介面（Interface）：使用何種介面來連結產品以及使用者？產品送出何種訊息？關係圖、脈絡圖或者是原型都是不錯的視覺化工具。 動作（Action）：產品能做什麼事？這些動作是怎麼驅動的？有沒有順序之分？產品如何回應不同的動作？這些動作如何影響資料？ 資料（Data）：產品接受什麼類型的資料？資料來源為何？上下文脈絡？資料的有效期間多長？ 控制（Control）：產品本身受到什麼政策、法規、商業邏輯等限制？違反這些限制的風險如何？ 環境（Environment）：斟酌一下產品的物理特徵，會在何種情境使用？如何安裝、設定、授權、營運？開發環境中所需的環境條件又是如何？ 品質特徵（Quality Attribute）：產品需要達到何種程度的服務品質？可靠度？停機率？安全性？可使用性？想想可測試性、可延展性，思考一下該如何評價這些品質特徵。  在產品規劃、衝刺週期計畫會議或是規格討論會議中，提醒自己用這七個面向的問題來增加思慮與討論過程的考量涵蓋度。" />
@@ -11,63 +15,114 @@
 <meta property="og:url" content="https://raviwu.github.io/posts/methodology-the-seven-product-dimensions/" />
 <meta property="article:published_time" content="2020-09-21T13:48:42+08:00" />
 <meta property="article:modified_time" content="2020-09-21T13:48:42+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="產品的七個面向（The 7 Product Dimensions）"/>
 <meta name="twitter:description" content="從 More Agile Testing 裡讀到各種方法論，在這邊隨機筆記一下。這次探討的是用 The seven product dimensions 來協助更全面性地探討規劃中的產品開發。
 七個可以在團隊中詢問的面向分別是：
  使用者（User）：使用、評價或者是從此產品受益的對象。不限於自然人。如果是自然人的話，使用 Personas 來勾勒出使用者是不錯的方法。 介面（Interface）：使用何種介面來連結產品以及使用者？產品送出何種訊息？關係圖、脈絡圖或者是原型都是不錯的視覺化工具。 動作（Action）：產品能做什麼事？這些動作是怎麼驅動的？有沒有順序之分？產品如何回應不同的動作？這些動作如何影響資料？ 資料（Data）：產品接受什麼類型的資料？資料來源為何？上下文脈絡？資料的有效期間多長？ 控制（Control）：產品本身受到什麼政策、法規、商業邏輯等限制？違反這些限制的風險如何？ 環境（Environment）：斟酌一下產品的物理特徵，會在何種情境使用？如何安裝、設定、授權、營運？開發環境中所需的環境條件又是如何？ 品質特徵（Quality Attribute）：產品需要達到何種程度的服務品質？可靠度？停機率？安全性？可使用性？想想可測試性、可延展性，思考一下該如何評價這些品質特徵。  在產品規劃、衝刺週期計畫會議或是規格討論會議中，提醒自己用這七個面向的問題來增加思慮與討論過程的考量涵蓋度。"/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="https://raviwu.github.io/js/main.js"></script>
-	<script src="https://raviwu.github.io/js/abc.js"></script>
-	<script src="https://raviwu.github.io/js/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
 
 <body>
-	<div class="container wrapper post">
-		<div class="header">
-	<base href="https://raviwu.github.io/">
-	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
-	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
-		</nav>
-	</div>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
 
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">Home</a>
-			</li>
-			
-			<li>
-				<a href="/posts">All posts</a>
-			</li>
-			
-			<li>
-				<a href="/about">About</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
 
 
-		<div class="post-header">
-			<h1 class="title">產品的七個面向（The 7 Product Dimensions）</h1>
-			<div class="meta">Posted at &mdash; Sep 21, 2020</div>
-		</div>
+    <main>
 
-		<div class="markdown">
-			<p>從 <a href="https://www.amazon.com/More-Agile-Testing-Addison-Wesley-Signature/dp/0321967054">More Agile Testing</a> 裡讀到各種方法論，在這邊隨機筆記一下。這次探討的是用 <a href="https://www.ebgconsulting.com/blog/the-7-product-dimensions-a-guide-to-asking-the-right-questions/">The seven product dimensions</a> 來協助更全面性地探討規劃中的產品開發。</p>
+
+
+
+<article>
+
+    <h1>產品的七個面向（The 7 Product Dimensions）</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2020-09-21T13:48:42&#43;08:00">Sep 21, 2020</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/software-engineering">#software engineering</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/agile-development">#agile development</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/methodology">#methodology</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>從 <a href="https://www.amazon.com/More-Agile-Testing-Addison-Wesley-Signature/dp/0321967054">More Agile Testing</a> 裡讀到各種方法論，在這邊隨機筆記一下。這次探討的是用 <a href="https://www.ebgconsulting.com/blog/the-7-product-dimensions-a-guide-to-asking-the-right-questions/">The seven product dimensions</a> 來協助更全面性地探討規劃中的產品開發。</p>
 <p>七個可以在團隊中詢問的面向分別是：</p>
 <ul>
 <li>使用者（User）：使用、評價或者是從此產品受益的對象。不限於自然人。如果是自然人的話，使用 Personas 來勾勒出使用者是不錯的方法。</li>
@@ -80,34 +135,43 @@
 </ul>
 <p>在產品規劃、衝刺週期計畫會議或是規格討論會議中，提醒自己用這七個面向的問題來增加思慮與討論過程的考量涵蓋度。</p>
 
-		</div>
 
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/software-engineering">software engineering</a></li>
-								
-								<li><a href="/tags/agile-development">agile development</a></li>
-								
-								<li><a href="/tags/methodology">methodology</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/"><i class="fa fa-chevron-circle-left"></i> InputStream 、 DataInputStream 與 BufferedInputStream</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/go-array/">Go | 陣列（Array） <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
 </div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
 
-
-
-<script>feather.replace()</script>
 </body>
+
 </html>
+

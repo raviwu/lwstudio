@@ -1,9 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="zh-TW">
+
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Rails grape API 上實作 JWT 多重登入 - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="Rails grape API 上實作 JWT 多重登入" />
+  <title>Rails grape API 上實作 JWT 多重登入 - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><meta property="og:title" content="Rails grape API 上實作 JWT 多重登入" />
 <meta property="og:description" content="多重登入的需求，在服務本身允許「跨裝置體驗」或者是「接受不同 request agent (APP request / mobile browser)」的時候顯得重要。
 理想情況下，可以讓使用者在介面上面清楚知道目前帳號的登入狀態，並在登入數超過服務上限的時候，讓使用者自己選擇要移除登入授權的裝置，使用者流程大概會像（這篇文）那樣，要做到類似參考連結這樣的管理介面，需要我目前還不會的前端的配合建置與基本的 session 管理 API。本篇只先建置允許使用多重登入的資料結構與登入驗證 API。
 選擇用 JWT (Jason Web Token) 作為主要的憑證溝通，優點有一些：
@@ -12,64 +16,115 @@
 <meta property="og:url" content="https://raviwu.github.io/posts/implement-jwt-in-grape-api/" />
 <meta property="article:published_time" content="2016-06-10T05:05:44+08:00" />
 <meta property="article:modified_time" content="2016-06-10T05:05:44+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Rails grape API 上實作 JWT 多重登入"/>
 <meta name="twitter:description" content="多重登入的需求，在服務本身允許「跨裝置體驗」或者是「接受不同 request agent (APP request / mobile browser)」的時候顯得重要。
 理想情況下，可以讓使用者在介面上面清楚知道目前帳號的登入狀態，並在登入數超過服務上限的時候，讓使用者自己選擇要移除登入授權的裝置，使用者流程大概會像（這篇文）那樣，要做到類似參考連結這樣的管理介面，需要我目前還不會的前端的配合建置與基本的 session 管理 API。本篇只先建置允許使用多重登入的資料結構與登入驗證 API。
 選擇用 JWT (Jason Web Token) 作為主要的憑證溝通，優點有一些：
  透過加密 payload 來比對資料庫內容的方式，可以不用在資料表中「直接存入」與憑證相關的訊息，加密跟解密只要透過協定就能進行調整。 payload 裡面塞入的訊息可以自訂，在各服務跟裝置之間交換加密過後的使用者資料。 signing key / protocol 可以在有資安疑慮時更換。  使用 Devise 的 Rails 捧油也可參考 devise_token_auth 這個 gem，整合效果在文件上面看起來很完善，但因為目前我手邊的系統絕大多數的 request 都來自 grape API endpoint ，比較過後，跟搞懂並駕馭 devise 設定比起來，我還是選擇自刻 JWT 較節省開發時間。"/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="https://raviwu.github.io/js/main.js"></script>
-	<script src="https://raviwu.github.io/js/abc.js"></script>
-	<script src="https://raviwu.github.io/js/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
 
 <body>
-	<div class="container wrapper post">
-		<div class="header">
-	<base href="https://raviwu.github.io/">
-	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
-	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
-		</nav>
-	</div>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
 
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">Home</a>
-			</li>
-			
-			<li>
-				<a href="/posts">All posts</a>
-			</li>
-			
-			<li>
-				<a href="/about">About</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
 
 
-		<div class="post-header">
-			<h1 class="title">Rails grape API 上實作 JWT 多重登入</h1>
-			<div class="meta">Posted at &mdash; Jun 10, 2016</div>
-		</div>
+    <main>
 
-		<div class="markdown">
-			<p>多重登入的需求，在服務本身允許「跨裝置體驗」或者是「接受不同 request agent (APP request / mobile browser)」的時候顯得重要。</p>
+
+
+
+<article>
+
+    <h1>Rails grape API 上實作 JWT 多重登入</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2016-06-10T05:05:44&#43;08:00">Jun 10, 2016</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/rails">#rails</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/jwt">#jwt</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>多重登入的需求，在服務本身允許「跨裝置體驗」或者是「接受不同 request agent (APP request / mobile browser)」的時候顯得重要。</p>
 <p>理想情況下，可以讓使用者在介面上面清楚知道目前帳號的登入狀態，並在登入數超過服務上限的時候，讓使用者自己選擇要移除登入授權的裝置，使用者流程大概會像（<a href="https://www.authy.com/blog/multi-multi-factor-authentication">這篇文</a>）那樣，要做到類似參考連結這樣的管理介面，需要<!-- raw HTML omitted -->我目前還不會的<!-- raw HTML omitted -->前端的配合建置與基本的 session 管理 API。本篇只先建置允許使用多重登入的資料結構與登入驗證 API。</p>
 <p>選擇用 <a href="https://jwt.io/">JWT (Jason Web Token)</a> 作為主要的憑證溝通，優點有一些：</p>
 <ol>
@@ -87,34 +142,43 @@
 <li>最後，在檢查憑證機制的 helper 裡使用 JasonWebToken class 去 decode request 裡面的 jwt。</li>
 </ol>
 
-		</div>
 
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/rails">rails</a></li>
-								
-								<li><a href="/tags/jwt">jwt</a></li>
-								
-								<li><a href="/tags/coding">coding</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/"><i class="fa fa-chevron-circle-left"></i> Rails 中使用 Paperclip 存 URI 附件</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/migrate-push-notification-from-parse-to-aws-sns/">在 rails 上實作轉移 Parse 手機推播服務到 Amazon SNS <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
 </div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
 
-
-
-<script>feather.replace()</script>
 </body>
+
 </html>
+

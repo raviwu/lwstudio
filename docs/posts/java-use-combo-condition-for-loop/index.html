@@ -1,144 +1,209 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="zh-TW">
+
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>使用複合條件來判斷是否進入下一輪 Java 迴圈 - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="使用複合條件來判斷是否進入下一輪 Java 迴圈" />
+  <title>使用複合條件來判斷是否進入下一輪 Java 迴圈 - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><meta property="og:title" content="使用複合條件來判斷是否進入下一輪 Java 迴圈" />
 <meta property="og:description" content="在 Java 迴圈寫法中，假如我想要透過一個外部判斷來提前中斷這個迴圈，之前我習慣寫：
-public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&lt;ints." />
+public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&lt;ints.length; i&#43;&#43;) { continueCond = ints[i] &lt; 4; if (!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://raviwu.github.io/posts/java-use-combo-condition-for-loop/" />
 <meta property="article:published_time" content="2020-09-10T13:41:31+08:00" />
 <meta property="article:modified_time" content="2020-09-10T13:41:31+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="使用複合條件來判斷是否進入下一輪 Java 迴圈"/>
 <meta name="twitter:description" content="在 Java 迴圈寫法中，假如我想要透過一個外部判斷來提前中斷這個迴圈，之前我習慣寫：
-public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&lt;ints."/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&lt;ints.length; i&#43;&#43;) { continueCond = ints[i] &lt; 4; if (!"/>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="https://raviwu.github.io/js/main.js"></script>
-	<script src="https://raviwu.github.io/js/abc.js"></script>
-	<script src="https://raviwu.github.io/js/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
 
 <body>
-	<div class="container wrapper post">
-		<div class="header">
-	<base href="https://raviwu.github.io/">
-	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
-	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
-		</nav>
-	</div>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
 
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">Home</a>
-			</li>
-			
-			<li>
-				<a href="/posts">All posts</a>
-			</li>
-			
-			<li>
-				<a href="/about">About</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
 
 
-		<div class="post-header">
-			<h1 class="title">使用複合條件來判斷是否進入下一輪 Java 迴圈</h1>
-			<div class="meta">Posted at &mdash; Sep 10, 2020</div>
-		</div>
+    <main>
 
-		<div class="markdown">
-			<p>在 Java 迴圈寫法中，假如我想要透過一個外部判斷來提前中斷這個迴圈，之前我習慣寫：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Test</span> <span style="color:#719e07">{</span>
-    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">main</span><span style="color:#719e07">(</span>String<span style="color:#719e07">[]</span> args<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-        <span style="color:#dc322f">int</span> <span style="color:#719e07">[]</span> ints <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>1<span style="color:#719e07">,</span>2<span style="color:#719e07">,</span>3<span style="color:#719e07">,</span>4<span style="color:#719e07">,</span>5<span style="color:#719e07">};</span>
-        <span style="color:#dc322f">boolean</span> continueCond <span style="color:#719e07">=</span> <span style="color:#cb4b16">true</span><span style="color:#719e07">;</span>
-        <span style="color:#719e07">for</span> <span style="color:#719e07">(</span><span style="color:#dc322f">int</span> i<span style="color:#719e07">=</span>0<span style="color:#719e07">;</span> i<span style="color:#719e07">&lt;</span>ints<span style="color:#719e07">.</span>length<span style="color:#719e07">;</span> i<span style="color:#719e07">++)</span> <span style="color:#719e07">{</span>
-            continueCond <span style="color:#719e07">=</span> ints<span style="color:#719e07">[</span>i<span style="color:#719e07">]</span> <span style="color:#719e07">&lt;</span> 4<span style="color:#719e07">;</span>
-            <span style="color:#719e07">if</span> <span style="color:#719e07">(!</span>continueCond<span style="color:#719e07">)</span> <span style="color:#719e07">break</span><span style="color:#719e07">;</span>
-            System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println<span style="color:#719e07">(</span>ints<span style="color:#719e07">[</span>i<span style="color:#719e07">]);</span>
-        <span style="color:#719e07">}</span>
-    <span style="color:#719e07">}</span>
-<span style="color:#719e07">}</span>
+
+
+
+<article>
+
+    <h1>使用複合條件來判斷是否進入下一輪 Java 迴圈</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2020-09-10T13:41:31&#43;08:00">Sep 10, 2020</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/java">#java</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/string">#string</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/early-break">#early break</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>在 Java 迴圈寫法中，假如我想要透過一個外部判斷來提前中斷這個迴圈，之前我習慣寫：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> <span style="color:#f92672">[]</span> ints <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>1<span style="color:#f92672">,</span>2<span style="color:#f92672">,</span>3<span style="color:#f92672">,</span>4<span style="color:#f92672">,</span>5<span style="color:#f92672">};</span>
+        <span style="color:#66d9ef">boolean</span> continueCond <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span> i<span style="color:#f92672">&lt;</span>ints<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            continueCond <span style="color:#f92672">=</span> ints<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">&lt;</span> 4<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>continueCond<span style="color:#f92672">)</span> <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>ints<span style="color:#f92672">[</span>i<span style="color:#f92672">]);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></div><p>但這樣寫其實有點冗，今天看到在 <a href="https://www.apress.com/gp/book/9781484242773">Functional Interfaces in Java</a> 裡的一個範例寫法：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Test</span> <span style="color:#719e07">{</span>
-    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">main</span><span style="color:#719e07">(</span>String<span style="color:#719e07">[]</span> args<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-        <span style="color:#dc322f">int</span> <span style="color:#719e07">[]</span> ints <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>1<span style="color:#719e07">,</span>2<span style="color:#719e07">,</span>3<span style="color:#719e07">,</span>4<span style="color:#719e07">,</span>5<span style="color:#719e07">};</span>
-        <span style="color:#dc322f">boolean</span> continueCond <span style="color:#719e07">=</span> <span style="color:#cb4b16">true</span><span style="color:#719e07">;</span>
-        <span style="color:#719e07">for</span> <span style="color:#719e07">(</span><span style="color:#dc322f">int</span> i<span style="color:#719e07">=</span>0<span style="color:#719e07">;</span> i<span style="color:#719e07">&lt;</span>ints<span style="color:#719e07">.</span>length <span style="color:#719e07">&amp;&amp;</span> continueCond<span style="color:#719e07">;</span> i<span style="color:#719e07">++)</span> <span style="color:#719e07">{</span>
-            continueCond <span style="color:#719e07">&amp;=</span> ints<span style="color:#719e07">[</span>i<span style="color:#719e07">]</span> <span style="color:#719e07">&lt;</span> 4<span style="color:#719e07">;</span>
-            System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println<span style="color:#719e07">(</span>ints<span style="color:#719e07">[</span>i<span style="color:#719e07">]);</span>
-        <span style="color:#719e07">}</span>
-    <span style="color:#719e07">}</span>
-<span style="color:#719e07">}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> <span style="color:#f92672">[]</span> ints <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>1<span style="color:#f92672">,</span>2<span style="color:#f92672">,</span>3<span style="color:#f92672">,</span>4<span style="color:#f92672">,</span>5<span style="color:#f92672">};</span>
+        <span style="color:#66d9ef">boolean</span> continueCond <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span> i<span style="color:#f92672">&lt;</span>ints<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">&amp;&amp;</span> continueCond<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            continueCond <span style="color:#f92672">&amp;=</span> ints<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">&lt;</span> 4<span style="color:#f92672">;</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>ints<span style="color:#f92672">[</span>i<span style="color:#f92672">]);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></div><p>但這樣寫的行為跟使用 <code>if (!continueCond) break;</code> 強制跳出迴圈有些差異，由於 <code>for</code> 裡面是要走完全部才會跳出，所以第二種寫法依然會把 4 給印出來。以這個範例來說，變成要把需要跳開的動作包在一個條件裡：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Test</span> <span style="color:#719e07">{</span>
-    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">main</span><span style="color:#719e07">(</span>String<span style="color:#719e07">[]</span> args<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-        <span style="color:#dc322f">int</span> <span style="color:#719e07">[]</span> ints <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>1<span style="color:#719e07">,</span>2<span style="color:#719e07">,</span>3<span style="color:#719e07">,</span>4<span style="color:#719e07">,</span>5<span style="color:#719e07">};</span>
-        <span style="color:#dc322f">boolean</span> continueCond <span style="color:#719e07">=</span> <span style="color:#cb4b16">true</span><span style="color:#719e07">;</span>
-        <span style="color:#719e07">for</span> <span style="color:#719e07">(</span><span style="color:#dc322f">int</span> i<span style="color:#719e07">=</span>0<span style="color:#719e07">;</span> i<span style="color:#719e07">&lt;</span>ints<span style="color:#719e07">.</span>length <span style="color:#719e07">&amp;&amp;</span> continueCond<span style="color:#719e07">;</span> i<span style="color:#719e07">++)</span> <span style="color:#719e07">{</span>
-            continueCond <span style="color:#719e07">&amp;=</span> ints<span style="color:#719e07">[</span>i<span style="color:#719e07">]</span> <span style="color:#719e07">&lt;</span> 4<span style="color:#719e07">;</span>
-            <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>continueCond<span style="color:#719e07">)</span> System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println<span style="color:#719e07">(</span>ints<span style="color:#719e07">[</span>i<span style="color:#719e07">]);</span>
-        <span style="color:#719e07">}</span>
-    <span style="color:#719e07">}</span>
-<span style="color:#719e07">}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> <span style="color:#f92672">[]</span> ints <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>1<span style="color:#f92672">,</span>2<span style="color:#f92672">,</span>3<span style="color:#f92672">,</span>4<span style="color:#f92672">,</span>5<span style="color:#f92672">};</span>
+        <span style="color:#66d9ef">boolean</span> continueCond <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span> i<span style="color:#f92672">&lt;</span>ints<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">&amp;&amp;</span> continueCond<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            continueCond <span style="color:#f92672">&amp;=</span> ints<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">&lt;</span> 4<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>continueCond<span style="color:#f92672">)</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>ints<span style="color:#f92672">[</span>i<span style="color:#f92672">]);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></div><p>本來想說好像是會比較簡潔一點，但發現改成後面這種寫法以這個範例來說並沒有特別的好處，以書上的情境可能會更適用：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#268bd2">static</span> <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">isLowerCase</span><span style="color:#719e07">(</span>String s<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-    <span style="color:#dc322f">boolean</span> result <span style="color:#719e07">=</span> <span style="color:#cb4b16">true</span><span style="color:#719e07">;</span>
-    <span style="color:#719e07">for</span> <span style="color:#719e07">(</span><span style="color:#dc322f">int</span> i<span style="color:#719e07">=</span>0<span style="color:#719e07">;</span> i<span style="color:#719e07">&lt;</span>s<span style="color:#719e07">.</span>length<span style="color:#719e07">()</span> <span style="color:#719e07">&amp;&amp;</span> result<span style="color:#719e07">;</span> i<span style="color:#719e07">++)</span> <span style="color:#719e07">{</span>
-        result <span style="color:#719e07">&amp;=</span> Character<span style="color:#719e07">.</span>isUpperCase<span style="color:#719e07">(</span>s<span style="color:#719e07">.</span>charAt<span style="color:#719e07">(</span>i<span style="color:#719e07">));</span>
-    <span style="color:#719e07">}</span>
-    <span style="color:#719e07">return</span> result<span style="color:#719e07">;</span>
-<span style="color:#719e07">}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isLowerCase</span><span style="color:#f92672">(</span>String s<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">boolean</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span> i<span style="color:#f92672">&lt;</span>s<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">()</span> <span style="color:#f92672">&amp;&amp;</span> result<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+        result <span style="color:#f92672">&amp;=</span> Character<span style="color:#f92672">.</span><span style="color:#a6e22e">isUpperCase</span><span style="color:#f92672">(</span>s<span style="color:#f92672">.</span><span style="color:#a6e22e">charAt</span><span style="color:#f92672">(</span>i<span style="color:#f92672">));</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> result<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
 </code></pre></div><p>如果迴圈本身只需要找到第一個符合某個條件的情況就可提前中斷後續的判讀，並且迴圈本身沒有 side effect 的話，這樣做可以免除寫那一行 <code>break;</code> 的篇幅。參考參考。</p>
 
-		</div>
 
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/coding">coding</a></li>
-								
-								<li><a href="/tags/java">java</a></li>
-								
-								<li><a href="/tags/string">string</a></li>
-								
-								<li><a href="/tags/early-break">early break</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/tools-scoop-sh/"><i class="fa fa-chevron-circle-left"></i> Windows 裡的類 homebrew 工具： scoop.sh</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/java-generic-functional-interface-specilization/">泛型 Java Functional Interface 的特規化 <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
 </div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
 
-
-
-<script>feather.replace()</script>
 </body>
+
 </html>
+

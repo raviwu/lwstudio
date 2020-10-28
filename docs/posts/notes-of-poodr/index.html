@@ -1,9 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="zh-TW">
+
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>筆記 | Practical Object-Oriented Design in Ruby (POODR) - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="筆記 | Practical Object-Oriented Design in Ruby (POODR)" />
+  <title>筆記 | Practical Object-Oriented Design in Ruby (POODR) - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><meta property="og:title" content="筆記 | Practical Object-Oriented Design in Ruby (POODR)" />
 <meta property="og:description" content="Practical Object-Oriented Design in Ruby (POODR) 不會很厚，循序漸進地介紹物件導向設計的各種重要概念，而且範例用的是 Ruby 來解說，挺親切的。
 除了各種設計原則之外，也簡要解釋了 Inheritance / Module / Composition 的使用時機與差異。
 最後一章介紹測試原則，除了說明一般的測試原則之外（例如主要應測試 public interface / incoming message / outgoing command ），也很清楚地說明要怎樣去分別把不同的測試責任分在 module / test double / test class 上，以及讓 test double 與實際的程式碼同步的技巧，可以反覆閱讀的參考書。" />
@@ -11,63 +15,117 @@
 <meta property="og:url" content="https://raviwu.github.io/posts/notes-of-poodr/" />
 <meta property="article:published_time" content="2017-01-03T13:20:41+08:00" />
 <meta property="article:modified_time" content="2017-01-03T13:20:41+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="筆記 | Practical Object-Oriented Design in Ruby (POODR)"/>
 <meta name="twitter:description" content="Practical Object-Oriented Design in Ruby (POODR) 不會很厚，循序漸進地介紹物件導向設計的各種重要概念，而且範例用的是 Ruby 來解說，挺親切的。
 除了各種設計原則之外，也簡要解釋了 Inheritance / Module / Composition 的使用時機與差異。
 最後一章介紹測試原則，除了說明一般的測試原則之外（例如主要應測試 public interface / incoming message / outgoing command ），也很清楚地說明要怎樣去分別把不同的測試責任分在 module / test double / test class 上，以及讓 test double 與實際的程式碼同步的技巧，可以反覆閱讀的參考書。"/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="https://raviwu.github.io/js/main.js"></script>
-	<script src="https://raviwu.github.io/js/abc.js"></script>
-	<script src="https://raviwu.github.io/js/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
 
 <body>
-	<div class="container wrapper post">
-		<div class="header">
-	<base href="https://raviwu.github.io/">
-	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
-	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
-		</nav>
-	</div>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
 
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">Home</a>
-			</li>
-			
-			<li>
-				<a href="/posts">All posts</a>
-			</li>
-			
-			<li>
-				<a href="/about">About</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
 
 
-		<div class="post-header">
-			<h1 class="title">筆記 | Practical Object-Oriented Design in Ruby (POODR)</h1>
-			<div class="meta">Posted at &mdash; Jan 3, 2017</div>
-		</div>
+    <main>
 
-		<div class="markdown">
-			<p><a href="http://www.poodr.com/">Practical Object-Oriented Design in Ruby (POODR)</a> 不會很厚，循序漸進地介紹物件導向設計的各種重要概念，而且範例用的是 Ruby 來解說，挺親切的。</p>
+
+
+
+<article>
+
+    <h1>筆記 | Practical Object-Oriented Design in Ruby (POODR)</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2017-01-03T13:20:41&#43;08:00">Jan 3, 2017</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/book">#book</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/notes">#notes</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p><a href="http://www.poodr.com/">Practical Object-Oriented Design in Ruby (POODR)</a> 不會很厚，循序漸進地介紹物件導向設計的各種重要概念，而且範例用的是 Ruby 來解說，挺親切的。</p>
 <p>除了各種設計原則之外，也簡要解釋了 Inheritance / Module / Composition 的使用時機與差異。</p>
 <p>最後一章介紹測試原則，除了說明一般的測試原則之外（例如主要應測試 public interface / incoming message / outgoing command ），也很清楚地說明要怎樣去分別把不同的測試責任分在 module / test double / test class 上，以及讓 test double 與實際的程式碼同步的技巧，可以反覆閱讀的參考書。</p>
 <h1 id="chapter-1---object-oriented-design">Chapter 1 - Object-Oriented Design</h1>
@@ -152,103 +210,103 @@ The purpose of design is to allow you to do design later and its primary goal is
 <h2 id="resolving-dependencies">Resolving Dependencies</h2>
 <h3 id="inject-dependencies">Inject Dependencies</h3>
 <p>Try not to hard code dependencies, use &lsquo;message&rsquo; the method or the class really cares:</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">Gear</span>
-  <span style="color:#719e07">attr_reader</span> <span style="color:#2aa198">:chainring</span>, <span style="color:#2aa198">:cog</span>, <span style="color:#2aa198">:rim</span>, <span style="color:#2aa198">:tire</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:rim</span>, <span style="color:#e6db74">:tire</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(chainring, cog, rim, tire)
-    <span style="color:#719e07">...</span>
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
+    <span style="color:#f92672">...</span>
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#586e75"># hard code the Wheel in gear_inches method</span>
-  <span style="color:#586e75"># call this method with Gear.new(52, 11, 26, 1.5).gear_inches#</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">gear_inches</span>
-    ratio <span style="color:#719e07">*</span> <span style="color:#cb4b16">Wheel</span><span style="color:#719e07">.</span>new(rim, tire)<span style="color:#719e07">.</span>diameter
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">Gear</span>
-  <span style="color:#719e07">attr_reader</span> <span style="color:#2aa198">:chaining</span>, <span style="color:#2aa198">:cog</span>, <span style="color:#2aa198">:wheel</span>
+  <span style="color:#75715e"># hard code the Wheel in gear_inches method</span>
+  <span style="color:#75715e"># call this method with Gear.new(52, 11, 26, 1.5).gear_inches#</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> <span style="color:#66d9ef">Wheel</span><span style="color:#f92672">.</span>new(rim, tire)<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chaining</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:wheel</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(chainring, cog, wheel)
-    <span style="color:#719e07">...</span>
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, wheel)
+    <span style="color:#f92672">...</span>
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#586e75"># Moving the creation of Wheel outside the Gear class, decoupling the Wheel and Gear class.</span>
-  <span style="color:#586e75"># call this method with Gear.new(52, 11, Wheel.new(26, 1.5)).gear_inches</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">gear_inches</span>
-    ratio <span style="color:#719e07">*</span> wheel<span style="color:#719e07">.</span>diameter
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#75715e"># Moving the creation of Wheel outside the Gear class, decoupling the Wheel and Gear class.</span>
+  <span style="color:#75715e"># call this method with Gear.new(52, 11, Wheel.new(26, 1.5)).gear_inches</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> wheel<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="isolate-dependencies">Isolate Dependencies</h3>
 <p>Prepare a space to isolate dependencies within given zone</p>
 <h4 id="isolate-instance-creation">Isolate Instance creation</h4>
 <ol>
 <li>Create Dependencies when initialize</li>
 </ol>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">Gear</span>
-  <span style="color:#719e07">attr_reader</span> <span style="color:#2aa198">:chainring</span>, <span style="color:#2aa198">:cog</span>, <span style="color:#2aa198">:wheel</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:wheel</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(chainring, cog, rim, tire)
-    <span style="color:#719e07">...</span>
-    @wheel <span style="color:#719e07">=</span> <span style="color:#cb4b16">Wheel</span><span style="color:#719e07">.</span>new(rim, tire)
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
+    <span style="color:#f92672">...</span>
+    @wheel <span style="color:#f92672">=</span> <span style="color:#66d9ef">Wheel</span><span style="color:#f92672">.</span>new(rim, tire)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">gear_inches</span>
-    ratio <span style="color:#719e07">*</span> wheel<span style="color:#719e07">.</span>diameter
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> wheel<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><ol start="2">
 <li>Isolate the Dependency in method</li>
 </ol>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">Gear</span>
-  <span style="color:#719e07">attr_reader</span> <span style="color:#2aa198">:chainring</span>, <span style="color:#2aa198">:cog</span>, <span style="color:#2aa198">:rim</span>, <span style="color:#2aa198">:tire</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:rim</span>, <span style="color:#e6db74">:tire</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(chainring, cog, rim, tire)
-    <span style="color:#719e07">...</span>
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
+    <span style="color:#f92672">...</span>
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">gear_inches</span>
-    ratio <span style="color:#719e07">*</span> wheel<span style="color:#719e07">.</span>diameter
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> wheel<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">private</span>
+  <span style="color:#66d9ef">private</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">wheel</span>
-    @wheel <span style="color:#719e07">||=</span> <span style="color:#cb4b16">Wheel</span><span style="color:#719e07">.</span>new(rim, tire)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wheel</span>
+    @wheel <span style="color:#f92672">||=</span> <span style="color:#66d9ef">Wheel</span><span style="color:#f92672">.</span>new(rim, tire)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h4 id="isolate-vulnerable-external-messages">Isolate Vulnerable External Messages</h4>
 <p>external messages: messasges that are &lsquo;send to someone other than <code>self</code>&rsquo;</p>
 <p>This refactor depends on whether this extraction is worth to be DRYed out.</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">def</span> <span style="color:#268bd2">gear_inches</span>
-  ratio <span style="color:#719e07">*</span> diameter
-<span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+  ratio <span style="color:#f92672">*</span> diameter
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">private</span>
+<span style="color:#66d9ef">private</span>
 
-<span style="color:#719e07">def</span> <span style="color:#268bd2">diameter</span>
-  wheel<span style="color:#719e07">.</span>diameter
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diameter</span>
+  wheel<span style="color:#f92672">.</span>diameter
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="remove-augument-order-dependencies">Remove Augument-Order Dependencies</h3>
 <p>Use args Hash to initialize the object, keys does not has order issue.</p>
 <p>Explicity define default or raise argument error in case the argument does not provide required values.</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#586e75"># this line will fall back to default value 18 whenever the args[:cog] are evaluated to false,</span>
-<span style="color:#586e75"># in other word, if args[:cog] are assigned to &#39;false&#39; then @cog will be assigned to 18</span>
-@cog <span style="color:#719e07">=</span> args<span style="color:#719e07">[</span><span style="color:#2aa198">:cog</span><span style="color:#719e07">]</span> <span style="color:#719e07">||</span> <span style="color:#2aa198">18</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># this line will fall back to default value 18 whenever the args[:cog] are evaluated to false,</span>
+<span style="color:#75715e"># in other word, if args[:cog] are assigned to &#39;false&#39; then @cog will be assigned to 18</span>
+@cog <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:cog</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> <span style="color:#ae81ff">18</span>
 
-<span style="color:#586e75"># To use the provided value whenever the key existed, can use fetch</span>
-<span style="color:#586e75"># the default value is assigned only when the fetched key does not exist</span>
-@cog <span style="color:#719e07">=</span> args<span style="color:#719e07">.</span>fetch(<span style="color:#2aa198">:cog</span>, <span style="color:#2aa198">18</span>)
+<span style="color:#75715e"># To use the provided value whenever the key existed, can use fetch</span>
+<span style="color:#75715e"># the default value is assigned only when the fetched key does not exist</span>
+@cog <span style="color:#f92672">=</span> args<span style="color:#f92672">.</span>fetch(<span style="color:#e6db74">:cog</span>, <span style="color:#ae81ff">18</span>)
 
-<span style="color:#586e75"># have a default hash to be merged is another solution</span>
-<span style="color:#719e07">def</span> <span style="color:#268bd2">default_args</span>
-  { <span style="color:#2aa198">cog</span>: <span style="color:#2aa198">18</span> }
-<span style="color:#719e07">end</span>
+<span style="color:#75715e"># have a default hash to be merged is another solution</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_args</span>
+  { <span style="color:#e6db74">cog</span>: <span style="color:#ae81ff">18</span> }
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(args)
-  args <span style="color:#719e07">=</span> default_args<span style="color:#719e07">.</span>merge(args)
-  <span style="color:#719e07">...</span>
-  @cog <span style="color:#719e07">=</span> args<span style="color:#719e07">[</span><span style="color:#2aa198">:cog</span><span style="color:#719e07">]</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(args)
+  args <span style="color:#f92672">=</span> default_args<span style="color:#f92672">.</span>merge(args)
+  <span style="color:#f92672">...</span>
+  @cog <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:cog</span><span style="color:#f92672">]</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><p>If the object belongs to external libs, then constructing a <code>LibObjectWrapper</code> for that object that use Hash parameter to initialize <code>LibObject</code> instead of a ordered argument array might worth the efforts. This is called factory patterns. An object whose purpose is to create other objects is a factory; the word factory implies nothing more, and use of it is the most expedient way to communicate this idea.</p>
 <h2 id="manageing-dependency-direction">Manageing Dependency Direction</h2>
 <p>Object should depend on the Class that tends to have less changes if possible.</p>
@@ -257,47 +315,47 @@ The purpose of design is to allow you to do design later and its primary goal is
 <li>Concrete classes are more likely to change than abstract classes.</li>
 <li>Changing a class that has many dependents will result in widespread consequences.</li>
 </ul>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#586e75"># Gear depends on Wheel</span>
-<span style="color:#719e07">class</span> <span style="color:#268bd2">Gear</span>
-  <span style="color:#719e07">attr_reader</span> <span style="color:#2aa198">:chainring</span>, <span style="color:#2aa198">:cog</span>, <span style="color:#2aa198">:wheel</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Gear depends on Wheel</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:wheel</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(chainring, cog, rim, tire)
-    <span style="color:#719e07">...</span>
-    @wheel <span style="color:#719e07">=</span> <span style="color:#cb4b16">Wheel</span><span style="color:#719e07">.</span>new(rim, tire)
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
+    <span style="color:#f92672">...</span>
+    @wheel <span style="color:#f92672">=</span> <span style="color:#66d9ef">Wheel</span><span style="color:#f92672">.</span>new(rim, tire)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">gear_inches</span>
-    ratio <span style="color:#719e07">*</span> wheel<span style="color:#719e07">.</span>diameter
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#586e75"># Wheel depends on Gear</span>
-<span style="color:#719e07">class</span> <span style="color:#268bd2">Gear</span>
-  <span style="color:#719e07">attr_reader</span> <span style="color:#2aa198">:chainring</span>, <span style="color:#2aa198">:cog</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> wheel<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Wheel depends on Gear</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(chainring, cog)
-    <span style="color:#719e07">...</span>
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog)
+    <span style="color:#f92672">...</span>
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">gear_inches</span>(diameter)
-    ratio <span style="color:#719e07">*</span> diameter
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>(diameter)
+    ratio <span style="color:#f92672">*</span> diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">Wheel</span>
-  <span style="color:#719e07">attr_reader</span> <span style="color:#2aa198">:rim</span>, <span style="color:#2aa198">:tire</span>, <span style="color:#2aa198">:gear</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(rim, tire, chainring, cog)
-    <span style="color:#719e07">...</span>
-    @gear <span style="color:#719e07">=</span> <span style="color:#cb4b16">Gear</span><span style="color:#719e07">.</span>new(chainring, cog)
-  <span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Wheel</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:rim</span>, <span style="color:#e6db74">:tire</span>, <span style="color:#e6db74">:gear</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(rim, tire, chainring, cog)
+    <span style="color:#f92672">...</span>
+    @gear <span style="color:#f92672">=</span> <span style="color:#66d9ef">Gear</span><span style="color:#f92672">.</span>new(chainring, cog)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">diameter</span>
-    rim <span style="color:#719e07">+</span> (tire <span style="color:#719e07">*</span> <span style="color:#2aa198">2</span>)
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diameter</span>
+    rim <span style="color:#f92672">+</span> (tire <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">gear_inches</span>
-    gear<span style="color:#719e07">.</span>gear_inches(diameter)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    gear<span style="color:#f92672">.</span>gear_inches(diameter)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><blockquote>
 <p>P.57</p>
 <p>Dependency management is core to creating future-proof applications. Injecting dependencies creates loosely coupled objects that can be reused in novel ways. Isolating dependencies allows objects to quickly adapt to unexpected changes. Depending on abstractions decreases the likelihood of facing these changes.</p>
@@ -384,64 +442,64 @@ The purpose of design is to allow you to do design later and its primary goal is
 <li><code>responds_to?</code></li>
 </ul>
 <p>The Trip has to know exactly the Class of preparer and the public method calls to prepare the trip</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">Trip</span>
-  <span style="color:#719e07">attr_reader</span> <span style="color:#2aa198">:bicycles</span>, <span style="color:#2aa198">:customers</span>, <span style="color:#2aa198">:bus</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Trip</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:bicycles</span>, <span style="color:#e6db74">:customers</span>, <span style="color:#e6db74">:bus</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">prepare</span>(preparers)
-    preparers<span style="color:#719e07">.</span>each <span style="color:#719e07">do</span> <span style="color:#719e07">|</span>preparer<span style="color:#719e07">|</span>
-      <span style="color:#719e07">case</span> preparer
-      <span style="color:#719e07">when</span> <span style="color:#cb4b16">Mechanic</span>
-        preparer<span style="color:#719e07">.</span>prepare_bicycles(bicycles)
-      <span style="color:#719e07">when</span> <span style="color:#cb4b16">TourGuide</span>
-        preparer<span style="color:#719e07">.</span>buy_food(customers)
-      <span style="color:#719e07">when</span> <span style="color:#cb4b16">Driver</span>
-        preparer<span style="color:#719e07">.</span>gas_up(bus)
-        preparer<span style="color:#719e07">.</span>fill_water_tank(bus)
-      <span style="color:#719e07">end</span>
-    <span style="color:#719e07">end</span>
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">if</span> preparer<span style="color:#719e07">.</span>kind_of?(<span style="color:#cb4b16">Mechanic</span>)
-  preparer<span style="color:#719e07">.</span>prepare_bycycles(bicycles)
-<span style="color:#719e07">elsif</span> preparer<span style="color:#719e07">.</span>kind_of?(<span style="color:#cb4b16">TourGuide</span>)
-  preparer<span style="color:#719e07">.</span>buy_food(customers)
-<span style="color:#719e07">elsif</span> preparer<span style="color:#719e07">.</span>kind_of?(<span style="color:#cb4b16">Driver</span>)
-  preparer<span style="color:#719e07">.</span>gas_up(bus)
-  preparer<span style="color:#719e07">.</span>fill_water_tank(bus)
-<span style="color:#719e07">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">if</span> preparer<span style="color:#719e07">.</span>responds_to?(<span style="color:#2aa198">:prepare_bicycles</span>)
-  preparer<span style="color:#719e07">.</span>prepare_bycycles(bicycles)
-<span style="color:#719e07">elsif</span> preparer<span style="color:#719e07">.</span>responds_to?(<span style="color:#2aa198">:buy_food</span>)
-  preparer<span style="color:#719e07">.</span>buy_food(customers)
-<span style="color:#719e07">elsif</span> preparer<span style="color:#719e07">.</span>responds_to?(<span style="color:#2aa198">:gas_up</span>)
-  preparer<span style="color:#719e07">.</span>gas_up(bus)
-  preparer<span style="color:#719e07">.</span>fill_water_tank(bus)
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare</span>(preparers)
+    preparers<span style="color:#f92672">.</span>each <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>preparer<span style="color:#f92672">|</span>
+      <span style="color:#66d9ef">case</span> preparer
+      <span style="color:#66d9ef">when</span> <span style="color:#66d9ef">Mechanic</span>
+        preparer<span style="color:#f92672">.</span>prepare_bicycles(bicycles)
+      <span style="color:#66d9ef">when</span> <span style="color:#66d9ef">TourGuide</span>
+        preparer<span style="color:#f92672">.</span>buy_food(customers)
+      <span style="color:#66d9ef">when</span> <span style="color:#66d9ef">Driver</span>
+        preparer<span style="color:#f92672">.</span>gas_up(bus)
+        preparer<span style="color:#f92672">.</span>fill_water_tank(bus)
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> preparer<span style="color:#f92672">.</span>kind_of?(<span style="color:#66d9ef">Mechanic</span>)
+  preparer<span style="color:#f92672">.</span>prepare_bycycles(bicycles)
+<span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>kind_of?(<span style="color:#66d9ef">TourGuide</span>)
+  preparer<span style="color:#f92672">.</span>buy_food(customers)
+<span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>kind_of?(<span style="color:#66d9ef">Driver</span>)
+  preparer<span style="color:#f92672">.</span>gas_up(bus)
+  preparer<span style="color:#f92672">.</span>fill_water_tank(bus)
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> preparer<span style="color:#f92672">.</span>responds_to?(<span style="color:#e6db74">:prepare_bicycles</span>)
+  preparer<span style="color:#f92672">.</span>prepare_bycycles(bicycles)
+<span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>responds_to?(<span style="color:#e6db74">:buy_food</span>)
+  preparer<span style="color:#f92672">.</span>buy_food(customers)
+<span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>responds_to?(<span style="color:#e6db74">:gas_up</span>)
+  preparer<span style="color:#f92672">.</span>gas_up(bus)
+  preparer<span style="color:#f92672">.</span>fill_water_tank(bus)
+<span style="color:#66d9ef">end</span>
 </code></pre></div><p>Changing above code to duck typing will rearrange the public interface between <code>Trip</code>, <code>Mechanic</code>, <code>TourGuide</code>, and <code>Driver</code>. Instead of letting <code>Trip</code> knows about how all kinds of preparer class and how to let them prepare things, <code>Trip</code> only send a <code>prepare_trip</code> messages to the preparer, and all preparers has to get correct repsonses, whether asking for more inputs or handling the provided ones.</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">Trip</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">prepare</span>(preparers)
-    preparers<span style="color:#719e07">.</span>each { <span style="color:#719e07">|</span>preparer<span style="color:#719e07">|</span> preparer<span style="color:#719e07">.</span>prepare_trip(<span style="color:#2aa198">vehicle</span>: bus, <span style="color:#2aa198">customers</span>: customers, <span style="color:#2aa198">bicycles</span>: bicycles) }
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Trip</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare</span>(preparers)
+    preparers<span style="color:#f92672">.</span>each { <span style="color:#f92672">|</span>preparer<span style="color:#f92672">|</span> preparer<span style="color:#f92672">.</span>prepare_trip(<span style="color:#e6db74">vehicle</span>: bus, <span style="color:#e6db74">customers</span>: customers, <span style="color:#e6db74">bicycles</span>: bicycles) }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">Driver</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">prepare_trip</span>(trip_requirement<span style="color:#719e07">=</span>{})
-    gas_up(trip_requirement<span style="color:#719e07">[</span><span style="color:#2aa198">:vehicle</span><span style="color:#719e07">]</span>)
-    fill_water_tank(trip_requirement<span style="color:#719e07">[</span><span style="color:#2aa198">:vehicle</span><span style="color:#719e07">]</span>)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Driver</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare_trip</span>(trip_requirement<span style="color:#f92672">=</span>{})
+    gas_up(trip_requirement<span style="color:#f92672">[</span><span style="color:#e6db74">:vehicle</span><span style="color:#f92672">]</span>)
+    fill_water_tank(trip_requirement<span style="color:#f92672">[</span><span style="color:#e6db74">:vehicle</span><span style="color:#f92672">]</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">TourGuide</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">prepare_trip</span>(trip_requirement<span style="color:#719e07">=</span>{})
-    buy_food(trip_requirement<span style="color:#719e07">[</span><span style="color:#2aa198">:customers</span><span style="color:#719e07">]</span>)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TourGuide</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare_trip</span>(trip_requirement<span style="color:#f92672">=</span>{})
+    buy_food(trip_requirement<span style="color:#f92672">[</span><span style="color:#e6db74">:customers</span><span style="color:#f92672">]</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">Mechanic</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">prepare_trip</span>(trip_requirement<span style="color:#719e07">=</span>{})
-    prepare_bycycles(trip_requirement<span style="color:#719e07">[</span><span style="color:#2aa198">:bicycles</span><span style="color:#719e07">]</span>)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Mechanic</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare_trip</span>(trip_requirement<span style="color:#f92672">=</span>{})
+    prepare_bycycles(trip_requirement<span style="color:#f92672">[</span><span style="color:#e6db74">:bicycles</span><span style="color:#f92672">]</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><p>Better can share the Duck Type code through Modules.</p>
 <blockquote>
 <p>P104.</p>
@@ -485,37 +543,37 @@ Inheritance provides a way to define two objects as having a relationship such t
 <p>P129.</p>
 <p>Creating code that fails with reasonable error messages takes minor effort in the present but provides value forever. Each error message is a small thing, but small things accumulate to produce big effects and it is this attention to detail that marks you as a serious programmer.</p>
 </blockquote>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">Bicycle</span>
-  <span style="color:#719e07">attr_reader</span> <span style="color:#2aa198">:size</span>, <span style="color:#2aa198">:chain</span>, <span style="color:#2aa198">:tire_size</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:size</span>, <span style="color:#e6db74">:chain</span>, <span style="color:#e6db74">:tire_size</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(args<span style="color:#719e07">=</span>{})
-    @size <span style="color:#719e07">=</span> args<span style="color:#719e07">[</span><span style="color:#2aa198">:size</span><span style="color:#719e07">]</span>
-    @chain <span style="color:#719e07">=</span> args<span style="color:#719e07">[</span><span style="color:#2aa198">:chain</span><span style="color:#719e07">]</span> <span style="color:#719e07">||</span> default_chain
-    @tire_size <span style="color:#719e07">=</span> args<span style="color:#719e07">[</span><span style="color:#2aa198">:tire_size</span><span style="color:#719e07">]</span> <span style="color:#719e07">||</span> default_tire_size
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(args<span style="color:#f92672">=</span>{})
+    @size <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:size</span><span style="color:#f92672">]</span>
+    @chain <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:chain</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> default_chain
+    @tire_size <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:tire_size</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> default_tire_size
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">default_chain</span>
-    <span style="color:#2aa198">&#39;10-speed&#39;</span>
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_chain</span>
+    <span style="color:#e6db74">&#39;10-speed&#39;</span>
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">default_tire_size</span>
-    <span style="color:#719e07">raise</span> <span style="color:#cb4b16">NotImplementedError</span>, <span style="color:#2aa198">&#34;This </span><span style="color:#2aa198">#{</span><span style="color:#b58900">self</span><span style="color:#719e07">.</span>class<span style="color:#2aa198">}</span><span style="color:#2aa198"> cannot respond to:&#34;</span>
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_tire_size</span>
+    <span style="color:#66d9ef">raise</span> <span style="color:#66d9ef">NotImplementedError</span>, <span style="color:#e6db74">&#34;This </span><span style="color:#e6db74">#{</span>self<span style="color:#f92672">.</span>class<span style="color:#e6db74">}</span><span style="color:#e6db74"> cannot respond to:&#34;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">RoadBike</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">Bicycle</span>
-  <span style="color:#586e75"># ...</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">default_tire_size</span>
-    <span style="color:#2aa198">&#39;23&#39;</span>
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#75715e"># ...</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_tire_size</span>
+    <span style="color:#e6db74">&#39;23&#39;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">MountainBike</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">Bicycle</span>
-  <span style="color:#586e75"># ...</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">default_tire_size</span>
-    <span style="color:#2aa198">&#39;2.1&#39;</span>
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MountainBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#75715e"># ...</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_tire_size</span>
+    <span style="color:#e6db74">&#39;2.1&#39;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h2 id="managing-coupling-between-superclasses-and-subclasses">Managing Coupling between Superclasses and subclasses</h2>
 <p>When a subclass is implementing a method that send <code>super</code> to its superclass, it implies that the subclass is knowing things about its superclass.</p>
 <blockquote>
@@ -527,49 +585,49 @@ Inheritance provides a way to define two objects as having a relationship such t
 <p>forcing a subclass to know how to interact with its abstract superclass causes many problems. When a subclass sends super it’s effectively declaring that it knows the algo- rithm; it depends on this knowledge. If the algorithm changes, then the subclasses may break even if their own specializations are not otherwise affected.</p>
 </blockquote>
 <h3 id="using-hook-messages-to-decoupling-subclasses">Using hook messages to decoupling subclasses</h3>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">Bicycle</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">initialize</span>(args<span style="color:#719e07">=</span>{})
-    @size <span style="color:#719e07">=</span> args<span style="color:#719e07">[</span><span style="color:#2aa198">:size</span><span style="color:#719e07">]</span>
-    @chain <span style="color:#719e07">=</span> args<span style="color:#719e07">[</span><span style="color:#2aa198">:chain</span><span style="color:#719e07">]</span> <span style="color:#719e07">||</span> default_chain
-    @tire_size <span style="color:#719e07">=</span> args<span style="color:#719e07">[</span><span style="color:#2aa198">:tire_size</span><span style="color:#719e07">]</span> <span style="color:#719e07">||</span> default_tire_size
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(args<span style="color:#f92672">=</span>{})
+    @size <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:size</span><span style="color:#f92672">]</span>
+    @chain <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:chain</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> default_chain
+    @tire_size <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:tire_size</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> default_tire_size
 
     post_initialize(args)
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">post_initialize</span>(args)
-    <span style="color:#719e07">nil</span>
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">post_initialize</span>(args)
+    <span style="color:#66d9ef">nil</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">RoadBike</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">Bicycle</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">post_initialize</span>(args)
-    @tape_color <span style="color:#719e07">=</span> args<span style="color:#719e07">[</span><span style="color:#2aa198">:tape_color</span><span style="color:#719e07">]</span>
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">post_initialize</span>(args)
+    @tape_color <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:tape_color</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><p>Provide a hook method to subclass can remove the dependencies that letting subclass knowing what is implemented in superclass.</p>
 <blockquote>
 <p>P135.</p>
 <p>RoadBike is still responsible for what initialization it needs but is no longer responsible for when its initialization occurs. This change allows RoadBike to know less about Bicycle, reducing the coupling between them and making each more flexible in the face of an uncertain future. RoadBike doesn’t know when its post_initialize method will be called and it doesn’t care what object actually sends the message. Bicycle (or any other object) could send this message at any time, there is no requirement that it be sent during object initialization.</p>
 </blockquote>
 <p>Using the hook method on the method can looks like this:</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">Bicycle</span>
-  <span style="color:#586e75"># ...</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">spares</span>
-    { <span style="color:#2aa198">tire_size</span>: tire_size,
-      <span style="color:#2aa198">chain</span>: chain }<span style="color:#719e07">.</span>merge(local_spares)
-  <span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
+  <span style="color:#75715e"># ...</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">spares</span>
+    { <span style="color:#e6db74">tire_size</span>: tire_size,
+      <span style="color:#e6db74">chain</span>: chain }<span style="color:#f92672">.</span>merge(local_spares)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">local_spares</span> <span style="color:#586e75"># hook for subclasses to override</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">local_spares</span> <span style="color:#75715e"># hook for subclasses to override</span>
     {}
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">RoadBike</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">Bicycle</span>
-  <span style="color:#586e75"># ...</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">local_spares</span>
-    { <span style="color:#2aa198">tape_color</span>: tape_color }
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#75715e"># ...</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">local_spares</span>
+    { <span style="color:#e6db74">tape_color</span>: tape_color }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h1 id="chapter-7---sharing-role-behavior-with-modules">Chapter 7 - Sharing Role Behavior with Modules</h1>
 <blockquote>
 <p>P142.</p>
@@ -677,228 +735,235 @@ composition provides no way to share this code.</p>
 <p>If one class uses another object, then the test will rely on creating classes that is required to interact with the tested interface, choose the approach that requires less resources to setup those dependencies, in other word, make the test run as fast as you can so that you will be more willing to run the test as frequent as it should be.</p>
 <h2 id="isolating-the-object-under-test">Isolating the Object Under Test</h2>
 <p>Use module to extract the role that shared among classes, increase the reuse of the test configuration.</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">module</span> PreparerInterfaceTest
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_implements_the_preparer_interface</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:prepare_trip</span>)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> PreparerInterfaceTest
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_implements_the_preparer_interface</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:prepare_trip</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">MechanicTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">PreparerInterfaceTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @mechanic <span style="color:#719e07">=</span> @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">Mechanic</span><span style="color:#719e07">.</span>new
-  <span style="color:#719e07">end</span>
-  <span style="color:#586e75"># other tests which rely on @mechanic</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MechanicTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">PreparerInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @mechanic <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Mechanic</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+  <span style="color:#75715e"># other tests which rely on @mechanic</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">TripCoordinatorTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">PreparerInterfaceTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @trip_coordinator <span style="color:#719e07">=</span> @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">TripCoordinator</span><span style="color:#719e07">.</span>new
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TripCoordinatorTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">PreparerInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @trip_coordinator <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">TripCoordinator</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">DriverTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">PreparerInterfaceTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @driver <span style="color:#719e07">=</span> @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">Driver</span><span style="color:#719e07">.</span>new
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DriverTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">PreparerInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @driver <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Driver</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><blockquote>
 <p>P.223</p>
 <p>Defining the PreparerInterfaceTest as a module allows you to write the test once and then reuse it in every object that plays the role. The module serves as a test and as documentation. It raises the visibility of the role and makes it easy to prove that any newly created Preparer successfully fulfills its obligations.</p>
 </blockquote>
 <h2 id="creating-test-doubles-that-can-sense-the-reasonable-failed">Creating test doubles that can sense the reasonable failed</h2>
 <p>Using mock might create a heaven like environment for each tests if all mocks are perfectly return the exact epect values that the test expect, changes on the mocked classes might not get reflected on the test results since the changes on mocked class does not impact on the mock behavior itself.</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">module</span> DiameterizableInterfaceTest
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_implements_the_diameterizable_interface</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:width</span>)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> DiameterizableInterfaceTest
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_implements_the_diameterizable_interface</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:width</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">DiameterDouble</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">diameter</span>
-    <span style="color:#2aa198">10</span>
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DiameterDouble</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diameter</span>
+    <span style="color:#ae81ff">10</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#586e75"># Prove the test double honors the interface this # test expects.</span>
-<span style="color:#719e07">class</span> <span style="color:#268bd2">DiameterDoubleTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">DiameterizableInterfaceTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">DiameterDouble</span><span style="color:#719e07">.</span>new
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#75715e"># Prove the test double honors the interface this # test expects.</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DiameterDoubleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">DiameterizableInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">DiameterDouble</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">GearTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_calculates_gear_inches</span>
-    gear <span style="color:#719e07">=</span> <span style="color:#cb4b16">Gear</span><span style="color:#719e07">.</span>new(
-      <span style="color:#2aa198">chainring</span>: <span style="color:#2aa198">52</span>,
-      <span style="color:#2aa198">cog</span>: <span style="color:#2aa198">11</span>,
-      <span style="color:#2aa198">wheel</span>: <span style="color:#cb4b16">DiameterDouble</span><span style="color:#719e07">.</span>new
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GearTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_calculates_gear_inches</span>
+    gear <span style="color:#f92672">=</span> <span style="color:#66d9ef">Gear</span><span style="color:#f92672">.</span>new(
+      <span style="color:#e6db74">chainring</span>: <span style="color:#ae81ff">52</span>,
+      <span style="color:#e6db74">cog</span>: <span style="color:#ae81ff">11</span>,
+      <span style="color:#e6db74">wheel</span>: <span style="color:#66d9ef">DiameterDouble</span><span style="color:#f92672">.</span>new
     )
-    assert_in_delta(<span style="color:#2aa198">47</span><span style="color:#719e07">.</span><span style="color:#2aa198">27</span>, gear<span style="color:#719e07">.</span>gear_inches, <span style="color:#2aa198">0</span><span style="color:#719e07">.</span><span style="color:#2aa198">01</span>)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+    assert_in_delta(<span style="color:#ae81ff">47</span><span style="color:#f92672">.</span><span style="color:#ae81ff">27</span>, gear<span style="color:#f92672">.</span>gear_inches, <span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">01</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><p>Above <code>DiameterizableInterfaceTest</code> ensures the double is expected to respond to <code>width</code> message, so the unsync between <code>DiameterDouble</code> and the <code>DiameterizableInterfaceTest</code> can now expose the defect of current code / test.</p>
 <p>and when we fix the Double to have latest <code>diameter</code> interface, then the <code>GearTest</code> that using the previous <code>width</code> interface will failed, hence expose the possible defect existed in the <code>Gear</code> class.</p>
 <h2 id="testing-inherited-code">Testing Inherited Code</h2>
 <h3 id="specifying-the-inherited-interface">Specifying the Inherited Interface</h3>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">module</span> BicycleInterfaceTest
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_responds_to_default_tire_size</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:default_tire_size</span>)
-  <span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> BicycleInterfaceTest
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_default_tire_size</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:default_tire_size</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_responds_to_default_chain</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:default_chain</span>)
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_default_chain</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:default_chain</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_responds_to_chain</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:chain</span>)
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_chain</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:chain</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_responds_to_size</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:size</span>)
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_size</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:size</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_responds_to_tire_size</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:tire_size</span>)
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_tire_size</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:tire_size</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_responds_to_spares</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:spares</span>)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_spares</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:spares</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">BicycleTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">BicycleInterfaceTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @bike <span style="color:#719e07">=</span> @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">Bicycle</span><span style="color:#719e07">.</span>new(<span style="color:#2aa198">tire_size</span>: <span style="color:#2aa198">0</span>)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BicycleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Bicycle</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">tire_size</span>: <span style="color:#ae81ff">0</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">RoadBikeTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">BicycleInterfaceTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @bike <span style="color:#719e07">=</span> @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">RoadBike</span><span style="color:#719e07">.</span>new
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">RoadBike</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="specifying-subclass-responsibilities">Specifying Subclass Responsibilities</h3>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">module</span> BicycleSubclassTest
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_responds_to_post_initialize</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:post_initialize</span>)
-  <span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> BicycleSubclassTest
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_post_initialize</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:post_initialize</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_responds_to_local_spares</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:local_spares</span>)
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_local_spares</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:local_spares</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_responds_to_default_tire_size</span>
-    assert_respond_to(@object, <span style="color:#2aa198">:default_tire_size</span>)
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_default_tire_size</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:default_tire_size</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">RoadBikeTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">BicycleInterfaceTest</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">BicycleSubclassTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @bike <span style="color:#719e07">=</span> @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">RoadBike</span><span style="color:#719e07">.</span>new
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleSubclassTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">RoadBike</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="confirming-superclass-enforcement">Confirming Superclass Enforcement</h3>
 <p>The Bicycle class should raise an error if a subclass does not implement default_tire_size. Even though this requirement applies to subclasses, the actual enforcement behavior is in Bicycle.</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">BicycleTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">BicycleInterfaceTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @bike <span style="color:#719e07">=</span> @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">Bicycle</span><span style="color:#719e07">.</span>new(<span style="color:#2aa198">tire_size</span>: <span style="color:#2aa198">0</span>)
-  <span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BicycleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Bicycle</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">tire_size</span>: <span style="color:#ae81ff">0</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_forces_subclasses_to_implement_default_tire_size</span>
-    assert_raises(<span style="color:#cb4b16">NotImplementedError</span>) { @bike<span style="color:#719e07">.</span>default_tire_size }
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_forces_subclasses_to_implement_default_tire_size</span>
+    assert_raises(<span style="color:#66d9ef">NotImplementedError</span>) { @bike<span style="color:#f92672">.</span>default_tire_size }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="testing-unique-behavior">Testing Unique Behavior</h3>
 <p>After testing the shared interface and the configurations with modules, it&rsquo;s time to test the concrete subclass behavior. The concrete behavior is therefore existed in the Concrete Subclass test.</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#719e07">class</span> <span style="color:#268bd2">RoadBikeTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">BicycleInterfaceTest</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">BicycleSubclassTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @bike <span style="color:#719e07">=</span> @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">RoadBike</span><span style="color:#719e07">.</span>new(<span style="color:#2aa198">tape_color</span>: ‘red’)
-  <span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleSubclassTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">RoadBike</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">tape_color</span>: <span style="color:#960050;background-color:#1e0010">‘</span>red<span style="color:#960050;background-color:#1e0010">’</span>)
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_puts_tape_color_in_local_spares</span>
-    assert_equal <span style="color:#2aa198">&#39;red&#39;</span>, @bike<span style="color:#719e07">.</span>local_spares<span style="color:#719e07">[</span><span style="color:#2aa198">:tape_color</span><span style="color:#719e07">]</span>
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_puts_tape_color_in_local_spares</span>
+    assert_equal <span style="color:#e6db74">&#39;red&#39;</span>, @bike<span style="color:#f92672">.</span>local_spares<span style="color:#f92672">[</span><span style="color:#e6db74">:tape_color</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="testing-abstract-superclass-behavior">Testing Abstract Superclass Behavior</h3>
 <p>Create a Stub itself subclass from the to-be-tested Superclass to test the Superclass Behavior could decouple especific subclass from the Superclass tests.</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#586e75"># Make sure this StubbedBike behaves correctly the class can be checked by</span>
-<span style="color:#586e75"># the BicycleSubclassTest module like the DiameterizableInterfaceTest we did</span>
-<span style="color:#719e07">class</span> <span style="color:#268bd2">StubbedBikeTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">BicycleSubclassTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">StubbedBike</span><span style="color:#719e07">.</span>new
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Make sure this StubbedBike behaves correctly the class can be checked by</span>
+<span style="color:#75715e"># the BicycleSubclassTest module like the DiameterizableInterfaceTest we did</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubbedBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleSubclassTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">StubbedBike</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">StubbedBike</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">Bicycle</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">default_tire_size</span>
-    <span style="color:#2aa198">0</span>
-  <span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubbedBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_tire_size</span>
+    <span style="color:#ae81ff">0</span>
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">local_spares</span>
-    { <span style="color:#2aa198">saddle</span>: <span style="color:#2aa198">&#39;painful&#39;</span> }
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">local_spares</span>
+    { <span style="color:#e6db74">saddle</span>: <span style="color:#e6db74">&#39;painful&#39;</span> }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#719e07">class</span> <span style="color:#268bd2">BicycleTest</span> <span style="color:#719e07">&lt;</span> <span style="color:#cb4b16">MiniTest</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Unit</span><span style="color:#719e07">::</span><span style="color:#cb4b16">TestCase</span>
-  <span style="color:#719e07">include</span> <span style="color:#cb4b16">BicycleInterfaceTest</span>
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">setup</span>
-    @bike <span style="color:#719e07">=</span> @object <span style="color:#719e07">=</span> <span style="color:#cb4b16">Bicycle</span><span style="color:#719e07">.</span>new(<span style="color:#2aa198">tire_size</span>: <span style="color:#2aa198">0</span>)
-    @stubbed_bike <span style="color:#719e07">=</span> <span style="color:#cb4b16">StubbedBike</span><span style="color:#719e07">.</span>new
-  <span style="color:#719e07">end</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BicycleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Bicycle</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">tire_size</span>: <span style="color:#ae81ff">0</span>)
+    @stubbed_bike <span style="color:#f92672">=</span> <span style="color:#66d9ef">StubbedBike</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_forces_subclasses_to_implement_default_tire_size</span>
-    assert_raises(<span style="color:#cb4b16">NotImplementedError</span>) { @bike<span style="color:#719e07">.</span>default_tire_size }
-  <span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_forces_subclasses_to_implement_default_tire_size</span>
+    assert_raises(<span style="color:#66d9ef">NotImplementedError</span>) { @bike<span style="color:#f92672">.</span>default_tire_size }
+  <span style="color:#66d9ef">end</span>
 
-  <span style="color:#719e07">def</span> <span style="color:#268bd2">test_includes_local_spares_in_spares</span>
-    assert_equal @stubbed_bike<span style="color:#719e07">.</span>spares, { <span style="color:#2aa198">tire_size</span>: <span style="color:#2aa198">0</span>,
-                                         <span style="color:#2aa198">chain</span>: <span style="color:#2aa198">&#39;10-speed&#39;</span>,
-                                         <span style="color:#2aa198">saddle</span>: <span style="color:#2aa198">&#39;painful&#39;</span> }
-  <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_includes_local_spares_in_spares</span>
+    assert_equal @stubbed_bike<span style="color:#f92672">.</span>spares, { <span style="color:#e6db74">tire_size</span>: <span style="color:#ae81ff">0</span>,
+                                         <span style="color:#e6db74">chain</span>: <span style="color:#e6db74">&#39;10-speed&#39;</span>,
+                                         <span style="color:#e6db74">saddle</span>: <span style="color:#e6db74">&#39;painful&#39;</span> }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div>
-		</div>
 
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/coding">coding</a></li>
-								
-								<li><a href="/tags/ruby">ruby</a></li>
-								
-								<li><a href="/tags/book">book</a></li>
-								
-								<li><a href="/tags/notes">notes</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/use-find-in-batches-during-migration/"><i class="fa fa-chevron-circle-left"></i> 利用 find_in_batches 在 Rails 做跨資料庫的資料移轉操作</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/elementary-trailblazer/">初探 Trailblazer 框架 <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
 </div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
 
-
-
-<script>feather.replace()</script>
 </body>
+
 </html>
+

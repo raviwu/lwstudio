@@ -2,7 +2,6 @@
 title: "About"
 date: 2020-10-25T03:38:56+08:00
 disqus: false
-type: "page"
 draft: false
 ---
 

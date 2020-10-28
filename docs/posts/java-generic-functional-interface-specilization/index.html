@@ -1,120 +1,187 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="zh-TW">
+
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>泛型 Java Functional Interface 的特規化 - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="泛型 Java Functional Interface 的特規化" />
+  <title>泛型 Java Functional Interface 的特規化 - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><meta property="og:title" content="泛型 Java Functional Interface 的特規化" />
 <meta property="og:description" content="如果某個特殊型別的 Functional Interface 常常被使用時，有時候直接宣告型別會比較方便引用。可以透過兩種方式來做特規，介面與抽象類別：
 Generic Functional Interface
 @FunctionalInterface public interface TwoArgsProcessor&lt;X&gt; { X process(X arg1, X arg2); } 介面（Interface）
-@FunctionalInterface public interface TwoIntsProcessor extends TwoArgsProcessor&lt;Integer&gt; { } 抽象類別（Abstract Class）" />
+@FunctionalInterface public interface TwoIntsProcessor extends TwoArgsProcessor&lt;Integer&gt; { } 抽象類別（Abstract Class）
+abstract class TwoIntsProcessorAbstract implements TwoArgsProcessor&lt;Integer&gt; { } " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://raviwu.github.io/posts/java-generic-functional-interface-specilization/" />
 <meta property="article:published_time" content="2020-09-11T13:44:04+08:00" />
 <meta property="article:modified_time" content="2020-09-11T13:44:04+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="泛型 Java Functional Interface 的特規化"/>
 <meta name="twitter:description" content="如果某個特殊型別的 Functional Interface 常常被使用時，有時候直接宣告型別會比較方便引用。可以透過兩種方式來做特規，介面與抽象類別：
 Generic Functional Interface
 @FunctionalInterface public interface TwoArgsProcessor&lt;X&gt; { X process(X arg1, X arg2); } 介面（Interface）
-@FunctionalInterface public interface TwoIntsProcessor extends TwoArgsProcessor&lt;Integer&gt; { } 抽象類別（Abstract Class）"/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+@FunctionalInterface public interface TwoIntsProcessor extends TwoArgsProcessor&lt;Integer&gt; { } 抽象類別（Abstract Class）
+abstract class TwoIntsProcessorAbstract implements TwoArgsProcessor&lt;Integer&gt; { } "/>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="https://raviwu.github.io/js/main.js"></script>
-	<script src="https://raviwu.github.io/js/abc.js"></script>
-	<script src="https://raviwu.github.io/js/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
 
 <body>
-	<div class="container wrapper post">
-		<div class="header">
-	<base href="https://raviwu.github.io/">
-	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
-	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
-		</nav>
-	</div>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
 
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">Home</a>
-			</li>
-			
-			<li>
-				<a href="/posts">All posts</a>
-			</li>
-			
-			<li>
-				<a href="/about">About</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
 
 
-		<div class="post-header">
-			<h1 class="title">泛型 Java Functional Interface 的特規化</h1>
-			<div class="meta">Posted at &mdash; Sep 11, 2020</div>
-		</div>
+    <main>
 
-		<div class="markdown">
-			<p>如果某個特殊型別的 Functional Interface 常常被使用時，有時候直接宣告型別會比較方便引用。可以透過兩種方式來做特規，介面與抽象類別：</p>
+
+
+
+<article>
+
+    <h1>泛型 Java Functional Interface 的特規化</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2020-09-11T13:44:04&#43;08:00">Sep 11, 2020</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/java">#java</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/specilization">#specilization</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/functional-interface">#functional interface</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>如果某個特殊型別的 Functional Interface 常常被使用時，有時候直接宣告型別會比較方便引用。可以透過兩種方式來做特規，介面與抽象類別：</p>
 <p>Generic Functional Interface</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#268bd2">@FunctionalInterface</span>
-<span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">TwoArgsProcessor</span><span style="color:#719e07">&lt;</span>X<span style="color:#719e07">&gt;</span> <span style="color:#719e07">{</span>
-    X <span style="color:#268bd2">process</span><span style="color:#719e07">(</span>X arg1<span style="color:#719e07">,</span> X arg2<span style="color:#719e07">);</span>
-<span style="color:#719e07">}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@FunctionalInterface</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoArgsProcessor</span><span style="color:#f92672">&lt;</span>X<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+    X <span style="color:#a6e22e">process</span><span style="color:#f92672">(</span>X arg1<span style="color:#f92672">,</span> X arg2<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
 </code></pre></div><p>介面（Interface）</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#268bd2">@FunctionalInterface</span>
-<span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">TwoIntsProcessor</span>
-    <span style="color:#268bd2">extends</span> TwoArgsProcessor<span style="color:#719e07">&lt;</span>Integer<span style="color:#719e07">&gt;</span> <span style="color:#719e07">{</span>
-<span style="color:#719e07">}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@FunctionalInterface</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoIntsProcessor</span>
+    <span style="color:#66d9ef">extends</span> TwoArgsProcessor<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+<span style="color:#f92672">}</span>
 </code></pre></div><p>抽象類別（Abstract Class）</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#268bd2">abstract</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">TwoIntsProcessorAbstract</span>
-    <span style="color:#268bd2">implements</span> TwoArgsProcessor<span style="color:#719e07">&lt;</span>Integer<span style="color:#719e07">&gt;</span> <span style="color:#719e07">{</span>
-<span style="color:#719e07">}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TwoIntsProcessorAbstract</span>
+    <span style="color:#66d9ef">implements</span> TwoArgsProcessor<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+<span style="color:#f92672">}</span>
 </code></pre></div>
-		</div>
 
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/coding">coding</a></li>
-								
-								<li><a href="/tags/java">java</a></li>
-								
-								<li><a href="/tags/specilization">specilization</a></li>
-								
-								<li><a href="/tags/functional-interface">functional interface</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/java-use-combo-condition-for-loop/"><i class="fa fa-chevron-circle-left"></i> 使用複合條件來判斷是否進入下一輪 Java 迴圈</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/">InputStream 、 DataInputStream 與 BufferedInputStream <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
 </div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
 
-
-
-<script>feather.replace()</script>
 </body>
+
 </html>
+

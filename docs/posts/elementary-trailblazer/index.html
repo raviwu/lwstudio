@@ -1,71 +1,131 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="zh-TW">
+
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>初探 Trailblazer 框架 - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="初探 Trailblazer 框架" />
+  <title>初探 Trailblazer 框架 - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><meta property="og:title" content="初探 Trailblazer 框架" />
 <meta property="og:description" content="最近公司的 Rails 專案試用了 Trailblazer 這套整理 Rails 程式碼的框架。（目前使用的是 1.1 版）
-Trailblazer 是擺在 Rails 上的一套工具，雖然有本專書可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 Nick Sutterer 設想的情況不一樣時，小小撞牆是難免的。" />
+Trailblazer 是擺在 Rails 上的一套工具，雖然有本專書可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 Nick Sutterer 設想的情況不一樣時，小小撞牆是難免的。
+Trailblazer 是模組化設計，所以並非所有模組需要安裝才能開始享受 Trailblazer 帶來的方便感，除了主要的 Operation / Policy / Contract / Cell 等稍微有摸過外，其他的眉眉角角尚待開發。稍微整理一下截至目前為止使用這套框架的個人認知，這套 Trailblazer 的目的是將原先 Rails 單純 MVC 架構下可能會散亂在 Controller / Model 層的商業邏輯，集中起來包在 Operation 的概念裡，（在理想狀況下）分別簡化日益肥大的 Controller / Model / View 邏輯：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://raviwu.github.io/posts/elementary-trailblazer/" />
 <meta property="article:published_time" content="2017-01-07T13:23:29+08:00" />
 <meta property="article:modified_time" content="2017-01-07T13:23:29+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="初探 Trailblazer 框架"/>
 <meta name="twitter:description" content="最近公司的 Rails 專案試用了 Trailblazer 這套整理 Rails 程式碼的框架。（目前使用的是 1.1 版）
-Trailblazer 是擺在 Rails 上的一套工具，雖然有本專書可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 Nick Sutterer 設想的情況不一樣時，小小撞牆是難免的。"/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+Trailblazer 是擺在 Rails 上的一套工具，雖然有本專書可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 Nick Sutterer 設想的情況不一樣時，小小撞牆是難免的。
+Trailblazer 是模組化設計，所以並非所有模組需要安裝才能開始享受 Trailblazer 帶來的方便感，除了主要的 Operation / Policy / Contract / Cell 等稍微有摸過外，其他的眉眉角角尚待開發。稍微整理一下截至目前為止使用這套框架的個人認知，這套 Trailblazer 的目的是將原先 Rails 單純 MVC 架構下可能會散亂在 Controller / Model 層的商業邏輯，集中起來包在 Operation 的概念裡，（在理想狀況下）分別簡化日益肥大的 Controller / Model / View 邏輯："/>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="https://raviwu.github.io/js/main.js"></script>
-	<script src="https://raviwu.github.io/js/abc.js"></script>
-	<script src="https://raviwu.github.io/js/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
 
 <body>
-	<div class="container wrapper post">
-		<div class="header">
-	<base href="https://raviwu.github.io/">
-	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
-	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
-		</nav>
-	</div>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
 
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">Home</a>
-			</li>
-			
-			<li>
-				<a href="/posts">All posts</a>
-			</li>
-			
-			<li>
-				<a href="/about">About</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
 
 
-		<div class="post-header">
-			<h1 class="title">初探 Trailblazer 框架</h1>
-			<div class="meta">Posted at &mdash; Jan 7, 2017</div>
-		</div>
+    <main>
 
-		<div class="markdown">
-			<p>最近公司的 Rails 專案試用了 <a href="http://trailblazer.to/">Trailblazer</a> 這套整理 Rails 程式碼的框架。（目前使用的是 1.1 版）</p>
+
+
+
+<article>
+
+    <h1>初探 Trailblazer 框架</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2017-01-07T13:23:29&#43;08:00">Jan 7, 2017</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/rails">#rails</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/trailblazer">#trailblazer</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>最近公司的 Rails 專案試用了 <a href="http://trailblazer.to/">Trailblazer</a> 這套整理 Rails 程式碼的框架。（目前使用的是 1.1 版）</p>
 <p>Trailblazer 是擺在 Rails 上的一套工具，雖然有本<a href="https://leanpub.com/trailblazer">專書</a>可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 <a href="https://github.com/apotonick">Nick Sutterer</a> 設想的情況不一樣時，小小撞牆是難免的。</p>
 <p>Trailblazer 是模組化設計，所以並非所有模組需要安裝才能開始享受 Trailblazer 帶來的方便感，除了主要的 Operation / Policy / Contract / Cell 等稍微有摸過外，其他的眉眉角角尚待開發。稍微整理一下截至目前為止使用這套框架的個人認知，這套 Trailblazer 的目的是將原先 Rails 單純 MVC 架構下可能會散亂在 Controller / Model 層的商業邏輯，集中起來包在 <a href="http://trailblazer.to/gems/operation/1.1/index.html">Operation</a> 的概念裡，（在理想狀況下）分別簡化日益肥大的 Controller / Model / View 邏輯：</p>
 <ul>
@@ -93,36 +153,43 @@ Trailblazer 是擺在 Rails 上的一套工具，雖然有本專書可以翻找�
 </ul>
 <p>其他尚未摸到邊但好像不錯用的模組是 <a href="http://trailblazer.to/gems/representable/">Representable</a> 跟 <a href="http://trailblazer.to/gems/roar/jsonapi.html">Roar</a> ，主要用在做 API 上，有心得再補上。</p>
 
-		</div>
 
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/coding">coding</a></li>
-								
-								<li><a href="/tags/rails">rails</a></li>
-								
-								<li><a href="/tags/ruby">ruby</a></li>
-								
-								<li><a href="/tags/trailblazer">trailblazer</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/notes-of-poodr/"><i class="fa fa-chevron-circle-left"></i> 筆記 | Practical Object-Oriented Design in Ruby (POODR)</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/customize-error-handlement-in-trailblazer-policy/">在 Trailblazer 的 Policy 中透過客制 Exception 來處理複雜的「錯誤回應」 <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
 </div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
 
-
-
-<script>feather.replace()</script>
 </body>
+
 </html>
+

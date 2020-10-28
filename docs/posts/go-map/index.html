@@ -1,133 +1,198 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="zh-TW">
+
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Go | Map - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="Go | Map" />
+  <title>Go | Map - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><meta property="og:title" content="Go | Map" />
 <meta property="og:description" content="Go 的 map 是鍵值對的資料結構。
 // 宣告一個空白 map colors := map[string]string{} // 加入或修改鍵值對 colors[&#34;Yello&#34;] = &#34;#cc8500&#34; // 刪除鍵值（鍵不存在時並不會噴錯誤） delete(colors, &#34;Red&#34;) // 宣告一個空 map var numbers map[int]string numbers[1] = &#34;One&#34; // panic: runtime error: assignment ot entry in nil map 檢查鍵是否存在，如果指定的鍵不存在，會回傳零值給 value" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://raviwu.github.io/posts/go-map/" />
 <meta property="article:published_time" content="2020-10-26T14:42:56+08:00" />
 <meta property="article:modified_time" content="2020-10-26T14:42:56+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Go | Map"/>
 <meta name="twitter:description" content="Go 的 map 是鍵值對的資料結構。
 // 宣告一個空白 map colors := map[string]string{} // 加入或修改鍵值對 colors[&#34;Yello&#34;] = &#34;#cc8500&#34; // 刪除鍵值（鍵不存在時並不會噴錯誤） delete(colors, &#34;Red&#34;) // 宣告一個空 map var numbers map[int]string numbers[1] = &#34;One&#34; // panic: runtime error: assignment ot entry in nil map 檢查鍵是否存在，如果指定的鍵不存在，會回傳零值給 value"/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="https://raviwu.github.io/js/main.js"></script>
-	<script src="https://raviwu.github.io/js/abc.js"></script>
-	<script src="https://raviwu.github.io/js/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
 
 <body>
-	<div class="container wrapper post">
-		<div class="header">
-	<base href="https://raviwu.github.io/">
-	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
-	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
-		</nav>
-	</div>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
 
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">Home</a>
-			</li>
-			
-			<li>
-				<a href="/posts">All posts</a>
-			</li>
-			
-			<li>
-				<a href="/about">About</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
 
 
-		<div class="post-header">
-			<h1 class="title">Go | Map</h1>
-			<div class="meta">Posted at &mdash; Oct 26, 2020</div>
-		</div>
+    <main>
 
-		<div class="markdown">
-			<p>Go 的 map 是鍵值對的資料結構。</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#586e75">// 宣告一個空白 map
-</span><span style="color:#586e75"></span>colors <span style="color:#719e07">:=</span> <span style="color:#268bd2">map</span>[<span style="color:#dc322f">string</span>]<span style="color:#dc322f">string</span>{}
-<span style="color:#586e75">// 加入或修改鍵值對
-</span><span style="color:#586e75"></span>colors[<span style="color:#2aa198">&#34;Yello&#34;</span>] = <span style="color:#2aa198">&#34;#cc8500&#34;</span>
-<span style="color:#586e75">// 刪除鍵值（鍵不存在時並不會噴錯誤）
-</span><span style="color:#586e75"></span><span style="color:#b58900">delete</span>(colors, <span style="color:#2aa198">&#34;Red&#34;</span>)
 
-<span style="color:#586e75">// 宣告一個空 map
-</span><span style="color:#586e75"></span><span style="color:#268bd2">var</span> numbers <span style="color:#268bd2">map</span>[<span style="color:#dc322f">int</span>]<span style="color:#dc322f">string</span>
-numbers[<span style="color:#2aa198">1</span>] = <span style="color:#2aa198">&#34;One&#34;</span>
-<span style="color:#586e75">// panic: runtime error: assignment ot entry in nil map
+
+
+<article>
+
+    <h1>Go | Map</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2020-10-26T14:42:56&#43;08:00">Oct 26, 2020</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/go">#go</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/map">#map</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/data-structure">#data structure</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>Go 的 map 是鍵值對的資料結構。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 宣告一個空白 map
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">colors</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{}
+<span style="color:#75715e">// 加入或修改鍵值對
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">colors</span>[<span style="color:#e6db74">&#34;Yello&#34;</span>] = <span style="color:#e6db74">&#34;#cc8500&#34;</span>
+<span style="color:#75715e">// 刪除鍵值（鍵不存在時並不會噴錯誤）
+</span><span style="color:#75715e"></span>delete(<span style="color:#a6e22e">colors</span>, <span style="color:#e6db74">&#34;Red&#34;</span>)
+
+<span style="color:#75715e">// 宣告一個空 map
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">numbers</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">int</span>]<span style="color:#66d9ef">string</span>
+<span style="color:#a6e22e">numbers</span>[<span style="color:#ae81ff">1</span>] = <span style="color:#e6db74">&#34;One&#34;</span>
+<span style="color:#75715e">// panic: runtime error: assignment ot entry in nil map
 </span></code></pre></div><p>檢查鍵是否存在，如果指定的鍵不存在，會回傳零值給 <code>value</code></p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">value, exists <span style="color:#719e07">:=</span> colors[<span style="color:#2aa198">&#34;Blue&#34;</span>]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">exists</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">colors</span>[<span style="color:#e6db74">&#34;Blue&#34;</span>]
 
-<span style="color:#719e07">if</span> exists {
-    fmt.<span style="color:#268bd2">Println</span>(value)
-} <span style="color:#719e07">else</span> {
-    fmt.<span style="color:#268bd2">Println</span>(value) <span style="color:#586e75">// &#34;&#34;
-</span><span style="color:#586e75"></span>}
+<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">exists</span> {
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">value</span>)
+} <span style="color:#66d9ef">else</span> {
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">value</span>) <span style="color:#75715e">// &#34;&#34;
+</span><span style="color:#75715e"></span>}
 </code></pre></div><h2 id="迭代-map">迭代 map</h2>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">numbers <span style="color:#719e07">:=</span> <span style="color:#268bd2">map</span>[<span style="color:#dc322f">int</span>]<span style="color:#dc322f">string</span>{
-    <span style="color:#2aa198">1</span>: <span style="color:#2aa198">&#34;one&#34;</span>,
-    <span style="color:#2aa198">2</span>: <span style="color:#2aa198">&#34;two&#34;</span>,
-    <span style="color:#2aa198">3</span>: <span style="color:#2aa198">&#34;three&#34;</span>,
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">numbers</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">int</span>]<span style="color:#66d9ef">string</span>{
+    <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;one&#34;</span>,
+    <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;two&#34;</span>,
+    <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;three&#34;</span>,
 }
 
-<span style="color:#719e07">for</span> key, value <span style="color:#719e07">:=</span> <span style="color:#719e07">range</span> numbers {
-    fmt.<span style="color:#268bd2">Printf</span>(<span style="color:#2aa198">&#34;Key: %d Value: %s\n&#34;</span>, key, value)
+<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">numbers</span> {
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Key: %d Value: %s\n&#34;</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">value</span>)
 }
 </code></pre></div><h2 id="使用-map-為函數之參數">使用 map 為函數之參數</h2>
 <p>傳遞 map 到函數時，並不會另外複製新的 map 物件，函數對 map 參數的操作會反應到其他也指向該 map 的地方。</p>
 
-		</div>
 
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/coding">coding</a></li>
-								
-								<li><a href="/tags/go">go</a></li>
-								
-								<li><a href="/tags/map">map</a></li>
-								
-								<li><a href="/tags/data-structure">data structure</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/go-slice/"><i class="fa fa-chevron-circle-left"></i> Go | 切片（Slice）</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/go-type/">Go | 型別（Type） <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
 </div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
 
-
-
-<script>feather.replace()</script>
 </body>
+
 </html>
+

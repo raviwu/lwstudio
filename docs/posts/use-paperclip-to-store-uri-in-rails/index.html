@@ -1,128 +1,196 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="zh-TW">
+
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Rails 中使用 Paperclip 存 URI 附件 - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="Rails 中使用 Paperclip 存 URI 附件" />
-<meta property="og:description" content="使用 Rails APP &#43; Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。" />
+  <title>Rails 中使用 Paperclip 存 URI 附件 - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><meta property="og:title" content="Rails 中使用 Paperclip 存 URI 附件" />
+<meta property="og:description" content="使用 Rails APP &#43; Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。
+由於部分圖片附件在存取時還會同步進行縮圖，如果要用 s3-cmd 這類的外部工具直接搬資料，得連各種不同 model 的縮圖定義一起處理，痛苦指數不低。
+原先預計要從 HTTP GET request 的 response body 裡直接塞 tempfile ：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/" />
 <meta property="article:published_time" content="2016-05-12T04:38:49+08:00" />
 <meta property="article:modified_time" content="2016-05-12T04:38:49+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Rails 中使用 Paperclip 存 URI 附件"/>
-<meta name="twitter:description" content="使用 Rails APP &#43; Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。"/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+<meta name="twitter:description" content="使用 Rails APP &#43; Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。
+由於部分圖片附件在存取時還會同步進行縮圖，如果要用 s3-cmd 這類的外部工具直接搬資料，得連各種不同 model 的縮圖定義一起處理，痛苦指數不低。
+原先預計要從 HTTP GET request 的 response body 裡直接塞 tempfile ："/>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="https://raviwu.github.io/js/main.js"></script>
-	<script src="https://raviwu.github.io/js/abc.js"></script>
-	<script src="https://raviwu.github.io/js/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
 
 <body>
-	<div class="container wrapper post">
-		<div class="header">
-	<base href="https://raviwu.github.io/">
-	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
-	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
-		</nav>
-	</div>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
 
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">Home</a>
-			</li>
-			
-			<li>
-				<a href="/posts">All posts</a>
-			</li>
-			
-			<li>
-				<a href="/about">About</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
 
 
-		<div class="post-header">
-			<h1 class="title">Rails 中使用 Paperclip 存 URI 附件</h1>
-			<div class="meta">Posted at &mdash; May 12, 2016</div>
-		</div>
+    <main>
 
-		<div class="markdown">
-			<p>使用 Rails APP + Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。</p>
+
+
+
+<article>
+
+    <h1>Rails 中使用 Paperclip 存 URI 附件</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2016-05-12T04:38:49&#43;08:00">May 12, 2016</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/rails">#rails</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/paperclip">#paperclip</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>使用 Rails APP + Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。</p>
 <p>由於部分圖片附件在存取時還會同步進行縮圖，如果要用 <a href="http://s3tools.org/s3cmd-howto">s3-cmd</a> 這類的外部工具直接搬資料，得連各種不同 model 的縮圖定義一起處理，痛苦指數不低。</p>
 <p>原先預計要從 HTTP GET request 的 response body 裡直接塞 tempfile ：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">url <span style="color:#719e07">=</span> <span style="color:#2aa198">&#39;https://s3.amazonaws.com&#39;</span>
-path <span style="color:#719e07">=</span> <span style="color:#2aa198">&#39;/BUCKET-NAME/MODEL/ATTACHMENT/000/016/222/original/FILE.jpg&#39;</span>
-conn <span style="color:#719e07">=</span> <span style="color:#cb4b16">Faraday</span><span style="color:#719e07">.</span>new(<span style="color:#2aa198">:url</span> <span style="color:#719e07">=&gt;</span> url) <span style="color:#719e07">do</span> <span style="color:#719e07">|</span>faraday<span style="color:#719e07">|</span>
-  faraday<span style="color:#719e07">.</span>request  <span style="color:#2aa198">:url_encoded</span>
-  faraday<span style="color:#719e07">.</span>response <span style="color:#2aa198">:logger</span>
-  faraday<span style="color:#719e07">.</span>adapter  <span style="color:#cb4b16">Faraday</span><span style="color:#719e07">.</span>default_adapter
-<span style="color:#719e07">end</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://s3.amazonaws.com&#39;</span>
+path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/BUCKET-NAME/MODEL/ATTACHMENT/000/016/222/original/FILE.jpg&#39;</span>
+conn <span style="color:#f92672">=</span> <span style="color:#66d9ef">Faraday</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">:url</span> <span style="color:#f92672">=&gt;</span> url) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>faraday<span style="color:#f92672">|</span>
+  faraday<span style="color:#f92672">.</span>request  <span style="color:#e6db74">:url_encoded</span>
+  faraday<span style="color:#f92672">.</span>response <span style="color:#e6db74">:logger</span>
+  faraday<span style="color:#f92672">.</span>adapter  <span style="color:#66d9ef">Faraday</span><span style="color:#f92672">.</span>default_adapter
+<span style="color:#66d9ef">end</span>
 
-response <span style="color:#719e07">=</span> conn<span style="color:#719e07">.</span>get path
-model<span style="color:#719e07">.</span>attachment <span style="color:#719e07">=</span> response<span style="color:#719e07">.</span>body
+response <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>get path
+model<span style="color:#f92672">.</span>attachment <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>body
 </code></pre></div><p>一直噴出各式各樣無法存入或者檔案格式錯誤的錯誤訊息。</p>
 <p>試過自行重組檔案的檔頭 ：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">attachment_file <span style="color:#719e07">=</span> {
-  <span style="color:#2aa198">:filename</span> <span style="color:#719e07">=&gt;</span> <span style="color:#dc322f">/^.*\/(.*\..*)$/</span><span style="color:#719e07">.</span>match(uri)<span style="color:#719e07">[</span><span style="color:#2aa198">1</span><span style="color:#719e07">].</span>split(<span style="color:#2aa198">&#39;?&#39;</span>)<span style="color:#719e07">.</span>first,
-  <span style="color:#2aa198">:type</span> <span style="color:#719e07">=&gt;</span> response<span style="color:#719e07">.</span>headers<span style="color:#719e07">[</span><span style="color:#2aa198">&#39;content-type&#39;</span><span style="color:#719e07">]</span>,
-  <span style="color:#2aa198">:headers</span> <span style="color:#719e07">=&gt;</span> response<span style="color:#719e07">.</span>headers,
-  <span style="color:#2aa198">:tempfile</span> <span style="color:#719e07">=&gt;</span> response<span style="color:#719e07">.</span>body
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">attachment_file <span style="color:#f92672">=</span> {
+  <span style="color:#e6db74">:filename</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">/^.*\/(.*\..*)$/</span><span style="color:#f92672">.</span>match(uri)<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">].</span>split(<span style="color:#e6db74">&#39;?&#39;</span>)<span style="color:#f92672">.</span>first,
+  <span style="color:#e6db74">:type</span> <span style="color:#f92672">=&gt;</span> response<span style="color:#f92672">.</span>headers<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;content-type&#39;</span><span style="color:#f92672">]</span>,
+  <span style="color:#e6db74">:headers</span> <span style="color:#f92672">=&gt;</span> response<span style="color:#f92672">.</span>headers,
+  <span style="color:#e6db74">:tempfile</span> <span style="color:#f92672">=&gt;</span> response<span style="color:#f92672">.</span>body
 }
 
-model<span style="color:#719e07">.</span>attachment <span style="color:#719e07">=</span> attachment_file
+model<span style="color:#f92672">.</span>attachment <span style="color:#f92672">=</span> attachment_file
 </code></pre></div><p>一樣過不了 Paperclip 的檔案驗證機制。</p>
 <p>使用 <code>File.new(response.body)</code> 或 <code>File.new(attachment_file)</code> 或 <code>ActionDispatch::Http::UploadedFile.new(attachment_file)</code> 都解析不了檔案。</p>
 <p>撞了好一會牆後，發現 Paperclip 吃 URI object。一切的撞牆只要簡單的：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">url <span style="color:#719e07">=</span> <span style="color:#2aa198">&#39;https://s3.amazonaws.com&#39;</span>
-path <span style="color:#719e07">=</span> <span style="color:#2aa198">&#39;/BUCKET-NAME/MODEL/ATTACHMENT/000/016/222/original/FILE.jpg&#39;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://s3.amazonaws.com&#39;</span>
+path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/BUCKET-NAME/MODEL/ATTACHMENT/000/016/222/original/FILE.jpg&#39;</span>
 
-model<span style="color:#719e07">.</span>attachment <span style="color:#719e07">=</span> <span style="color:#cb4b16">URI</span><span style="color:#719e07">.</span>parse(<span style="color:#2aa198">&#34;</span><span style="color:#2aa198">#{</span>url<span style="color:#2aa198">}#{</span>path<span style="color:#2aa198">}</span><span style="color:#2aa198">&#34;</span>)
+model<span style="color:#f92672">.</span>attachment <span style="color:#f92672">=</span> <span style="color:#66d9ef">URI</span><span style="color:#f92672">.</span>parse(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>url<span style="color:#e6db74">}#{</span>path<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
 </code></pre></div><p>獻給其他可能要做這類奇異操作的破頭工程師們。</p>
 
-		</div>
 
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/coding">coding</a></li>
-								
-								<li><a href="/tags/rails">rails</a></li>
-								
-								<li><a href="/tags/paperclip">paperclip</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/early-termination/"><i class="fa fa-chevron-circle-left"></i> 程設風格 | 早期終止執行</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/implement-jwt-in-grape-api/">Rails grape API 上實作 JWT 多重登入 <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
 </div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
 
-
-
-<script>feather.replace()</script>
 </body>
+
 </html>
+

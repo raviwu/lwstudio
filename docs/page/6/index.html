@@ -1,0 +1,279 @@
+<!doctype html>
+
+<html lang="zh-TW">
+
+<head>
+  <title>Ravi Wu - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><link rel="alternate" type="application/rss+xml+xml" href="https://raviwu.github.io/index.xml" title="Ravi Wu" /><meta property="og:title" content="Ravi Wu" />
+<meta property="og:description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://raviwu.github.io/" />
+<meta property="og:updated_time" content="2020-10-28T12:05:03+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ravi Wu"/>
+<meta name="twitter:description" content="Ravi Wu: random thoughts and notes, beware if you want to reference"/>
+
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<section id="home">
+  <ul>
+    
+    
+    
+
+    <li class="first" >
+      <h1><a href="https://raviwu.github.io/posts/use-find-in-batches-during-migration/" title="利用 find_in_batches 在 Rails 做跨資料庫的資料移轉操作">利用 find_in_batches 在 Rails 做跨資料庫的資料移轉操作</a></h1>
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2016-09-02T05:05:44&#43;08:00">Sep 2, 2016</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/rails">#rails</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/db">#db</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+      
+
+      <p>在處理跨資料庫搬動並且需要一筆一筆資料去做各種運算處理時，最直覺的方式，是把表格裡的所有資料通通透過 ORM 撈到 ActiveRecord::Association 陣列裡，再用 each 去做操作：
+User.all.each do |user| user.email = &#34;assign@new.email&#34; ... end 但由於 Rails 會需要先去建立這些 objects，如果資料筆數很多的話，一次通通撈出來會佔用過多不必要的記憶體，可以使用 find_in_batches 做批次處理，減少系統 RAM 的負擔。
+User.find_in_batches do |group| group.each do |user| user.email = &#34;assign@new.</p>
+      
+      <a href="https://raviwu.github.io/posts/use-find-in-batches-during-migration/"></a>
+      
+    </li>
+    
+
+    <li >
+      <h1><a href="https://raviwu.github.io/posts/pull-data-to-rails-from-google-sheet/" title="使用 Google Sheets API 拉資料到 Rails APP 裡">使用 Google Sheets API 拉資料到 Rails APP 裡</a></h1>
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2016-07-09T05:17:26&#43;08:00">Jul 9, 2016</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/rails">#rails</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/google-sheet">#google sheet</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+      
+
+      <p>Google Sheets 很好用，一些程式中需要跨部門討論的字串定義，又或者是需要讓不方便存取原始碼的同事也能清楚知道原始碼裡部分設定字串的時候，通常都可以利用 Google Sheet 來做討論平台，再以 Google Sheets 上面的文件為基礎，匯入主程式中做各種處理，確保主程式的內容與 Google Sheets 上的內容同步。
+要匯入 Google Sheets 內容到程式裡最簡單的方式，是輸出 csv 後寫個小 script 去讀取 csv 資料，轉成 Array 後就能靈活使用。
+但若是開發過程當中常常要不斷更新 Google Sheets 欄位後再手動匯出 csv 跑 script 去後處理，這種半自動的方式還是令人覺得太過麻煩。可以考慮進一步用 Google Sheets API 去拉特定 Google Sheets 工作表資料，把半自動的「到瀏覽器視窗匯出 csv &gt; 儲存檔案到特定資料夾 &gt; 執行 script 完成匯入」簡化為「執行 script 完成匯入」。</p>
+      
+      <a href="https://raviwu.github.io/posts/pull-data-to-rails-from-google-sheet/"></a>
+      
+    </li>
+    
+
+    <li >
+      <h1><a href="https://raviwu.github.io/posts/migrate-push-notification-from-parse-to-aws-sns/" title="在 rails 上實作轉移 Parse 手機推播服務到 Amazon SNS">在 rails 上實作轉移 Parse 手機推播服務到 Amazon SNS</a></h1>
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2016-06-24T05:05:44&#43;08:00">Jun 24, 2016</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/rails">#rails</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/parse">#parse</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/aws">#aws</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/sns">#sns</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/push-notification">#push notification</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+      
+
+      <p>簡要說明 為了避免使用者因服務轉換而被迫強制更新，移轉過程採用漸進方式。
+如果不需要如此痛苦的同時使用兩種服務的捧油，可以參考這一篇的實作，直接用 AWS Mobile Hub 的服務做批次資料移轉。
+由於在轉換期需要同時支援兩邊服務運作，又要避免使用者重複收到相同的推播，需要實作「對同一裝置擇一服務進行推播」。本篇實作的概念是，使用者只有在用新版本的 APP 登入時，伺服器才會從 APP 取得 device_token 去註冊 Amazon SNS endpoint_arn，同時刪除 Parse 服務上的使用者的所有 Installation 紀錄。
+Parse 跟 Amazon SNS 的 API 邏輯有些不同，主要差別在於，Parse 只需要在同一 request 裡就可以達到「推播給符合某條件的 channels 組合，並且可以指定其中的特定 users 組合」，但是 Amazon 的推播就是 topic_arn / target_arn 兩種，要收到 topic_arn 的話要先讓 endpoint_arn 訂閱特定的 topic_arn，而 target_arn 則是一個 request 只能推播給單一 target_arn (endpoint_arn)。</p>
+      
+      <a href="https://raviwu.github.io/posts/migrate-push-notification-from-parse-to-aws-sns/"></a>
+      
+    </li>
+    
+  </ul>
+</section>
+
+
+<ul class="pagination">
+  <li class="page-item">
+    <a href="https://raviwu.github.io/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a href="https://raviwu.github.io/page/5/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="https://raviwu.github.io/">1</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="https://raviwu.github.io/page/2/">2</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="https://raviwu.github.io/page/3/">3</a>
+  </li>
+  <li class="page-item disabled">
+    <span aria-hidden="true">&nbsp;&hellip;&nbsp;</span>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="https://raviwu.github.io/page/5/">5</a>
+  </li>
+  <li class="page-item active">
+    <a class="page-link" href="https://raviwu.github.io/page/6/">6</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="https://raviwu.github.io/page/7/">7</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="https://raviwu.github.io/page/8/">8</a>
+  </li>
+  <li class="page-item">
+    <a href="https://raviwu.github.io/page/7/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a href="https://raviwu.github.io/page/8/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+  </li>
+</ul>
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
+</div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
+
+</body>
+
+</html>
+

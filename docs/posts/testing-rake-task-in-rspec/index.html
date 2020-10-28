@@ -1,156 +1,222 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="zh-TW">
+
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>在 RSpec 裡測試 Rake Task - Ravi Wu</title><link rel="icon" type="image/png" href=favicon.ico /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="在 RSpec 裡測試 Rake Task" />
+  <title>在 RSpec 裡測試 Rake Task - Ravi Wu</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Ravi Wu: random thoughts and notes, beware if you want to reference" />
+<meta name="author" content="Ravi Wu" /><meta property="og:title" content="在 RSpec 裡測試 Rake Task" />
 <meta property="og:description" content="最近被 Rake Task 的測試設定搞得一頭霧水，簡單記錄一下測試 Rake Task 的測試設定，以及各種鬼打牆的血淚史：
 TL;DR 為了避免各種 task 載入、執行狀態等相互干擾導致 test case 會偶發性失敗，每一次執行 test case 時就去做「載入」、「卸載」會比較沒有鬼打牆狀況出現。
-# spec_helper.rb config.before(:each, rake: true) do Rails." />
+# spec_helper.rb config.before(:each, rake: true) do Rails.application.load_tasks end config.after(:each, rake: true) do Rake::Task.clear end 把 Rails." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://raviwu.github.io/posts/testing-rake-task-in-rspec/" />
 <meta property="article:published_time" content="2017-05-07T13:36:08+08:00" />
 <meta property="article:modified_time" content="2017-05-07T13:36:08+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="在 RSpec 裡測試 Rake Task"/>
 <meta name="twitter:description" content="最近被 Rake Task 的測試設定搞得一頭霧水，簡單記錄一下測試 Rake Task 的測試設定，以及各種鬼打牆的血淚史：
 TL;DR 為了避免各種 task 載入、執行狀態等相互干擾導致 test case 會偶發性失敗，每一次執行 test case 時就去做「載入」、「卸載」會比較沒有鬼打牆狀況出現。
-# spec_helper.rb config.before(:each, rake: true) do Rails."/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+# spec_helper.rb config.before(:each, rake: true) do Rails.application.load_tasks end config.after(:each, rake: true) do Rake::Task.clear end 把 Rails."/>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="https://raviwu.github.io/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom.css" />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/dark.css"  />
-	<link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/custom-dark.css"  />
+<meta name="generator" content="Hugo 0.75.1" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+  
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	<script src="https://raviwu.github.io/js/main.js"></script>
-	<script src="https://raviwu.github.io/js/abc.js"></script>
-	<script src="https://raviwu.github.io/js/xyz.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://raviwu.github.io/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://raviwu.github.io/css/styles.css" /></head>
 
 <body>
-	<div class="container wrapper post">
-		<div class="header">
-	<base href="https://raviwu.github.io/">
-	<h1 class="site-title"><a href="https://raviwu.github.io/">Ravi Wu</a></h1>
-	<div class="site-description"><h2>random thoughts and notes, beware if you want to reference</h2><nav class="nav social">
-			<ul class="flat"><a href="https://github.com/raviwu" title="Github"><i data-feather="github"></i></a><a href="https://www.linkedin.com/in/raviwu/" title="Linkedin"><i data-feather="linkedin"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
-		</nav>
-	</div>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="https://raviwu.github.io/">Ravi Wu</a>
+            </h1>
 
-	<nav class="nav">
-		<ul class="flat">
-			
-			<li>
-				<a href="/">Home</a>
-			</li>
-			
-			<li>
-				<a href="/posts">All posts</a>
-			</li>
-			
-			<li>
-				<a href="/about">About</a>
-			</li>
-			
-		</ul>
-	</nav>
-</div>
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/https://github.com/raviwu" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/https://www.linkedin.com/in/raviwu/" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>random thoughts and notes, beware if you want to reference</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/about">
+                <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="https://raviwu.github.io/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
 
 
-		<div class="post-header">
-			<h1 class="title">在 RSpec 裡測試 Rake Task</h1>
-			<div class="meta">Posted at &mdash; May 7, 2017</div>
-		</div>
+    <main>
 
-		<div class="markdown">
-			<p>最近被 Rake Task 的測試設定搞得一頭霧水，簡單記錄一下測試 Rake Task 的測試設定，以及各種鬼打牆的血淚史：</p>
+
+
+
+<article>
+
+    <h1>在 RSpec 裡測試 Rake Task</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2017-05-07T13:36:08&#43;08:00">May 7, 2017</time>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="https://raviwu.github.io/tags/coding">#coding</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/ruby">#ruby</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/testing">#testing</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/rspec">#rspec</a>
+                
+                    , 
+                    <a href="https://raviwu.github.io/tags/rake">#rake</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>最近被 Rake Task 的測試設定搞得一頭霧水，簡單記錄一下測試 Rake Task 的測試設定，以及各種鬼打牆的血淚史：</p>
 <h2 id="tldr">TL;DR</h2>
 <p>為了避免各種 task 載入、執行狀態等相互干擾導致 test case 會偶發性失敗，每一次執行 test case 時就去做「載入」、「卸載」會比較沒有鬼打牆狀況出現。</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#586e75"># spec_helper.rb</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># spec_helper.rb</span>
 
-config<span style="color:#719e07">.</span>before(<span style="color:#2aa198">:each</span>, <span style="color:#2aa198">rake</span>: <span style="color:#719e07">true</span>) <span style="color:#719e07">do</span>
-<span style="color:#cb4b16">Rails</span><span style="color:#719e07">.</span>application<span style="color:#719e07">.</span>load_tasks
-<span style="color:#719e07">end</span>
+config<span style="color:#f92672">.</span>before(<span style="color:#e6db74">:each</span>, <span style="color:#e6db74">rake</span>: <span style="color:#66d9ef">true</span>) <span style="color:#66d9ef">do</span>
+<span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>load_tasks
+<span style="color:#66d9ef">end</span>
 
-config<span style="color:#719e07">.</span>after(<span style="color:#2aa198">:each</span>, <span style="color:#2aa198">rake</span>: <span style="color:#719e07">true</span>) <span style="color:#719e07">do</span>
-<span style="color:#cb4b16">Rake</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Task</span><span style="color:#719e07">.</span>clear
-<span style="color:#719e07">end</span>
+config<span style="color:#f92672">.</span>after(<span style="color:#e6db74">:each</span>, <span style="color:#e6db74">rake</span>: <span style="color:#66d9ef">true</span>) <span style="color:#66d9ef">do</span>
+<span style="color:#66d9ef">Rake</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Task</span><span style="color:#f92672">.</span>clear
+<span style="color:#66d9ef">end</span>
 </code></pre></div><p>把 <code>Rails.application.load_tasks</code> 放在 <code>before(:each)</code> 確保每次載入 test case 前都有正確 load 到要測試的那隻 task ，並在 <code>after(:each)</code> 時用 <code>Rake::Task.clear</code> 去清空剛剛載入的 Rake Task。</p>
 <p>透過 <code>rake: true</code> 這個 <code>flag</code> 可以避免其他不相關的單元測試也去載入 Rake Task。</p>
 <p>透過每個 each 都做載入跟卸載 Rake Task 後，就可以在 test case 單純使用 <code>Rake::Task['task_name'].invoke</code> 來手動執行 Task 而不用另外去作載入或卸載。</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#586e75"># spec/lib/tasks/example_task_spec.rb</span>
-<span style="color:#b58900">require</span> <span style="color:#2aa198">&#39;rake&#39;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># spec/lib/tasks/example_task_spec.rb</span>
+require <span style="color:#e6db74">&#39;rake&#39;</span>
 
-describe <span style="color:#2aa198">&#39;example_task test&#39;</span>, <span style="color:#2aa198">rake</span>: <span style="color:#719e07">true</span> <span style="color:#719e07">do</span>
-    <span style="color:#586e75"># ...</span>
-    it <span style="color:#2aa198">&#39;does something&#39;</span> <span style="color:#719e07">do</span>
-    <span style="color:#cb4b16">Rake</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Task</span><span style="color:#719e07">[</span><span style="color:#2aa198">&#39;example_task&#39;</span><span style="color:#719e07">].</span>invoke
-    expect(result)<span style="color:#719e07">.</span>to eq(something)
-    <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+describe <span style="color:#e6db74">&#39;example_task test&#39;</span>, <span style="color:#e6db74">rake</span>: <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
+    <span style="color:#75715e"># ...</span>
+    it <span style="color:#e6db74">&#39;does something&#39;</span> <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">Rake</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Task</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;example_task&#39;</span><span style="color:#f92672">].</span>invoke
+    expect(result)<span style="color:#f92672">.</span>to eq(something)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><h2 id="血淚史">血淚史</h2>
 <p>之所以最後還是決定要每次 test case 就去載入，實在是因為太常出現鬼打牆的狀況了：</p>
 <h3 id="單一檔案裡-raketask-只能被-invoke-一次">單一檔案裡 Rake::Task 只能被 invoke 一次</h3>
 <p>有多個需要 invoke 的 task 時就會有些 example 沒能成功執行 task</p>
 <p>之前寫 Rake Task 測試時，都單獨在 <code>*_spec.rb</code> 裡面直接載：</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#b58900">require</span> <span style="color:#2aa198">&#39;rake&#39;</span>
-<span style="color:#586e75"># ...</span>
-describe <span style="color:#2aa198">&#39;some rake test&#39;</span> <span style="color:#719e07">do</span>
-    <span style="color:#cb4b16">Rails</span><span style="color:#719e07">.</span>application<span style="color:#719e07">.</span>load_tasks
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;rake&#39;</span>
+<span style="color:#75715e"># ...</span>
+describe <span style="color:#e6db74">&#39;some rake test&#39;</span> <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>load_tasks
 
-    it <span style="color:#2aa198">&#39;does something&#39;</span> <span style="color:#719e07">do</span>
-    <span style="color:#cb4b16">Rake</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Task</span><span style="color:#719e07">[</span><span style="color:#2aa198">&#39;task_name&#39;</span><span style="color:#719e07">].</span>invoke
-    <span style="color:#719e07">end</span>
-<span style="color:#719e07">end</span>
+    it <span style="color:#e6db74">&#39;does something&#39;</span> <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">Rake</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Task</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;task_name&#39;</span><span style="color:#f92672">].</span>invoke
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 </code></pre></div><p>這個寫法每個測試檔案單獨跑的時候都沒有太大問題，因為每次載入檔案時就會透過 <code>Rails.application.load_tasks</code> 去載入所有定義在 <code>lib/tasks/*.rb</code> 裡面的 Rake Task，並且透過 <code>Rake::Task['task_name'].invoke</code> 來手動 invoke 測試目標。</p>
 <p>但是！如果要在單一的測試裡面有多個 example 需要 invoke Rake Task 的話，單獨用 <code>invoke</code> 就會時不時出現某些 example 沒有正確執行 Rake Task 的狀況。</p>
 <p>之前蠢蠢地只用</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#cb4b16">Rake</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Task</span><span style="color:#719e07">[</span><span style="color:#2aa198">&#39;task_name&#39;</span><span style="color:#719e07">].</span>reenable
-<span style="color:#cb4b16">Rake</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Task</span><span style="color:#719e07">[</span><span style="color:#2aa198">&#39;task_name&#39;</span><span style="color:#719e07">].</span>invoke
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Rake</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Task</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;task_name&#39;</span><span style="color:#f92672">].</span>reenable
+<span style="color:#66d9ef">Rake</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Task</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;task_name&#39;</span><span style="color:#f92672">].</span>invoke
 </code></pre></div><p>或是</p>
-<div class="highlight"><pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#cb4b16">Rake</span><span style="color:#719e07">::</span><span style="color:#cb4b16">Task</span><span style="color:#719e07">[</span><span style="color:#2aa198">&#39;task_name&#39;</span><span style="color:#719e07">].</span>execute
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Rake</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Task</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;task_name&#39;</span><span style="color:#f92672">].</span>execute
 </code></pre></div><p>去強制執行那隻 Rake Task 來通過測試。然後就繼續過著美好的日子直到⋯⋯</p>
 <h3 id="rake-task-被-invoke-了超出預期的次數">Rake Task 被 invoke 了超出預期的次數</h3>
 <p>強制 invoke task 的話，在單一檔案跑測試都沒問題，但如果是多個 rake task spec 一起跑的時候，就會一直出現鬼打牆的狀態，明明只呼叫 <code>Rake::Task['task_name'].execute</code> 一次卻會被 invoke 多一次。（眼神死</p>
 <p>在推測多個 test file 相互干擾為主因的情況下，翻找老半天，後來才找到是因為每一隻 <code>*_spec.rb</code> 都豪氣地 <code>Rails.application.load_tasks</code> 後就載後不理，導致某些 task 被 define 了多次，所以跑 <code>Rake::Task['task_name'].execute</code> 的時候就會多跑那些被重複定義的 task 。</p>
 <p>在「每個 test 檔案去載入與卸載」和「把載入卸載寫在 <code>spec_helper.rb</code> 」這兩個方案之間，我後來是選擇了後者，看起來乾淨一滴滴。（汗</p>
 
-		</div>
 
-		<div class="post-tags">
-			
-				
-					<nav class="nav tags">
-							<ul class="flat">
-								
-								<li><a href="/tags/coding">coding</a></li>
-								
-								<li><a href="/tags/ruby">ruby</a></li>
-								
-								<li><a href="/tags/testing">testing</a></li>
-								
-								<li><a href="/tags/rspec">rspec</a></li>
-								
-								<li><a href="/tags/rake">rake</a></li>
-								
-							</ul>
-					</nav>
-				
-			
-		</div>
-		</div>
-	<div class="footer wrapper">
-	<nav class="nav">
-		<div> Copyright © 2020 | Ravi Wu |  <a href="https://github.com/vividvilla/ezhil">Ezhil theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
-	</nav>
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/notes-soft-skills/"><i class="fa fa-chevron-circle-left"></i> 書摘 | Soft Skills: The software developer&#39;s life manual</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://raviwu.github.io/posts/tools-scoop-sh/">Windows 裡的類 homebrew 工具： scoop.sh <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6>Copyright © 2020 | Ravi Wu |
+             <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://raviwu.github.io/index.xml"> </a></h6>
+    </footer>
 </div>
+<script src="https://raviwu.github.io/js/scripts.js"></script>
 
-
-
-<script>feather.replace()</script>
 </body>
+
 </html>
+
