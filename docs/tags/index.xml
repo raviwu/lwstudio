@@ -7,13 +7,49 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-TW</language>
     <copyright>Copyright © 2020 | Ravi Wu</copyright>
-    <lastBuildDate>Mon, 26 Oct 2020 14:42:56 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Oct 2020 12:05:03 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>coding</title>
       <link>https://raviwu.github.io/tags/coding/</link>
-      <pubDate>Mon, 26 Oct 2020 14:42:56 +0800</pubDate>
+      <pubDate>Wed, 28 Oct 2020 12:05:03 +0800</pubDate>
       
       <guid>https://raviwu.github.io/tags/coding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>function</title>
+      <link>https://raviwu.github.io/tags/function/</link>
+      <pubDate>Wed, 28 Oct 2020 12:05:03 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/tags/function/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>go</title>
+      <link>https://raviwu.github.io/tags/go/</link>
+      <pubDate>Wed, 28 Oct 2020 12:05:03 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>struct</title>
+      <link>https://raviwu.github.io/tags/struct/</link>
+      <pubDate>Wed, 28 Oct 2020 12:05:03 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/tags/struct/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>type</title>
+      <link>https://raviwu.github.io/tags/type/</link>
+      <pubDate>Wed, 28 Oct 2020 12:05:03 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/tags/type/</guid>
       <description></description>
     </item>
     
@@ -23,15 +59,6 @@
       <pubDate>Mon, 26 Oct 2020 14:42:56 +0800</pubDate>
       
       <guid>https://raviwu.github.io/tags/data-structure/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>go</title>
-      <link>https://raviwu.github.io/tags/go/</link>
-      <pubDate>Mon, 26 Oct 2020 14:42:56 +0800</pubDate>
-      
-      <guid>https://raviwu.github.io/tags/go/</guid>
       <description></description>
     </item>
     

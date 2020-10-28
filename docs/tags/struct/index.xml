@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>struct on Ravi Wu</title>
+    <link>https://raviwu.github.io/tags/struct/</link>
+    <description>Recent content in struct on Ravi Wu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <copyright>Copyright © 2020 | Ravi Wu</copyright>
+    <lastBuildDate>Wed, 28 Oct 2020 12:05:03 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/struct/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go | 型別（Type）</title>
+      <link>https://raviwu.github.io/posts/go-type/</link>
+      <pubDate>Wed, 28 Oct 2020 12:05:03 +0800</pubDate>
+      
+      <guid>https://raviwu.github.io/posts/go-type/</guid>
+      <description>Go 的型別（Type）可以讓編譯器知道兩樣資訊：
+ 需要使用的記憶體大小 這些記憶體所代表的內容  以內建的型別為例：
+   型別 記憶體大小 內容     int64 8 bytes 整數   float32 4 bytes IEEE-754 浮點數   bool 1 byte true OR false    有一些型別所代表的內容會跟著 build 機器的不同架構有所差異，例如同樣的 int 在 64 位元電腦裡佔 8 bytes 但在 32 位元電腦裡只佔 4 bytes。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,9 +1,9 @@
 ---
 title: "Go | 型別（Type）"
-date: 2020-10-27T15:05:03+08:00
+date: 2020-10-28T12:05:03+08:00
 tags: ["coding", "go", "type", "struct", "function"]
 disqus: false
-draft: true
+draft: false
 ---
 
 Go 的型別（Type）可以讓編譯器知道兩樣資訊：
@@ -206,3 +206,111 @@ Methods Receivers      Values
 
 再回顧一次，因為，值本身並不能總是解析出確切的位址。
 
+## 嵌入型別（Embedded Type）
+
+Go 允許使用者復用現有型別，而且使用者可以在復用時覆寫型別的行為。以下方程式碼為例：
+
+```go
+type user struct {
+    name string
+    email string
+}
+
+func (u *user) notify() {
+    sendEmail(u.email)
+}
+
+type admin struct {
+    user // 內嵌型別
+    level string
+}
+```
+
+`user` 是 `admin` 的內嵌型別，所以如果初始化 `ad := admin { ... }` 後，可以透過 `ad.user.notify()` 來呼叫綁定給 `user` 類別的 `notify()` 函數。特別的是，也可以直接使用 `ad.notify()` 的方式呼叫函數。
+
+來試試看用介面的方式來呼叫函數：
+
+```go
+type notifier interface {
+    notify()
+}
+
+type user struct {
+    name string
+    email string
+}
+
+func (u *user) notify() {
+    sendEmail(u.email)
+}
+
+type admin struct {
+    user // 內嵌型別
+    level string
+}
+
+func sendNotification(n notifer) {
+    n.notify()
+}
+
+func main() {
+    ad := admin{
+        user: user{
+            name: "Ravi",
+            email: "ravi@foo.bar",
+        },
+        level: "super",
+    }
+
+    sendNotification(&ad)
+}
+```
+
+從這個範例可以看出，嵌入型別的同時，外型別同時也具有內型別實作的介面。如果想要覆寫內型別的介面行為呢？
+
+```go
+func (a *admin) notify() {
+    fmt.Printf("Sending admin email: %v\n", a.email)
+}
+```
+
+由於外型別自己也實作了 `notify()`，此時 `ad.user.notify()` 和 `ad.notify()` 所引用的函數就會不同了：只有特地援用內型別的寫法才會引用到原先內型別的實作。
+
+如果是丟進介面函數，同樣的邏輯下，`sendNotification(&(ad.user))` 和 `sendNotification(&ad)` 也會呼叫到不同的實作。
+
+## 套件的匯出（Exporting）與非匯出（Unexporting）定義
+
+套件內部元件的可見性用來控制函數或型別能否被外部引用。Go 使用命名規則來判定是否可被外部引用：
+
+1. 使用小寫開頭的定義為內部定義，無法被外部引用
+2. 使用大寫開頭的定義為公開介面，可以被外部直接引用
+
+此原則套用在：
+
+1. Interface
+2. Type
+3. Field of Type
+4. Function
+5. Var / Const
+
+要注意的是，型別的欄位可以選擇性匯出：
+
+```go
+// package auth
+type User struct {
+    Name string
+    email string
+}
+
+// package test
+
+import "auth"
+
+func test() {
+    u := auth.User{
+        Name: "Ravi",
+        email: "ravi@foo.bar",
+        // error comes here: unknown auth.User field 'email'...
+    }
+}
+```
