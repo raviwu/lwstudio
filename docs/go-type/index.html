@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html ⚡ lang="en">
+	<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+<title>Go | 型別（Type）</title>
+    
+<meta name="description" content="" />
+<link rel="canonical" href="https://raviwu.github.io/go-type/" >
+<link rel="sitemap" href="https://raviwu.github.io/sitemap.xml" type="application/xml" /><meta property="og:title" content="Go | 型別（Type）">
+<meta property="og:url" content="https://raviwu.github.io/go-type/">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://raviwu.github.io/logo.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content=""><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Go | 型別（Type）">
+<meta name="twitter:url" content="https://raviwu.github.io/go-type/">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://raviwu.github.io/logo.png">
+<meta name="twitter:site" content=""><meta name="theme-color" content="#333"/>
+<link rel="manifest" href="https://raviwu.github.io/manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="https://raviwu.github.io/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://raviwu.github.io/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://raviwu.github.io/icons/apple-touch-icon.png"><style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes  -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
+<noscript>
+    <style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>
+</noscript><style amp-custom>
+    
+        *,*::before,*::after{box-sizing:border-box}ul[class],ol[class]{padding:0}body,h1,h2,h3,h4,p,ul[class],ol[class],li,figure,figcaption,blockquote,dl,dd{margin:0}body{min-height:100vh;scroll-behavior:smooth;text-rendering:optimizeSpeed}ul[class],ol[class]{list-style:none}a:not([class]){text-decoration-skip-ink:auto}img{max-width:100%;display:block}input,button,textarea,select{font:inherit}.chroma{background-color:#fff}.chroma .err{color:#a61717;background-color:#e3d2d2}.chroma .lntd{vertical-align:top;padding:0;margin:0;border:0}.chroma .lntable{border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block}.chroma .hl{display:block;width:100%;background-color:#ffc}.chroma .lnt{margin-right:.4em;padding:0 .4em;color:#7f7f7f}.chroma .ln{margin-right:.4em;padding:0 .4em;color:#7f7f7f}.chroma .k{color:#000;font-weight:700}.chroma .kc{color:#000;font-weight:700}.chroma .kd{color:#000;font-weight:700}.chroma .kn{color:#000;font-weight:700}.chroma .kp{color:#000;font-weight:700}.chroma .kr{color:#000;font-weight:700}.chroma .kt{color:#458;font-weight:700}.chroma .na{color:teal}.chroma .nb{color:#0086b3}.chroma .bp{color:#999}.chroma .nc{color:#458;font-weight:700}.chroma .no{color:teal}.chroma .nd{color:#3c5d5d;font-weight:700}.chroma .ni{color:purple}.chroma .ne{color:#900;font-weight:700}.chroma .nf{color:#900;font-weight:700}.chroma .nl{color:#900;font-weight:700}.chroma .nn{color:#555}.chroma .nt{color:navy}.chroma .nv{color:teal}.chroma .vc{color:teal}.chroma .vg{color:teal}.chroma .vi{color:teal}.chroma .s{color:#d14}.chroma .sa{color:#d14}.chroma .sb{color:#d14}.chroma .sc{color:#d14}.chroma .dl{color:#d14}.chroma .sd{color:#d14}.chroma .s2{color:#d14}.chroma .se{color:#d14}.chroma .sh{color:#d14}.chroma .si{color:#d14}.chroma .sx{color:#d14}.chroma .sr{color:#009926}.chroma .s1{color:#d14}.chroma .ss{color:#990073}.chroma .m{color:#099}.chroma .mb{color:#099}.chroma .mf{color:#099}.chroma .mh{color:#099}.chroma .mi{color:#099}.chroma .il{color:#099}.chroma .mo{color:#099}.chroma .o{color:#000;font-weight:700}.chroma .ow{color:#000;font-weight:700}.chroma .c{color:#998;font-style:italic}.chroma .ch{color:#998;font-style:italic}.chroma .cm{color:#998;font-style:italic}.chroma .c1{color:#998;font-style:italic}.chroma .cs{color:#999;font-weight:700;font-style:italic}.chroma .cp{color:#999;font-weight:700;font-style:italic}.chroma .cpf{color:#999;font-weight:700;font-style:italic}.chroma .gd{color:#000;background-color:#fdd}.chroma .ge{color:#000;font-style:italic}.chroma .gr{color:#a00}.chroma .gh{color:#999}.chroma .gi{color:#000;background-color:#dfd}.chroma .go{color:#888}.chroma .gp{color:#555}.chroma .gs{font-weight:700}.chroma .gu{color:#aaa}.chroma .gt{color:#a00}.chroma .gl{text-decoration:underline}.chroma .w{color:#bbb}body{max-width:100%;display:grid;grid-template-columns:repeat(12,1fr);grid-gap:1em 1em;font-size:1.2em;font-family:Courier New,sans-serif;line-height:1.6;color:#000}amp-next-page{grid-column:span 12}.header,.main,.footer{grid-column:4/span 6}.header{margin-top:1em}.header__menu{margin:0;padding:0;display:flex;flex-direction:row;justify-content:flex-start;align-items:center;overflow:auto;border:1px solid #333}.header__menu a{font-size:1.2em;white-space:nowrap;border-bottom:none}.header__menu a:hover{color:#d14}.header__menu__logo{line-height:0}.header__menu__logo svg{width:75px;height:75px;min-width:75px;min-height:75px}.header__menu__list{display:flex;flex-grow:1;flex-wrap:nowrap;align-items:center;justify-content:space-around}.header__menu__list li{padding:0 1em;display:inline}.header__menu__dropdown-input,.header__menu__dropdown-label,.header__menu__dropdown-list{display:none}.header__menu__dropdown-input:checked~.header__menu__dropdown-list{display:flex}.header__menu__dropdown-input:checked~.header__menu__dropdown-label .header__menu__dropdown-icon{background:0 0}.header__menu__dropdown-input:checked~.header__menu__dropdown-label .header__menu__dropdown-icon:before{top:0;transform:rotate(-45deg)}.header__menu__dropdown-input:checked~.header__menu__dropdown-label .header__menu__dropdown-icon:after{top:0;transform:rotate(45deg)}.header__menu__dropdown-label{cursor:pointer;padding:1em}.header__menu__dropdown-icon{background:#333;display:block;height:2px;position:relative;transition:background .2s ease-out;width:36px}.header__menu__dropdown-icon:before,.header__menu__dropdown-icon:after{background:#333;content:'';display:block;height:100%;position:absolute;transition:all .2s ease-out;width:100%}.header__menu__dropdown-icon:before{top:15px}.header__menu__dropdown-icon:after{top:-15px}.header__menu__dropdown-list{width:100%;flex-direction:column;align-items:center;border-top:1px solid #333}.header__menu__dropdown-list li{padding:.5em}.header__search{font-family:Courier New,sans-serif;color:#000;width:100%;margin:0 auto}.header__search__input{padding:.5em 1em;font-family:Courier New,sans-serif;font-size:1.2em;width:100%;height:75px;border-radius:0;border:1px solid #000;border-top:none}.header__search__input:focus{outline:none}.header__search .search-item__link{border-bottom:none}.main{min-width:0;min-height:80vh}.main .pagination{margin:3em auto 2em;display:flex;justify-content:space-between}.footer{display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:1em}h1{font-size:3.5rem}h2{font-size:2.5rem}h3{font-size:2rem}h4{font-size:1.5rem}a{color:inherit;text-decoration:none;transition:background .3s;border-bottom:2px dashed #37474f}a:hover{border-color:#d14}.button{padding:.5em .75em;font-size:1.2em;text-align:center;border:1px solid #000;box-shadow:7px 7px 0 0 #333}.button:hover{color:#d14;border:1px solid #000;transform:translate(4px,4px);box-shadow:3px 3px 0 0 #333}li{margin-top:.25em}pre,code{font-family:lucida console,Monaco,monospace;font-size:12pt;background-color:#f1f1f1}blockquote{margin:inherit auto;margin-left:1em;padding:1em;border-left:5px solid #999}blockquote:before{display:none}blockquote:not(:first-of-type){margin-top:.5em}blockquote p{color:#555;font-size:1.25em;font-family:times new roman,serif}.figure{width:100%;max-width:100%}.figure--with-caption{display:flex;border-top:6px solid #333}.figure__image--with-caption{min-width:70%}.figure__caption{background-color:#333;color:#fff;font-weight:700;padding:.5em 1em;height:min-content;word-wrap:break-word}.post-it{width:100%;padding:1.5em}.post-it--tip{background-color:#fffacd}.post-it--info{background-color:azure}.post-it--danger{background-color:#ffcccb}.post-it--success{background-color:#d0f0c0}.post-it__title{font-weight:700;font-size:1.5em}.post-it__content{margin-top:1em}.product{width:100%;display:flex;justify-content:space-between;padding:1.5em;border:1px solid #333}.product__image{margin:auto;width:100%;min-width:250px;max-width:400px}.product__content{margin-left:2em;align-self:center;display:flex;flex-direction:column}.product__title{font-weight:700;font-size:1.5rem}.product__description{margin-top:1em}.product__cta{margin-top:1em}.social-share{display:flex;align-self:center;align-items:center}.social-share__button{margin:0 .5em;border-radius:50%;background-size:60%}#tags{margin:0;padding:0}#tags li{display:inline}.content{width:100%}.content>*{margin-top:1.5em}.content>h1{margin-top:.5em}.content pre{overflow:auto;padding:.5em}.content code{padding:.1em}.content table{display:block;overflow-x:auto;border-collapse:collapse}.content table td,.content table th{border:1px solid #ddd}.content table td{padding:.5em 1em}.content table th{padding:1em 2em;background-color:#333;color:#fff}.content table tr:nth-child(even){background-color:#f1f1f1}.content table tr:hover{background-color:#ddd}.content .highlight .chroma{background-color:#f1f1f1}.content .under-title{display:flex;flex-wrap:wrap;justify-content:space-between;font-size:1rem}.content .under-title__info,.content .under-title__social-share{align-self:center}.content .ad{display:flex;margin:1rem auto;align-content:center;width:min-content;height:min-content;min-width:320px;min-height:320px;border:1px solid #333}.content .ad__fallback{display:flex;align-items:center}.content .ad__fallback p{margin:auto}.content .author{display:flex;flex-direction:column;align-items:center;background-color:#f1f1f1;padding:1.5rem}.content .author>*:not(:first-child){margin-top:1rem}.content .author__name{font-weight:700;font-size:1.5em}.content .author__image{border-radius:100px}.content .author__bio,.content .author__cta{text-align:center}.content .author__cta{font-size:1.25em}.summary:not(:first-of-type) h2{margin-top:2.5em}.summary>*{margin-top:1.25em}.summary__title{text-align:center}.summary .button{display:block;margin:inherit 1em}@media(max-width:1200px){body{grid-gap:0}.main,.header,.footer{grid-column:1/span 12}.main,.footer{margin:.5em .75em}.footer{flex-direction:column;align-items:center;margin-bottom:1em}.header{margin:0}.header__menu{border:none;border-bottom:1px solid #333;flex-wrap:wrap;justify-content:space-between}.header__menu__list{display:none}.header__menu__dropdown-label{display:block}.header__search__input{border:none;border-bottom:1px solid #333}h1{font-size:2.5rem}h2{font-size:2rem}h3{font-size:1.66rem}h4{font-size:1.25rem}.post-it{margin-left:0;margin-right:0}}@media(max-width:600px){.under-title__social-share{width:100%;margin-top:1.5em;justify-content:space-between}.figure{flex-direction:column-reverse}.figure--with-caption{border-top:none}.figure__caption{position:relative;max-width:100%}.product{flex-wrap:wrap}.product__content{margin-left:unset;text-align:center}.product__title{margin-top:1em}}
+    
+    
+</style><script async src="https://cdn.ampproject.org/v0.js"></script><script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script><script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script><script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script><script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+
+
+<script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
+
+
+
+    <script async custom-element="amp-next-page" src="https://cdn.ampproject.org/v0/amp-next-page-1.0.js"></script>
+</head>
+	<body><amp-install-serviceworker
+  src="https://raviwu.github.io/sw.js"
+  data-iframe-src="https://raviwu.github.io/install-sw.html"
+  layout="nodisplay">
+</amp-install-serviceworker>
+
+
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      
+        
+        {
+          "@type": "ListItem",
+          "position":  1 ,
+          "item": {
+            "@id": "https:\/\/raviwu.github.io\/",
+            "name": "Home"
+          }
+        }
+      
+        ,
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "item": {
+            "@id": "https:\/\/raviwu.github.io\/go-type\/",
+            "name": "Go type"
+          }
+        }
+       ]
+  }
+</script><script type="application/ld+json">
+  {
+    "@context":"http://schema.org",
+    "@type": "BlogPosting",
+    "image": "https:\/\/raviwu.github.io\/",
+    "url": "https:\/\/raviwu.github.io\/go-type\/",
+    "headline": "Go | 型別（Type）",
+    "alternativeHeadline": "Go | 型別（Type）",
+    "dateCreated": "2020-10-28T12:05:03",
+    "datePublished": "2020-10-28T12:05:03",
+    "dateModified": "2020-10-28T12:05:03",
+    "inLanguage": "en",
+    "isFamilyFriendly": "true",
+    "copyrightYear": "2020",
+    "copyrightHolder": "Ravi Wu",
+    "accountablePerson": {
+      "@type": "Person",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io",
+      "image": "https:\/\/raviwu.github.io\/",
+      "description": ""
+    },
+    "creator": {
+      "@type": "Person",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io",
+      "image": "https:\/\/raviwu.github.io\/",
+      "description": ""
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io\/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "\/lwstudio-logo.png",
+        "width":"600",
+        "height":"60"
+      }
+    },
+    "mainEntityOfPage": "https:\/\/raviwu.github.io\/go-type\/",
+    "keywords": "null",
+    "genre": "[\"coding\",\"go\",\"type\",\"struct\",\"function\"]",
+    "articleSection": "Ravi Wu"
+  }
+</script><header class="header"><nav class="header__menu" next-page-hide>
+    <a class="header__menu__logo" data-rel="prefetch" href="https://raviwu.github.io/" aria-label="Go back to the homepage"><svg width="256" height="256" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <rect x="2.0205e-9" y="2.0205e-9" width="259.25" height="261.42" fill="#333" stroke-width="1.0148"/>
+ <path d="m171.89 116.28-53.696 89.36h-9.728l9.617-58.227-30.2 0.047c-2.684 0-4.855-2.172-4.855-4.855 0-1.152 1.07-3.102 1.07-3.102l53.52-89.254 9.9 0.043-9.86 58.317 30.413-0.043c2.684 0 4.855 2.172 4.855 4.855 0 1.088-0.427 2.044-1.033 2.854l4e-3 4e-3z" fill="#fff" fill-rule="evenodd"/>
+</svg>
+</a>
+<ul class="header__menu__list">
+    
+        
+        <li>
+            <a href="https://github.com/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>GitHub</span>
+            </a>
+        </li>
+    
+        
+        <li>
+            <a href="https://www.linkedin.com/in/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>Linkedin</span>
+            </a>
+        </li>
+    
+</ul>
+
+<input class="header__menu__dropdown-input" type="checkbox" id="dropdown"/>
+<label class="header__menu__dropdown-label" for="dropdown" role="button" aria-label="Open dropdown menu">
+    <span class="header__menu__dropdown-icon"></span>
+</label>
+
+<ul class="header__menu__dropdown-list">
+    
+        
+        <li>
+            <a href="https://github.com/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>GitHub</span>
+            </a>
+        </li>
+    
+        
+        <li>
+            <a href="https://www.linkedin.com/in/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>Linkedin</span>
+            </a>
+        </li>
+    
+</ul></nav><amp-autocomplete
+    on="select:AMP.navigateTo(url=event.value)"
+    filter="substring"
+    filter-value="title"
+    src="https://raviwu.github.io/search.json"
+    min-characters="1"
+    class="header__search"
+    next-page-hide>
+    <input class="header__search__input" type="text" placeholder="Search for a post..." aria-label="Search for a post...">
+    <template class="header__search__item-template" type="amp-mustache" id="amp-template-custom">
+        <div class="search-item" data-value="{{url}}">
+            <small class="search-item__date">{{date}}</small> <br>
+            <a class="search-item__link" href="{{url}}">
+                {{title}}
+            </a>
+        </div>
+    </template>
+</amp-autocomplete></header>
+		<main class="main">
+	<article class="content">
+		<p>Go 的型別（Type）可以讓編譯器知道兩樣資訊：</p>
+<ol>
+<li>需要使用的記憶體大小</li>
+<li>這些記憶體所代表的內容</li>
+</ol>
+<p>以內建的型別為例：</p>
+<table>
+<thead>
+<tr>
+<th>型別</th>
+<th>記憶體大小</th>
+<th>內容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int64</td>
+<td>8 bytes</td>
+<td>整數</td>
+</tr>
+<tr>
+<td>float32</td>
+<td>4 bytes</td>
+<td>
+
+
+<a href="https://en.wikipedia.org/wiki/IEEE_754"
+     target="_blank" rel="nofollow noopener noreferrer" 
+    >IEEE-754</a> 浮點數</td>
+</tr>
+<tr>
+<td>bool</td>
+<td>1 byte</td>
+<td>true OR false</td>
+</tr>
+</tbody>
+</table>
+<p>有一些型別所代表的內容會跟著 build 機器的不同架構有所差異，例如同樣的 <code>int</code> 在 64 位元電腦裡佔 8 bytes 但在 32 位元電腦裡只佔 4 bytes。</p>
+<h2 id="自定義型別">自定義型別</h2>
+<p>Go 容許自定義型別，最簡單的宣告方式為 struct</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">user</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">name</span> <span class="kt">string</span>
+    <span class="nx">email</span> <span class="kt">string</span>
+    <span class="nx">ext</span> <span class="kt">int</span>
+    <span class="nx">isAdmin</span> <span class="kt">bool</span>
+<span class="p">}</span>
+</code></pre></div><p>使用 <code>var ravi user</code> 可以宣告一個 <code>ravi</code> 的變數，代表一個 <code>user</code> 型別。宣告的當下，型別的欄位值會使用各欄位之型別的零值。</p>
+<p>當需要直接復值時也可以使用以下語法：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">tom</span> <span class="o">:=</span> <span class="nx">user</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="p">:</span> <span class="s">&#34;Tom&#34;</span><span class="p">,</span>
+    <span class="nx">email</span><span class="p">:</span> <span class="s">&#34;tom@foo.bar&#34;</span><span class="p">,</span>
+    <span class="nx">ext</span><span class="p">:</span> <span class="mi">321</span><span class="p">,</span>
+    <span class="nx">isAdmin</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div><p>或者也可以使用 <code>tom := user{&quot;Tom&quot;, &quot;tom@foo.bar&quot;, 321, true}</code> 來宣告，通常都會把所有值放在同一行以縮減最後一個值的逗點。用單行宣告時，變數順序至關重要，需要依照自定義欄位的順序提供。</p>
+<p>已知自定義型別也能被當成欄位使用：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">admin</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">person</span> <span class="nx">user</span>
+    <span class="nx">level</span> <span class="kt">string</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="自定義型別的函數宣告">自定義型別的函數宣告</h2>
+<p>型別函數宣告使用 <code>(u user)</code> 或 <code>(u *user)</code> 的時機：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Value Receiver
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="nx">user</span><span class="p">)</span> <span class="nf">notify</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">send</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">email</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Pointer Receiver
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">user</span><span class="p">)</span> <span class="nf">changeEmail</span><span class="p">(</span><span class="nx">email</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">u</span><span class="p">.</span><span class="nx">email</span> <span class="p">=</span> <span class="nx">email</span>
+<span class="p">}</span>
+</code></pre></div><p>如果函數取值做操作，不需要改變原物件欄位時，使用傳值的方式 <code>(u user)</code> 宣告；如果函數需要針對物件作操作，更改欄位值的內容時，使用傳指標的方式 <code>(u *user)</code> 去做宣告。</p>
+<h3 id="go-的貼心動作">Go 的貼心動作</h3>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">ravi</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nf">user</span><span class="p">(</span><span class="s">&#34;Ravi&#34;</span><span class="p">,</span> <span class="s">&#34;ravi@foo.bar&#34;</span><span class="p">)</span>
+<span class="nx">ravi</span><span class="p">.</span><span class="nf">notify</span><span class="p">()</span>
+</code></pre></div><p>即使上面的 <code>ravi</code> 變數透過 <code>&amp;user</code> 被指定為指標，對指摽 <code>ravi</code> 呼叫宣告傳值的 <code>notify()</code> 仍可以編譯執行。原因在於 Go 編譯器在函數呼叫時另行處理為 <code>(*ravi).notify()</code> 並且複製了一份 <code>*ravi</code> 物件進函數處理。</p>
+<p>同樣地：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">tomas</span> <span class="o">:=</span> <span class="nf">tomas</span><span class="p">(</span><span class="s">&#34;Tomas&#34;</span><span class="p">,</span> <span class="s">&#34;tomas@foo.bar&#34;</span><span class="p">)</span>
+<span class="nx">tomas</span><span class="p">.</span><span class="nf">changeEmail</span><span class="p">(</span><span class="s">&#34;newTomas@foo.bar&#34;</span><span class="p">)</span>
+</code></pre></div><p>也可以編譯成功，因為 Go 在做函數呼叫時實際上是長這樣： <code>(&amp;tomas).changeEmail(&quot;newTomas@foo.bar&quot;)</code></p>
+<h2 id="go-的內建原始型別primative-types">Go 的內建原始型別（Primative Types）</h2>
+<p>針對數字、字串和布林值等 Go 的內建型別，當對其值進行操作時，一律是對新的副本做操作。</p>
+<h2 id="go-的參照型別reference-types">Go 的參照型別（Reference Types）</h2>
+<p>像是
+
+
+<a href="https://raviwu.github.io/posts/go-slice"
+     data-rel="prefetch"
+    
+    >切片</a>、
+
+
+<a href="https://raviwu.github.io/posts/go-map"
+     data-rel="prefetch"
+    
+    >map</a>、channel、介面（interface）與函數（function）等參照型別，在宣告變數給這些型別的當下，只有被稱為 header 的值產生。嚴格來說，字串也是屬於參照型別。這些不同型別的 header 值，儲存了指向底層資料結構記憶體位址的指標（Pointer）。每個不同的參照型別除了這個指標之外還另外儲存了管理底層資料結構所需的訊息。（例如切片的 Length 與 Capacity）</p>
+<p>因為這個特性，在使用參照型別時，一律都是針對新的副本做操作。要注意的是，由於底層的資料結構可能與其他指標共用，針對資料變動需要特別小心。</p>
+<h2 id="struct-型別">Struct 型別</h2>
+<p>Struct 可以包含原始或非原始型別，在定義過程應該根據 Struct 欄位或者是其設計目的來決定這個 Struct 應該適用傳值或是傳指標式操作。</p>
+<p>以標準庫的範例來看：</p>
+<h3 id="time">Time</h3>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Time</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">sec</span> <span class="kt">int64</span>
+    <span class="nx">nsec</span> <span class="kt">int32</span>
+    <span class="nx">loc</span> <span class="o">*</span><span class="nx">Location</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">Now</span><span class="p">()</span> <span class="nx">Time</span> <span class="p">{</span>
+    <span class="nx">sec</span><span class="p">,</span> <span class="nx">nsec</span> <span class="o">:=</span> <span class="nf">now</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nx">Time</span><span class="p">{</span><span class="nx">sed</span> <span class="o">+</span> <span class="nx">unixToInternal</span><span class="p">,</span> <span class="nx">nsec</span><span class="p">,</span> <span class="nx">Local</span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>Time 的屬性多是原始性質，所以大多數的內建函數是回傳一個新的 Time。</p>
+<h3 id="file">File</h3>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">File</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="o">*</span><span class="nx">file</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">file</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">fd</span> <span class="kt">int</span>
+    <span class="nx">name</span> <span class="kt">string</span>
+    <span class="nx">dirinfo</span> <span class="o">*</span><span class="nx">dirInfo</span>
+    <span class="nx">nepipe</span> <span class="kt">int32</span>
+<span class="p">}</span>
+</code></pre></div><p>從定義看，File 型別根據定義，屬於參照型別。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Open</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">file</span> <span class="o">*</span><span class="nx">File</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nf">OpenFile</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">O_RDONLY</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>Go 的標準庫實作回傳一個 File 的指標。</p>
+<h2 id="介面interfaces">介面（Interfaces）</h2>
+<p>多型（Polyporphism）是型別（Type）透過實作不同介面（Interface）來產生不同的行為。</p>
+<p>介面定義了行為，而實際上的實作內容要在自定義型別上界定。</p>
+<p>把值指定給 <code>notifer</code> 介面的變數時：</p>
+<pre><code>             var n notifier
+  notifier   n = user{&quot;Ravi&quot;}
+  介面的值                     iTable
+ [位址]
+ iTable  -------------------&gt; [Type(user)]
+ ------                       ------------
+ [位址]       儲存值             Method set
+  user   --&gt; [User]
+</code></pre><p>把指標指定給 <code>notifer</code> 介面的變數時：</p>
+<pre><code>             var n notifier
+  notifier   n = &amp;user{&quot;Ravi&quot;}
+  介面的值                     iTable
+ [位址]
+ iTable  -------------------&gt; [Type(*user)]
+ ------                       ------------
+ [位址]       儲存值             Method set
+  user   --&gt; [User]
+</code></pre><h3 id="函數集method-sets">函數集（Method sets）</h3>
+<p>函數集定義了介面實作是否合規。假如實作時只宣告指標作為 Method call 的 Receiver 時，那只有指標實作了介面，呼叫介面方法時需傳入指標。這個限制的理由是因為單就值本身並不能總是取得位址。</p>
+<pre><code>Values          Methods Receivers
+---------------------------------
+  T                (t T)
+  *T               (t T) and (t *T)
+
+Methods Receivers      Values
+---------------------------------
+ (t T)                  T and *T
+ (t *T)                 *T
+</code></pre><p>當我們傳值給函數時，Method Receiver 只有辦法拿到值本身，但如果是傳指標，Method Receiver 可以除了取得指標以外，還能透過指標拿到值。</p>
+<p>反過來看，當 Method Receiver 定義為值的時候，傳入的參數可以是指標或者是值；但如果 Method Receiver 定義為取得指標的話，傳入的參數只能是指標。</p>
+<p>再回顧一次，因為，值本身並不能總是解析出確切的位址。</p>
+<h2 id="嵌入型別embedded-type">嵌入型別（Embedded Type）</h2>
+<p>Go 允許使用者復用現有型別，而且使用者可以在復用時覆寫型別的行為。以下方程式碼為例：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">user</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">name</span> <span class="kt">string</span>
+    <span class="nx">email</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">user</span><span class="p">)</span> <span class="nf">notify</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">sendEmail</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">email</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">admin</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">user</span> <span class="c1">// 內嵌型別
+</span><span class="c1"></span>    <span class="nx">level</span> <span class="kt">string</span>
+<span class="p">}</span>
+</code></pre></div><p><code>user</code> 是 <code>admin</code> 的內嵌型別，所以如果初始化 <code>ad := admin { ... }</code> 後，可以透過 <code>ad.user.notify()</code> 來呼叫綁定給 <code>user</code> 類別的 <code>notify()</code> 函數。特別的是，也可以直接使用 <code>ad.notify()</code> 的方式呼叫函數。</p>
+<p>來試試看用介面的方式來呼叫函數：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">notifier</span> <span class="kd">interface</span> <span class="p">{</span>
+    <span class="nf">notify</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">user</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">name</span> <span class="kt">string</span>
+    <span class="nx">email</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">user</span><span class="p">)</span> <span class="nf">notify</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">sendEmail</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">email</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">admin</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">user</span> <span class="c1">// 內嵌型別
+</span><span class="c1"></span>    <span class="nx">level</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">sendNotification</span><span class="p">(</span><span class="nx">n</span> <span class="nx">notifer</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">n</span><span class="p">.</span><span class="nf">notify</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ad</span> <span class="o">:=</span> <span class="nx">admin</span><span class="p">{</span>
+        <span class="nx">user</span><span class="p">:</span> <span class="nx">user</span><span class="p">{</span>
+            <span class="nx">name</span><span class="p">:</span> <span class="s">&#34;Ravi&#34;</span><span class="p">,</span>
+            <span class="nx">email</span><span class="p">:</span> <span class="s">&#34;ravi@foo.bar&#34;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="nx">level</span><span class="p">:</span> <span class="s">&#34;super&#34;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="nf">sendNotification</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ad</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>從這個範例可以看出，嵌入型別的同時，外型別同時也具有內型別實作的介面。如果想要覆寫內型別的介面行為呢？</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="o">*</span><span class="nx">admin</span><span class="p">)</span> <span class="nf">notify</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Sending admin email: %v\n&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">email</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>由於外型別自己也實作了 <code>notify()</code>，此時 <code>ad.user.notify()</code> 和 <code>ad.notify()</code> 所引用的函數就會不同了：只有特地援用內型別的寫法才會引用到原先內型別的實作。</p>
+<p>如果是丟進介面函數，同樣的邏輯下，<code>sendNotification(&amp;(ad.user))</code> 和 <code>sendNotification(&amp;ad)</code> 也會呼叫到不同的實作。</p>
+<h2 id="套件的匯出exporting與非匯出unexporting定義">套件的匯出（Exporting）與非匯出（Unexporting）定義</h2>
+<p>套件內部元件的可見性用來控制函數或型別能否被外部引用。Go 使用命名規則來判定是否可被外部引用：</p>
+<ol>
+<li>使用小寫開頭的定義為內部定義，無法被外部引用</li>
+<li>使用大寫開頭的定義為公開介面，可以被外部直接引用</li>
+</ol>
+<p>此原則套用在：</p>
+<ol>
+<li>Interface</li>
+<li>Type</li>
+<li>Field of Type</li>
+<li>Function</li>
+<li>Var / Const</li>
+</ol>
+<p>要注意的是，型別的欄位可以選擇性匯出：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// package auth
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Name</span> <span class="kt">string</span>
+    <span class="nx">email</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="c1">// package test
+</span><span class="c1"></span>
+<span class="kn">import</span> <span class="s">&#34;auth&#34;</span>
+
+<span class="kd">func</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">u</span> <span class="o">:=</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">User</span><span class="p">{</span>
+        <span class="nx">Name</span><span class="p">:</span> <span class="s">&#34;Ravi&#34;</span><span class="p">,</span>
+        <span class="nx">email</span><span class="p">:</span> <span class="s">&#34;ravi@foo.bar&#34;</span><span class="p">,</span>
+        <span class="c1">// error comes here: unknown auth.User field &#39;email&#39;...
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+    <h2 class="related-content__title">Related readings 📖</h2>
+    
+        <p class="related-content__item"><a href="https://raviwu.github.io/go-map/" data-rel="prefetch">Go | Map</a></p>
+    
+        <p class="related-content__item"><a href="https://raviwu.github.io/go-slice/" data-rel="prefetch">Go | 切片（Slice）</a></p>
+    
+        <p class="related-content__item"><a href="https://raviwu.github.io/go-array/" data-rel="prefetch">Go | 陣列（Array）</a></p>
+    
+
+    <section class="author">
+        
+            <p class="author__name">Ravi Wu</p>
+        
+        
+        
+        <p class="author__cta">If you liked it share and comment!</p>
+        <div class="social-share"><amp-social-share class="social-share__button"
+    aria-label="Share content" type="system" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Facebook" type="facebook" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Twitter" type="twitter" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Linkedin" type="linkedin" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Pinterest" type="pinterest" width="50" height="50"></amp-social-share></div>
+    </section>
+</article>
+
+		</main>
+		<footer class="footer"><div class="footer__copyright">© Ravi Wu 2020</div><div class="footer__languages">
+	
+</div></footer>
+		
+
+
+<amp-next-page>
+    <script type="application/json">
+        [{
+                    "image": "",
+                    "title": "Go | Map",
+                    "url": "https:\/\/raviwu.github.io\/go-map\/"
+                },{
+                    "image": "",
+                    "title": "Go | 切片（Slice）",
+                    "url": "https:\/\/raviwu.github.io\/go-slice\/"
+                },{
+                    "image": "",
+                    "title": "Go | 陣列（Array）",
+                    "url": "https:\/\/raviwu.github.io\/go-array\/"
+                }]
+    </script>
+</amp-next-page>
+
+	</body>
+</html>

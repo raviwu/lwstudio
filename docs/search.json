@@ -1,0 +1,89 @@
+{ "items": [{
+            "title": "Go | 型別（Type）",
+            "url": "https://raviwu.github.io/go-type/",
+            "date": "28 October 2020"
+        },{
+            "title": "Go | Map",
+            "url": "https://raviwu.github.io/go-map/",
+            "date": "26 October 2020"
+        },{
+            "title": "Go | 切片（Slice）",
+            "url": "https://raviwu.github.io/go-slice/",
+            "date": "26 October 2020"
+        },{
+            "title": "Go | 陣列（Array）",
+            "url": "https://raviwu.github.io/go-array/",
+            "date": "26 October 2020"
+        },{
+            "title": "產品的七個面向（The 7 Product Dimensions）",
+            "url": "https://raviwu.github.io/methodology-the-seven-product-dimensions/",
+            "date": "21 September 2020"
+        },{
+            "title": "InputStream 、 DataInputStream 與 BufferedInputStream",
+            "url": "https://raviwu.github.io/java-inputstream-datainputstream-and-bufferedinputstream/",
+            "date": "11 September 2020"
+        },{
+            "title": "泛型 Java Functional Interface 的特規化",
+            "url": "https://raviwu.github.io/java-generic-functional-interface-specilization/",
+            "date": "11 September 2020"
+        },{
+            "title": "使用複合條件來判斷是否進入下一輪 Java 迴圈",
+            "url": "https://raviwu.github.io/java-use-combo-condition-for-loop/",
+            "date": "10 September 2020"
+        },{
+            "title": "Windows 裡的類 homebrew 工具： scoop.sh",
+            "url": "https://raviwu.github.io/tools-scoop-sh/",
+            "date": "10 August 2018"
+        },{
+            "title": "在 RSpec 裡測試 Rake Task",
+            "url": "https://raviwu.github.io/testing-rake-task-in-rspec/",
+            "date": "7 May 2017"
+        },{
+            "title": "書摘 | Soft Skills = The software developer's life manual",
+            "url": "https://raviwu.github.io/notes-soft-skills/",
+            "date": "22 February 2017"
+        },{
+            "title": "工具 | Kindle "My Clippings.txt" 的轉檔 gem KCFU",
+            "url": "https://raviwu.github.io/tools-kcfu-for-kindle-clipping/",
+            "date": "28 January 2017"
+        },{
+            "title": "在 Trailblazer 的 Policy 中透過客制 Exception 來處理複雜的「錯誤回應」",
+            "url": "https://raviwu.github.io/customize-error-handlement-in-trailblazer-policy/",
+            "date": "14 January 2017"
+        },{
+            "title": "初探 Trailblazer 框架",
+            "url": "https://raviwu.github.io/elementary-trailblazer/",
+            "date": "7 January 2017"
+        },{
+            "title": "筆記 | Practical Object-Oriented Design in Ruby (POODR)",
+            "url": "https://raviwu.github.io/notes-of-poodr/",
+            "date": "3 January 2017"
+        },{
+            "title": "利用 find_in_batches 在 Rails 做跨資料庫的資料移轉操作",
+            "url": "https://raviwu.github.io/use-find-in-batches-during-migration/",
+            "date": "2 September 2016"
+        },{
+            "title": "使用 Google Sheets API 拉資料到 Rails APP 裡",
+            "url": "https://raviwu.github.io/pull-data-to-rails-from-google-sheet/",
+            "date": "9 July 2016"
+        },{
+            "title": "在 rails 上實作轉移 Parse 手機推播服務到 Amazon SNS",
+            "url": "https://raviwu.github.io/migrate-push-notification-from-parse-to-aws-sns/",
+            "date": "24 June 2016"
+        },{
+            "title": "Rails grape API 上實作 JWT 多重登入",
+            "url": "https://raviwu.github.io/implement-jwt-in-grape-api/",
+            "date": "10 June 2016"
+        },{
+            "title": "Rails 中使用 Paperclip 存 URI 附件",
+            "url": "https://raviwu.github.io/use-paperclip-to-store-uri-in-rails/",
+            "date": "12 May 2016"
+        },{
+            "title": "程設風格 | 早期終止執行",
+            "url": "https://raviwu.github.io/early-termination/",
+            "date": "15 April 2016"
+        },{
+            "title": "終端機工具",
+            "url": "https://raviwu.github.io/command-line-tools-notes/",
+            "date": "27 March 2016"
+        }]}

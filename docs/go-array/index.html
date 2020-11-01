@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html ⚡ lang="en">
+	<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+<title>Go | 陣列（Array）</title>
+    
+<meta name="description" content="" />
+<link rel="canonical" href="https://raviwu.github.io/go-array/" >
+<link rel="sitemap" href="https://raviwu.github.io/sitemap.xml" type="application/xml" /><meta property="og:title" content="Go | 陣列（Array）">
+<meta property="og:url" content="https://raviwu.github.io/go-array/">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://raviwu.github.io/logo.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content=""><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Go | 陣列（Array）">
+<meta name="twitter:url" content="https://raviwu.github.io/go-array/">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://raviwu.github.io/logo.png">
+<meta name="twitter:site" content=""><meta name="theme-color" content="#333"/>
+<link rel="manifest" href="https://raviwu.github.io/manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="https://raviwu.github.io/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://raviwu.github.io/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://raviwu.github.io/icons/apple-touch-icon.png"><style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes  -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
+<noscript>
+    <style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>
+</noscript><style amp-custom>
+    
+        *,*::before,*::after{box-sizing:border-box}ul[class],ol[class]{padding:0}body,h1,h2,h3,h4,p,ul[class],ol[class],li,figure,figcaption,blockquote,dl,dd{margin:0}body{min-height:100vh;scroll-behavior:smooth;text-rendering:optimizeSpeed}ul[class],ol[class]{list-style:none}a:not([class]){text-decoration-skip-ink:auto}img{max-width:100%;display:block}input,button,textarea,select{font:inherit}.chroma{background-color:#fff}.chroma .err{color:#a61717;background-color:#e3d2d2}.chroma .lntd{vertical-align:top;padding:0;margin:0;border:0}.chroma .lntable{border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block}.chroma .hl{display:block;width:100%;background-color:#ffc}.chroma .lnt{margin-right:.4em;padding:0 .4em;color:#7f7f7f}.chroma .ln{margin-right:.4em;padding:0 .4em;color:#7f7f7f}.chroma .k{color:#000;font-weight:700}.chroma .kc{color:#000;font-weight:700}.chroma .kd{color:#000;font-weight:700}.chroma .kn{color:#000;font-weight:700}.chroma .kp{color:#000;font-weight:700}.chroma .kr{color:#000;font-weight:700}.chroma .kt{color:#458;font-weight:700}.chroma .na{color:teal}.chroma .nb{color:#0086b3}.chroma .bp{color:#999}.chroma .nc{color:#458;font-weight:700}.chroma .no{color:teal}.chroma .nd{color:#3c5d5d;font-weight:700}.chroma .ni{color:purple}.chroma .ne{color:#900;font-weight:700}.chroma .nf{color:#900;font-weight:700}.chroma .nl{color:#900;font-weight:700}.chroma .nn{color:#555}.chroma .nt{color:navy}.chroma .nv{color:teal}.chroma .vc{color:teal}.chroma .vg{color:teal}.chroma .vi{color:teal}.chroma .s{color:#d14}.chroma .sa{color:#d14}.chroma .sb{color:#d14}.chroma .sc{color:#d14}.chroma .dl{color:#d14}.chroma .sd{color:#d14}.chroma .s2{color:#d14}.chroma .se{color:#d14}.chroma .sh{color:#d14}.chroma .si{color:#d14}.chroma .sx{color:#d14}.chroma .sr{color:#009926}.chroma .s1{color:#d14}.chroma .ss{color:#990073}.chroma .m{color:#099}.chroma .mb{color:#099}.chroma .mf{color:#099}.chroma .mh{color:#099}.chroma .mi{color:#099}.chroma .il{color:#099}.chroma .mo{color:#099}.chroma .o{color:#000;font-weight:700}.chroma .ow{color:#000;font-weight:700}.chroma .c{color:#998;font-style:italic}.chroma .ch{color:#998;font-style:italic}.chroma .cm{color:#998;font-style:italic}.chroma .c1{color:#998;font-style:italic}.chroma .cs{color:#999;font-weight:700;font-style:italic}.chroma .cp{color:#999;font-weight:700;font-style:italic}.chroma .cpf{color:#999;font-weight:700;font-style:italic}.chroma .gd{color:#000;background-color:#fdd}.chroma .ge{color:#000;font-style:italic}.chroma .gr{color:#a00}.chroma .gh{color:#999}.chroma .gi{color:#000;background-color:#dfd}.chroma .go{color:#888}.chroma .gp{color:#555}.chroma .gs{font-weight:700}.chroma .gu{color:#aaa}.chroma .gt{color:#a00}.chroma .gl{text-decoration:underline}.chroma .w{color:#bbb}body{max-width:100%;display:grid;grid-template-columns:repeat(12,1fr);grid-gap:1em 1em;font-size:1.2em;font-family:Courier New,sans-serif;line-height:1.6;color:#000}amp-next-page{grid-column:span 12}.header,.main,.footer{grid-column:4/span 6}.header{margin-top:1em}.header__menu{margin:0;padding:0;display:flex;flex-direction:row;justify-content:flex-start;align-items:center;overflow:auto;border:1px solid #333}.header__menu a{font-size:1.2em;white-space:nowrap;border-bottom:none}.header__menu a:hover{color:#d14}.header__menu__logo{line-height:0}.header__menu__logo svg{width:75px;height:75px;min-width:75px;min-height:75px}.header__menu__list{display:flex;flex-grow:1;flex-wrap:nowrap;align-items:center;justify-content:space-around}.header__menu__list li{padding:0 1em;display:inline}.header__menu__dropdown-input,.header__menu__dropdown-label,.header__menu__dropdown-list{display:none}.header__menu__dropdown-input:checked~.header__menu__dropdown-list{display:flex}.header__menu__dropdown-input:checked~.header__menu__dropdown-label .header__menu__dropdown-icon{background:0 0}.header__menu__dropdown-input:checked~.header__menu__dropdown-label .header__menu__dropdown-icon:before{top:0;transform:rotate(-45deg)}.header__menu__dropdown-input:checked~.header__menu__dropdown-label .header__menu__dropdown-icon:after{top:0;transform:rotate(45deg)}.header__menu__dropdown-label{cursor:pointer;padding:1em}.header__menu__dropdown-icon{background:#333;display:block;height:2px;position:relative;transition:background .2s ease-out;width:36px}.header__menu__dropdown-icon:before,.header__menu__dropdown-icon:after{background:#333;content:'';display:block;height:100%;position:absolute;transition:all .2s ease-out;width:100%}.header__menu__dropdown-icon:before{top:15px}.header__menu__dropdown-icon:after{top:-15px}.header__menu__dropdown-list{width:100%;flex-direction:column;align-items:center;border-top:1px solid #333}.header__menu__dropdown-list li{padding:.5em}.header__search{font-family:Courier New,sans-serif;color:#000;width:100%;margin:0 auto}.header__search__input{padding:.5em 1em;font-family:Courier New,sans-serif;font-size:1.2em;width:100%;height:75px;border-radius:0;border:1px solid #000;border-top:none}.header__search__input:focus{outline:none}.header__search .search-item__link{border-bottom:none}.main{min-width:0;min-height:80vh}.main .pagination{margin:3em auto 2em;display:flex;justify-content:space-between}.footer{display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:1em}h1{font-size:3.5rem}h2{font-size:2.5rem}h3{font-size:2rem}h4{font-size:1.5rem}a{color:inherit;text-decoration:none;transition:background .3s;border-bottom:2px dashed #37474f}a:hover{border-color:#d14}.button{padding:.5em .75em;font-size:1.2em;text-align:center;border:1px solid #000;box-shadow:7px 7px 0 0 #333}.button:hover{color:#d14;border:1px solid #000;transform:translate(4px,4px);box-shadow:3px 3px 0 0 #333}li{margin-top:.25em}pre,code{font-family:lucida console,Monaco,monospace;font-size:12pt;background-color:#f1f1f1}blockquote{margin:inherit auto;margin-left:1em;padding:1em;border-left:5px solid #999}blockquote:before{display:none}blockquote:not(:first-of-type){margin-top:.5em}blockquote p{color:#555;font-size:1.25em;font-family:times new roman,serif}.figure{width:100%;max-width:100%}.figure--with-caption{display:flex;border-top:6px solid #333}.figure__image--with-caption{min-width:70%}.figure__caption{background-color:#333;color:#fff;font-weight:700;padding:.5em 1em;height:min-content;word-wrap:break-word}.post-it{width:100%;padding:1.5em}.post-it--tip{background-color:#fffacd}.post-it--info{background-color:azure}.post-it--danger{background-color:#ffcccb}.post-it--success{background-color:#d0f0c0}.post-it__title{font-weight:700;font-size:1.5em}.post-it__content{margin-top:1em}.product{width:100%;display:flex;justify-content:space-between;padding:1.5em;border:1px solid #333}.product__image{margin:auto;width:100%;min-width:250px;max-width:400px}.product__content{margin-left:2em;align-self:center;display:flex;flex-direction:column}.product__title{font-weight:700;font-size:1.5rem}.product__description{margin-top:1em}.product__cta{margin-top:1em}.social-share{display:flex;align-self:center;align-items:center}.social-share__button{margin:0 .5em;border-radius:50%;background-size:60%}#tags{margin:0;padding:0}#tags li{display:inline}.content{width:100%}.content>*{margin-top:1.5em}.content>h1{margin-top:.5em}.content pre{overflow:auto;padding:.5em}.content code{padding:.1em}.content table{display:block;overflow-x:auto;border-collapse:collapse}.content table td,.content table th{border:1px solid #ddd}.content table td{padding:.5em 1em}.content table th{padding:1em 2em;background-color:#333;color:#fff}.content table tr:nth-child(even){background-color:#f1f1f1}.content table tr:hover{background-color:#ddd}.content .highlight .chroma{background-color:#f1f1f1}.content .under-title{display:flex;flex-wrap:wrap;justify-content:space-between;font-size:1rem}.content .under-title__info,.content .under-title__social-share{align-self:center}.content .ad{display:flex;margin:1rem auto;align-content:center;width:min-content;height:min-content;min-width:320px;min-height:320px;border:1px solid #333}.content .ad__fallback{display:flex;align-items:center}.content .ad__fallback p{margin:auto}.content .author{display:flex;flex-direction:column;align-items:center;background-color:#f1f1f1;padding:1.5rem}.content .author>*:not(:first-child){margin-top:1rem}.content .author__name{font-weight:700;font-size:1.5em}.content .author__image{border-radius:100px}.content .author__bio,.content .author__cta{text-align:center}.content .author__cta{font-size:1.25em}.summary:not(:first-of-type) h2{margin-top:2.5em}.summary>*{margin-top:1.25em}.summary__title{text-align:center}.summary .button{display:block;margin:inherit 1em}@media(max-width:1200px){body{grid-gap:0}.main,.header,.footer{grid-column:1/span 12}.main,.footer{margin:.5em .75em}.footer{flex-direction:column;align-items:center;margin-bottom:1em}.header{margin:0}.header__menu{border:none;border-bottom:1px solid #333;flex-wrap:wrap;justify-content:space-between}.header__menu__list{display:none}.header__menu__dropdown-label{display:block}.header__search__input{border:none;border-bottom:1px solid #333}h1{font-size:2.5rem}h2{font-size:2rem}h3{font-size:1.66rem}h4{font-size:1.25rem}.post-it{margin-left:0;margin-right:0}}@media(max-width:600px){.under-title__social-share{width:100%;margin-top:1.5em;justify-content:space-between}.figure{flex-direction:column-reverse}.figure--with-caption{border-top:none}.figure__caption{position:relative;max-width:100%}.product{flex-wrap:wrap}.product__content{margin-left:unset;text-align:center}.product__title{margin-top:1em}}
+    
+    
+</style><script async src="https://cdn.ampproject.org/v0.js"></script><script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script><script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script><script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script><script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+
+
+<script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
+
+
+
+    <script async custom-element="amp-next-page" src="https://cdn.ampproject.org/v0/amp-next-page-1.0.js"></script>
+</head>
+	<body><amp-install-serviceworker
+  src="https://raviwu.github.io/sw.js"
+  data-iframe-src="https://raviwu.github.io/install-sw.html"
+  layout="nodisplay">
+</amp-install-serviceworker>
+
+
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      
+        
+        {
+          "@type": "ListItem",
+          "position":  1 ,
+          "item": {
+            "@id": "https:\/\/raviwu.github.io\/",
+            "name": "Home"
+          }
+        }
+      
+        ,
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "item": {
+            "@id": "https:\/\/raviwu.github.io\/go-array\/",
+            "name": "Go array"
+          }
+        }
+       ]
+  }
+</script><script type="application/ld+json">
+  {
+    "@context":"http://schema.org",
+    "@type": "BlogPosting",
+    "image": "https:\/\/raviwu.github.io\/",
+    "url": "https:\/\/raviwu.github.io\/go-array\/",
+    "headline": "Go | 陣列（Array）",
+    "alternativeHeadline": "Go | 陣列（Array）",
+    "dateCreated": "2020-10-26T11:36:46",
+    "datePublished": "2020-10-26T11:36:46",
+    "dateModified": "2020-10-26T11:36:46",
+    "inLanguage": "en",
+    "isFamilyFriendly": "true",
+    "copyrightYear": "2020",
+    "copyrightHolder": "Ravi Wu",
+    "accountablePerson": {
+      "@type": "Person",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io",
+      "image": "https:\/\/raviwu.github.io\/",
+      "description": ""
+    },
+    "creator": {
+      "@type": "Person",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io",
+      "image": "https:\/\/raviwu.github.io\/",
+      "description": ""
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io\/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "\/lwstudio-logo.png",
+        "width":"600",
+        "height":"60"
+      }
+    },
+    "mainEntityOfPage": "https:\/\/raviwu.github.io\/go-array\/",
+    "keywords": "null",
+    "genre": "[\"go\",\"array\",\"coding\",\"data structure\"]",
+    "articleSection": "Ravi Wu"
+  }
+</script><header class="header"><nav class="header__menu" next-page-hide>
+    <a class="header__menu__logo" data-rel="prefetch" href="https://raviwu.github.io/" aria-label="Go back to the homepage"><svg width="256" height="256" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <rect x="2.0205e-9" y="2.0205e-9" width="259.25" height="261.42" fill="#333" stroke-width="1.0148"/>
+ <path d="m171.89 116.28-53.696 89.36h-9.728l9.617-58.227-30.2 0.047c-2.684 0-4.855-2.172-4.855-4.855 0-1.152 1.07-3.102 1.07-3.102l53.52-89.254 9.9 0.043-9.86 58.317 30.413-0.043c2.684 0 4.855 2.172 4.855 4.855 0 1.088-0.427 2.044-1.033 2.854l4e-3 4e-3z" fill="#fff" fill-rule="evenodd"/>
+</svg>
+</a>
+<ul class="header__menu__list">
+    
+        
+        <li>
+            <a href="https://github.com/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>GitHub</span>
+            </a>
+        </li>
+    
+        
+        <li>
+            <a href="https://www.linkedin.com/in/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>Linkedin</span>
+            </a>
+        </li>
+    
+</ul>
+
+<input class="header__menu__dropdown-input" type="checkbox" id="dropdown"/>
+<label class="header__menu__dropdown-label" for="dropdown" role="button" aria-label="Open dropdown menu">
+    <span class="header__menu__dropdown-icon"></span>
+</label>
+
+<ul class="header__menu__dropdown-list">
+    
+        
+        <li>
+            <a href="https://github.com/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>GitHub</span>
+            </a>
+        </li>
+    
+        
+        <li>
+            <a href="https://www.linkedin.com/in/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>Linkedin</span>
+            </a>
+        </li>
+    
+</ul></nav><amp-autocomplete
+    on="select:AMP.navigateTo(url=event.value)"
+    filter="substring"
+    filter-value="title"
+    src="https://raviwu.github.io/search.json"
+    min-characters="1"
+    class="header__search"
+    next-page-hide>
+    <input class="header__search__input" type="text" placeholder="Search for a post..." aria-label="Search for a post...">
+    <template class="header__search__item-template" type="amp-mustache" id="amp-template-custom">
+        <div class="search-item" data-value="{{url}}">
+            <small class="search-item__date">{{date}}</small> <br>
+            <a class="search-item__link" href="{{url}}">
+                {{title}}
+            </a>
+        </div>
+    </template>
+</amp-autocomplete></header>
+		<main class="main">
+	<article class="content">
+		<p>Go 的陣列是連續空間內儲存了固定數目之相同型別物件的容器。當使用 <code>var array [5]int</code> 宣告時，陣列內儲存的型別或者長度都不能再改變，如果需要更多的空間來儲存新的物件，需要宣告一個新的陣列後把原先的值搬過去新的陣列。</p>
+<p>在 Go 語言中宣告新的變數且無賦值時，這些變數所指向的物件都會以其零值（Zero Value）初始化。有關於 Go 的零值，請參考
+
+
+<a href="https://dave.cheney.net/2013/01/19/what-is-the-zero-value-and-why-is-it-useful"
+     target="_blank" rel="nofollow noopener noreferrer" 
+    >這邊</a>。常用的零值：</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>零值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>數值</td>
+<td>0</td>
+</tr>
+<tr>
+<td>布林值</td>
+<td>false</td>
+</tr>
+<tr>
+<td>字串</td>
+<td>&quot;&quot;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="初始化陣列的同時賦值">初始化陣列的同時賦值</h2>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 宣告一個 array1 變數的 int 陣列，長度為 5 且值依序分別為 1,2,3,4,5
+</span><span class="c1"></span><span class="nx">array1</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span>
+
+<span class="c1">// 宣告一個 array2 變數的 int 陣列，長度為 5 且值依序分別為 0,1,2,0,0
+</span><span class="c1"></span><span class="nx">array2</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+<span class="c1">// 宣告一個 array3 變數的 int 陣列，長度為取決於賦值內容
+</span><span class="c1">// 如以下 array3 的長度為 3
+</span><span class="c1"></span><span class="nx">array3</span> <span class="o">:=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
+</code></pre></div><h2 id="陣列的操作">陣列的操作</h2>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 宣告一個 array 變數的 int 陣列，長度為 3 且值依序分別為 1,2,3
+</span><span class="c1"></span><span class="nx">array</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
+
+<span class="c1">// 把 index 2 的值改為 5
+</span><span class="c1"></span><span class="nx">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">=</span> <span class="mi">5</span>
+</code></pre></div><h2 id="使用指標為陣列的值">使用指標為陣列的值</h2>
+<p>初始化 <code>array := [3]*int{0: new(int), 1: new(int)}</code> 時：</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>nil</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>0</td>
+<td><code>error: cannot use assignment (array[i]) = (nil) as value</code></td>
+</tr>
+</tbody>
+</table>
+<p>試試看改變陣列指標的值 <code>*array[0] = 100</code> ：</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>nil</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>100</td>
+<td><code>error: cannot use assignment (array[i]) = (nil) as value</code></td>
+</tr>
+</tbody>
+</table>
+<p>這邊可以注意到，指標的記憶體位址是一樣的，但值改變了。</p>
+<p>假如想要替現在為 <code>nil</code> 的位置指定值，首先要在記憶體裡做出一個指標。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">i</span> <span class="o">:=</span> <span class="mi">200</span>
+<span class="nx">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">i</span>
+</code></pre></div><p>透過 <code>i := 200</code> 的方式宣告了 <code>i</code> 以後，使用 <code>&amp;i</code> 取得 <code>i</code> 的指標並賦值給 <code>array[2]</code> 後，會變成：</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>0xc0000b6038</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>100</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<p>假如另外再賦值另一個變數 <code>j</code> 時，指標位址會變：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">j</span> <span class="o">:=</span> <span class="mi">200</span>
+<span class="nx">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">j</span>
+</code></pre></div><p>這邊例外宣告了變數 <code>j</code> 給整數 200，其實是另外在記憶體裡找了一塊地方塞值 200 給指標 <code>j</code>，到此， <code>i</code> 跟 <code>j</code> 的位置不同，但值相同。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">i</span> <span class="o">:=</span> <span class="mi">200</span>
+<span class="nx">j</span> <span class="o">:=</span> <span class="mi">200</span>
+<span class="nx">k</span> <span class="o">:=</span> <span class="nx">j</span>
+
+<span class="nx">i</span> <span class="o">==</span> <span class="nx">j</span> <span class="c1">// true
+</span><span class="c1"></span><span class="nx">k</span> <span class="o">==</span> <span class="nx">j</span> <span class="c1">// true
+</span><span class="c1"></span>
+<span class="o">&amp;</span><span class="nx">i</span> <span class="o">==</span> <span class="o">&amp;</span><span class="nx">j</span> <span class="c1">// false
+</span><span class="c1"></span><span class="o">&amp;</span><span class="nx">k</span> <span class="o">==</span> <span class="o">&amp;</span><span class="nx">j</span> <span class="c1">// false
+</span><span class="c1"></span>
+<span class="nx">k</span> <span class="p">=</span> <span class="mi">300</span>
+<span class="nx">k</span> <span class="o">==</span> <span class="nx">j</span> <span class="c1">// false
+</span></code></pre></div><p>突然跳來實驗一下 Go 的指標，可以發現每 <code>:=</code> 了一個指標，都是在記憶體裡拿一塊新的區域來存值，這幾個指標都是不同位置，所以假若 <code>*k</code> 被改值時不會影響到 <code>i</code> 或 <code>j</code> 這兩個指標所指向的值。</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>0xc0000b6058</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>100</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<p>重新指定一個指標給 <code>array[2] = new(int)</code> 也是一樣的意思：</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>0xc0000b6078</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>100</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>要注意的是，如果複製以指標為值的陣列時，指標的位置會一樣：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">array1</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="kt">int</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="nb">new</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span> <span class="mi">1</span><span class="p">:</span> <span class="nb">new</span><span class="p">(</span><span class="kt">int</span><span class="p">)}</span>
+<span class="nx">array1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">=</span> <span class="mi">1</span>
+<span class="nx">array1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="mi">2</span>
+
+<span class="nx">array2</span> <span class="o">:=</span> <span class="nx">array1</span>
+</code></pre></div><p>可以發現 <code>array1</code> 跟 <code>array2</code> 裡頭放的指標，地址都是一樣的。</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array1[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+</tr>
+<tr>
+<td>array2[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+</tr>
+<tr>
+<td>*array1[index]</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>*array2[index]</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>當然，這就表示，如果改動指標指向的值，兩個陣列都會被影響，請注意！</p>
+<h2 id="傳送陣列給函數">傳送陣列給函數</h2>
+<p>由於 Golang 的函數是傳值（passed by value），所以把陣列直接傳進去函數裡面，對於程式效能會有負面影響。</p>
+<p>可以試試看下面的實驗：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 宣告一個 8MB 的陣列
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">array</span> <span class="p">[</span><span class="mf">1e6</span><span class="p">]</span><span class="kt">int</span>
+
+<span class="c1">// 把陣列直接傳到 foo 函數裡
+</span><span class="c1"></span><span class="nf">foo</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span>
+
+<span class="c1">// foo 直接接收陣列
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">foo</span><span class="p">(</span><span class="nx">array</span> <span class="p">[</span><span class="mf">1e6</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div><p>每一次 <code>foo</code> 這個函數被呼叫，就會有 8MB 的空間在 stack 被取用。然後傳入的陣列會被複製到這個新取用的空間裡。即使你的機器可以處理這樣的負載，但其實有更好的方式。</p>
+<h3 id="使用指標pointer作為參數">使用指標（Pointer）作為參數</h3>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">array</span> <span class="p">[</span><span class="mf">1e6</span><span class="p">]</span><span class="kt">int</span>
+
+<span class="nf">foo</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">array</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">foo</span><span class="p">(</span><span class="nx">array</span> <span class="o">*</span><span class="p">[</span><span class="mf">1e6</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div><p>這麼做，呼叫 <code>foo</code> 的時候就不會浪費額外的記憶體空間去複製傳入的值，而是使用 <code>array</code> 這個已經建立好的陣列。</p>
+<p>但這麼做要小心函數是否對於這個參數的值做改變，由於傳入的是指標，所以對於陣列的值做任何改變時，同一個記憶體中的數值會被更改。</p>
+
+
+    <h2 class="related-content__title">Related readings 📖</h2>
+    
+        <p class="related-content__item"><a href="https://raviwu.github.io/java-inputstream-datainputstream-and-bufferedinputstream/" data-rel="prefetch">InputStream 、 DataInputStream 與 BufferedInputStream</a></p>
+    
+        <p class="related-content__item"><a href="https://raviwu.github.io/java-generic-functional-interface-specilization/" data-rel="prefetch">泛型 Java Functional Interface 的特規化</a></p>
+    
+        <p class="related-content__item"><a href="https://raviwu.github.io/java-use-combo-condition-for-loop/" data-rel="prefetch">使用複合條件來判斷是否進入下一輪 Java 迴圈</a></p>
+    
+
+    <section class="author">
+        
+            <p class="author__name">Ravi Wu</p>
+        
+        
+        
+        <p class="author__cta">If you liked it share and comment!</p>
+        <div class="social-share"><amp-social-share class="social-share__button"
+    aria-label="Share content" type="system" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Facebook" type="facebook" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Twitter" type="twitter" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Linkedin" type="linkedin" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Pinterest" type="pinterest" width="50" height="50"></amp-social-share></div>
+    </section>
+</article>
+
+		</main>
+		<footer class="footer"><div class="footer__copyright">© Ravi Wu 2020</div><div class="footer__languages">
+	
+</div></footer>
+		
+
+
+<amp-next-page>
+    <script type="application/json">
+        [{
+                    "image": "",
+                    "title": "InputStream 、 DataInputStream 與 BufferedInputStream",
+                    "url": "https:\/\/raviwu.github.io\/java-inputstream-datainputstream-and-bufferedinputstream\/"
+                },{
+                    "image": "",
+                    "title": "泛型 Java Functional Interface 的特規化",
+                    "url": "https:\/\/raviwu.github.io\/java-generic-functional-interface-specilization\/"
+                },{
+                    "image": "",
+                    "title": "使用複合條件來判斷是否進入下一輪 Java 迴圈",
+                    "url": "https:\/\/raviwu.github.io\/java-use-combo-condition-for-loop\/"
+                }]
+    </script>
+</amp-next-page>
+
+	</body>
+</html>

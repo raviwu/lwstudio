@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html ⚡ lang="en">
+	<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+<title>Rails grape API 上實作 JWT 多重登入</title>
+    
+<meta name="description" content="" />
+<link rel="canonical" href="https://raviwu.github.io/implement-jwt-in-grape-api/" >
+<link rel="sitemap" href="https://raviwu.github.io/sitemap.xml" type="application/xml" /><meta property="og:title" content="Rails grape API 上實作 JWT 多重登入">
+<meta property="og:url" content="https://raviwu.github.io/implement-jwt-in-grape-api/">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://raviwu.github.io/logo.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content=""><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rails grape API 上實作 JWT 多重登入">
+<meta name="twitter:url" content="https://raviwu.github.io/implement-jwt-in-grape-api/">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://raviwu.github.io/logo.png">
+<meta name="twitter:site" content=""><meta name="theme-color" content="#333"/>
+<link rel="manifest" href="https://raviwu.github.io/manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="https://raviwu.github.io/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://raviwu.github.io/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://raviwu.github.io/icons/apple-touch-icon.png"><style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes  -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
+<noscript>
+    <style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>
+</noscript><style amp-custom>
+    
+        *,*::before,*::after{box-sizing:border-box}ul[class],ol[class]{padding:0}body,h1,h2,h3,h4,p,ul[class],ol[class],li,figure,figcaption,blockquote,dl,dd{margin:0}body{min-height:100vh;scroll-behavior:smooth;text-rendering:optimizeSpeed}ul[class],ol[class]{list-style:none}a:not([class]){text-decoration-skip-ink:auto}img{max-width:100%;display:block}input,button,textarea,select{font:inherit}.chroma{background-color:#fff}.chroma .err{color:#a61717;background-color:#e3d2d2}.chroma .lntd{vertical-align:top;padding:0;margin:0;border:0}.chroma .lntable{border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block}.chroma .hl{display:block;width:100%;background-color:#ffc}.chroma .lnt{margin-right:.4em;padding:0 .4em;color:#7f7f7f}.chroma .ln{margin-right:.4em;padding:0 .4em;color:#7f7f7f}.chroma .k{color:#000;font-weight:700}.chroma .kc{color:#000;font-weight:700}.chroma .kd{color:#000;font-weight:700}.chroma .kn{color:#000;font-weight:700}.chroma .kp{color:#000;font-weight:700}.chroma .kr{color:#000;font-weight:700}.chroma .kt{color:#458;font-weight:700}.chroma .na{color:teal}.chroma .nb{color:#0086b3}.chroma .bp{color:#999}.chroma .nc{color:#458;font-weight:700}.chroma .no{color:teal}.chroma .nd{color:#3c5d5d;font-weight:700}.chroma .ni{color:purple}.chroma .ne{color:#900;font-weight:700}.chroma .nf{color:#900;font-weight:700}.chroma .nl{color:#900;font-weight:700}.chroma .nn{color:#555}.chroma .nt{color:navy}.chroma .nv{color:teal}.chroma .vc{color:teal}.chroma .vg{color:teal}.chroma .vi{color:teal}.chroma .s{color:#d14}.chroma .sa{color:#d14}.chroma .sb{color:#d14}.chroma .sc{color:#d14}.chroma .dl{color:#d14}.chroma .sd{color:#d14}.chroma .s2{color:#d14}.chroma .se{color:#d14}.chroma .sh{color:#d14}.chroma .si{color:#d14}.chroma .sx{color:#d14}.chroma .sr{color:#009926}.chroma .s1{color:#d14}.chroma .ss{color:#990073}.chroma .m{color:#099}.chroma .mb{color:#099}.chroma .mf{color:#099}.chroma .mh{color:#099}.chroma .mi{color:#099}.chroma .il{color:#099}.chroma .mo{color:#099}.chroma .o{color:#000;font-weight:700}.chroma .ow{color:#000;font-weight:700}.chroma .c{color:#998;font-style:italic}.chroma .ch{color:#998;font-style:italic}.chroma .cm{color:#998;font-style:italic}.chroma .c1{color:#998;font-style:italic}.chroma .cs{color:#999;font-weight:700;font-style:italic}.chroma .cp{color:#999;font-weight:700;font-style:italic}.chroma .cpf{color:#999;font-weight:700;font-style:italic}.chroma .gd{color:#000;background-color:#fdd}.chroma .ge{color:#000;font-style:italic}.chroma .gr{color:#a00}.chroma .gh{color:#999}.chroma .gi{color:#000;background-color:#dfd}.chroma .go{color:#888}.chroma .gp{color:#555}.chroma .gs{font-weight:700}.chroma .gu{color:#aaa}.chroma .gt{color:#a00}.chroma .gl{text-decoration:underline}.chroma .w{color:#bbb}body{max-width:100%;display:grid;grid-template-columns:repeat(12,1fr);grid-gap:1em 1em;font-size:1.2em;font-family:Courier New,sans-serif;line-height:1.6;color:#000}amp-next-page{grid-column:span 12}.header,.main,.footer{grid-column:4/span 6}.header{margin-top:1em}.header__menu{margin:0;padding:0;display:flex;flex-direction:row;justify-content:flex-start;align-items:center;overflow:auto;border:1px solid #333}.header__menu a{font-size:1.2em;white-space:nowrap;border-bottom:none}.header__menu a:hover{color:#d14}.header__menu__logo{line-height:0}.header__menu__logo svg{width:75px;height:75px;min-width:75px;min-height:75px}.header__menu__list{display:flex;flex-grow:1;flex-wrap:nowrap;align-items:center;justify-content:space-around}.header__menu__list li{padding:0 1em;display:inline}.header__menu__dropdown-input,.header__menu__dropdown-label,.header__menu__dropdown-list{display:none}.header__menu__dropdown-input:checked~.header__menu__dropdown-list{display:flex}.header__menu__dropdown-input:checked~.header__menu__dropdown-label .header__menu__dropdown-icon{background:0 0}.header__menu__dropdown-input:checked~.header__menu__dropdown-label .header__menu__dropdown-icon:before{top:0;transform:rotate(-45deg)}.header__menu__dropdown-input:checked~.header__menu__dropdown-label .header__menu__dropdown-icon:after{top:0;transform:rotate(45deg)}.header__menu__dropdown-label{cursor:pointer;padding:1em}.header__menu__dropdown-icon{background:#333;display:block;height:2px;position:relative;transition:background .2s ease-out;width:36px}.header__menu__dropdown-icon:before,.header__menu__dropdown-icon:after{background:#333;content:'';display:block;height:100%;position:absolute;transition:all .2s ease-out;width:100%}.header__menu__dropdown-icon:before{top:15px}.header__menu__dropdown-icon:after{top:-15px}.header__menu__dropdown-list{width:100%;flex-direction:column;align-items:center;border-top:1px solid #333}.header__menu__dropdown-list li{padding:.5em}.header__search{font-family:Courier New,sans-serif;color:#000;width:100%;margin:0 auto}.header__search__input{padding:.5em 1em;font-family:Courier New,sans-serif;font-size:1.2em;width:100%;height:75px;border-radius:0;border:1px solid #000;border-top:none}.header__search__input:focus{outline:none}.header__search .search-item__link{border-bottom:none}.main{min-width:0;min-height:80vh}.main .pagination{margin:3em auto 2em;display:flex;justify-content:space-between}.footer{display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:1em}h1{font-size:3.5rem}h2{font-size:2.5rem}h3{font-size:2rem}h4{font-size:1.5rem}a{color:inherit;text-decoration:none;transition:background .3s;border-bottom:2px dashed #37474f}a:hover{border-color:#d14}.button{padding:.5em .75em;font-size:1.2em;text-align:center;border:1px solid #000;box-shadow:7px 7px 0 0 #333}.button:hover{color:#d14;border:1px solid #000;transform:translate(4px,4px);box-shadow:3px 3px 0 0 #333}li{margin-top:.25em}pre,code{font-family:lucida console,Monaco,monospace;font-size:12pt;background-color:#f1f1f1}blockquote{margin:inherit auto;margin-left:1em;padding:1em;border-left:5px solid #999}blockquote:before{display:none}blockquote:not(:first-of-type){margin-top:.5em}blockquote p{color:#555;font-size:1.25em;font-family:times new roman,serif}.figure{width:100%;max-width:100%}.figure--with-caption{display:flex;border-top:6px solid #333}.figure__image--with-caption{min-width:70%}.figure__caption{background-color:#333;color:#fff;font-weight:700;padding:.5em 1em;height:min-content;word-wrap:break-word}.post-it{width:100%;padding:1.5em}.post-it--tip{background-color:#fffacd}.post-it--info{background-color:azure}.post-it--danger{background-color:#ffcccb}.post-it--success{background-color:#d0f0c0}.post-it__title{font-weight:700;font-size:1.5em}.post-it__content{margin-top:1em}.product{width:100%;display:flex;justify-content:space-between;padding:1.5em;border:1px solid #333}.product__image{margin:auto;width:100%;min-width:250px;max-width:400px}.product__content{margin-left:2em;align-self:center;display:flex;flex-direction:column}.product__title{font-weight:700;font-size:1.5rem}.product__description{margin-top:1em}.product__cta{margin-top:1em}.social-share{display:flex;align-self:center;align-items:center}.social-share__button{margin:0 .5em;border-radius:50%;background-size:60%}#tags{margin:0;padding:0}#tags li{display:inline}.content{width:100%}.content>*{margin-top:1.5em}.content>h1{margin-top:.5em}.content pre{overflow:auto;padding:.5em}.content code{padding:.1em}.content table{display:block;overflow-x:auto;border-collapse:collapse}.content table td,.content table th{border:1px solid #ddd}.content table td{padding:.5em 1em}.content table th{padding:1em 2em;background-color:#333;color:#fff}.content table tr:nth-child(even){background-color:#f1f1f1}.content table tr:hover{background-color:#ddd}.content .highlight .chroma{background-color:#f1f1f1}.content .under-title{display:flex;flex-wrap:wrap;justify-content:space-between;font-size:1rem}.content .under-title__info,.content .under-title__social-share{align-self:center}.content .ad{display:flex;margin:1rem auto;align-content:center;width:min-content;height:min-content;min-width:320px;min-height:320px;border:1px solid #333}.content .ad__fallback{display:flex;align-items:center}.content .ad__fallback p{margin:auto}.content .author{display:flex;flex-direction:column;align-items:center;background-color:#f1f1f1;padding:1.5rem}.content .author>*:not(:first-child){margin-top:1rem}.content .author__name{font-weight:700;font-size:1.5em}.content .author__image{border-radius:100px}.content .author__bio,.content .author__cta{text-align:center}.content .author__cta{font-size:1.25em}.summary:not(:first-of-type) h2{margin-top:2.5em}.summary>*{margin-top:1.25em}.summary__title{text-align:center}.summary .button{display:block;margin:inherit 1em}@media(max-width:1200px){body{grid-gap:0}.main,.header,.footer{grid-column:1/span 12}.main,.footer{margin:.5em .75em}.footer{flex-direction:column;align-items:center;margin-bottom:1em}.header{margin:0}.header__menu{border:none;border-bottom:1px solid #333;flex-wrap:wrap;justify-content:space-between}.header__menu__list{display:none}.header__menu__dropdown-label{display:block}.header__search__input{border:none;border-bottom:1px solid #333}h1{font-size:2.5rem}h2{font-size:2rem}h3{font-size:1.66rem}h4{font-size:1.25rem}.post-it{margin-left:0;margin-right:0}}@media(max-width:600px){.under-title__social-share{width:100%;margin-top:1.5em;justify-content:space-between}.figure{flex-direction:column-reverse}.figure--with-caption{border-top:none}.figure__caption{position:relative;max-width:100%}.product{flex-wrap:wrap}.product__content{margin-left:unset;text-align:center}.product__title{margin-top:1em}}
+    
+    
+</style><script async src="https://cdn.ampproject.org/v0.js"></script><script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script><script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script><script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script><script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+
+
+<script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
+
+
+
+    <script async custom-element="amp-next-page" src="https://cdn.ampproject.org/v0/amp-next-page-1.0.js"></script>
+</head>
+	<body><amp-install-serviceworker
+  src="https://raviwu.github.io/sw.js"
+  data-iframe-src="https://raviwu.github.io/install-sw.html"
+  layout="nodisplay">
+</amp-install-serviceworker>
+
+
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      
+        
+        {
+          "@type": "ListItem",
+          "position":  1 ,
+          "item": {
+            "@id": "https:\/\/raviwu.github.io\/",
+            "name": "Home"
+          }
+        }
+      
+        ,
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "item": {
+            "@id": "https:\/\/raviwu.github.io\/implement-jwt-in-grape-api\/",
+            "name": "Implement jwt in grape api"
+          }
+        }
+       ]
+  }
+</script><script type="application/ld+json">
+  {
+    "@context":"http://schema.org",
+    "@type": "BlogPosting",
+    "image": "https:\/\/raviwu.github.io\/",
+    "url": "https:\/\/raviwu.github.io\/implement-jwt-in-grape-api\/",
+    "headline": "Rails grape API 上實作 JWT 多重登入",
+    "alternativeHeadline": "Rails grape API 上實作 JWT 多重登入",
+    "dateCreated": "2016-06-10T05:05:44",
+    "datePublished": "2016-06-10T05:05:44",
+    "dateModified": "2016-06-10T05:05:44",
+    "inLanguage": "en",
+    "isFamilyFriendly": "true",
+    "copyrightYear": "2016",
+    "copyrightHolder": "Ravi Wu",
+    "accountablePerson": {
+      "@type": "Person",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io",
+      "image": "https:\/\/raviwu.github.io\/",
+      "description": ""
+    },
+    "creator": {
+      "@type": "Person",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io",
+      "image": "https:\/\/raviwu.github.io\/",
+      "description": ""
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ravi Wu",
+      "url": "https:\/\/raviwu.github.io\/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "\/lwstudio-logo.png",
+        "width":"600",
+        "height":"60"
+      }
+    },
+    "mainEntityOfPage": "https:\/\/raviwu.github.io\/implement-jwt-in-grape-api\/",
+    "keywords": "null",
+    "genre": "[\"rails\",\"jwt\",\"coding\"]",
+    "articleSection": "Ravi Wu"
+  }
+</script><header class="header"><nav class="header__menu" next-page-hide>
+    <a class="header__menu__logo" data-rel="prefetch" href="https://raviwu.github.io/" aria-label="Go back to the homepage"><svg width="256" height="256" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <rect x="2.0205e-9" y="2.0205e-9" width="259.25" height="261.42" fill="#333" stroke-width="1.0148"/>
+ <path d="m171.89 116.28-53.696 89.36h-9.728l9.617-58.227-30.2 0.047c-2.684 0-4.855-2.172-4.855-4.855 0-1.152 1.07-3.102 1.07-3.102l53.52-89.254 9.9 0.043-9.86 58.317 30.413-0.043c2.684 0 4.855 2.172 4.855 4.855 0 1.088-0.427 2.044-1.033 2.854l4e-3 4e-3z" fill="#fff" fill-rule="evenodd"/>
+</svg>
+</a>
+<ul class="header__menu__list">
+    
+        
+        <li>
+            <a href="https://github.com/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>GitHub</span>
+            </a>
+        </li>
+    
+        
+        <li>
+            <a href="https://www.linkedin.com/in/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>Linkedin</span>
+            </a>
+        </li>
+    
+</ul>
+
+<input class="header__menu__dropdown-input" type="checkbox" id="dropdown"/>
+<label class="header__menu__dropdown-label" for="dropdown" role="button" aria-label="Open dropdown menu">
+    <span class="header__menu__dropdown-icon"></span>
+</label>
+
+<ul class="header__menu__dropdown-list">
+    
+        
+        <li>
+            <a href="https://github.com/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>GitHub</span>
+            </a>
+        </li>
+    
+        
+        <li>
+            <a href="https://www.linkedin.com/in/raviwu"
+                 target="_blank" rel="nofollow noopener noreferrer" >
+                <span>Linkedin</span>
+            </a>
+        </li>
+    
+</ul></nav><amp-autocomplete
+    on="select:AMP.navigateTo(url=event.value)"
+    filter="substring"
+    filter-value="title"
+    src="https://raviwu.github.io/search.json"
+    min-characters="1"
+    class="header__search"
+    next-page-hide>
+    <input class="header__search__input" type="text" placeholder="Search for a post..." aria-label="Search for a post...">
+    <template class="header__search__item-template" type="amp-mustache" id="amp-template-custom">
+        <div class="search-item" data-value="{{url}}">
+            <small class="search-item__date">{{date}}</small> <br>
+            <a class="search-item__link" href="{{url}}">
+                {{title}}
+            </a>
+        </div>
+    </template>
+</amp-autocomplete></header>
+		<main class="main">
+	<article class="content">
+		<p>多重登入的需求，在服務本身允許「跨裝置體驗」或者是「接受不同 request agent (APP request / mobile browser)」的時候顯得重要。</p>
+<p>理想情況下，可以讓使用者在介面上面清楚知道目前帳號的登入狀態，並在登入數超過服務上限的時候，讓使用者自己選擇要移除登入授權的裝置，使用者流程大概會像（
+
+
+<a href="https://www.authy.com/blog/multi-multi-factor-authentication"
+     target="_blank" rel="nofollow noopener noreferrer" 
+    >這篇文</a>）那樣，要做到類似參考連結這樣的管理介面，需要<strike>我目前還不會的</strike>前端的配合建置與基本的 session 管理 API。本篇只先建置允許使用多重登入的資料結構與登入驗證 API。</p>
+<p>選擇用 
+
+
+<a href="https://jwt.io"
+     target="_blank" rel="nofollow noopener noreferrer" 
+    >JWT (Jason Web Token)</a> 作為主要的憑證溝通，優點有一些：</p>
+<ol>
+<li>透過加密 payload 來比對資料庫內容的方式，可以不用在資料表中「直接存入」與憑證相關的訊息，加密跟解密只要透過協定就能進行調整。</li>
+<li>payload 裡面塞入的訊息可以自訂，在各服務跟裝置之間交換加密過後的使用者資料。</li>
+<li>signing key / protocol 可以在有資安疑慮時更換。</li>
+</ol>
+<p>使用 Devise 的 Rails 捧油也可參考 
+
+
+<a href="https://github.com/lynndylanhurley/devise_token_auth"
+     target="_blank" rel="nofollow noopener noreferrer" 
+    >devise_token_auth</a> 這個 gem，整合效果在文件上面看起來很完善，但因為目前我手邊的系統絕大多數的 request 都來自 grape API endpoint ，比較過後，跟搞懂並駕馭 devise 設定比起來，我還是選擇自刻 JWT 較節省開發時間。</p>
+<hr>
+<p>在 Rails grape API 上實作 JWT 多重登入，分 4 個階段。</p>
+<ol>
+<li>建立 user_sessions 資料表跟 UserSession Model Setup，目前找得到的 
+
+
+<a href="https://www.sitepoint.com/introduction-to-using-jwt-in-rails"
+     target="_blank" rel="nofollow noopener noreferrer" 
+    >Rails JWT 整合教學</a>大多是用在 Controller / Rails View 上，為了之後如果要導入前端管理裝置時可以很方便地去刪除跟紀錄不要的 Session，我選擇了透過 UserSession 這個 model 來做媒介，之後要新增 API 的時候直接去對這個 table 做 query 跟各種欄位處理，盡量把 Session 管理跟目前龐大的 users table 切乾淨。</li>
+<li>寫一隻自己的 JasonWebToken Service 把 jwt 的 code 包裝得更適合自己的系統使用：雖然 jwt 這隻 gem 的語法已經寫得很美，但還想更方便地只要把 headers 塞進去這個 wrapper 就可以得到 user object 回傳或者是指定的錯誤訊息。</li>
+<li>做好資料結構跟 JasonWebToken Service 後，就可以開始使用準備好的工具來更換 Grape API 的登入跟檢查憑證機制，首先要在登入的 API output 提供 jwt 字串。</li>
+<li>最後，在檢查憑證機制的 helper 裡使用 JasonWebToken class 去 decode request 裡面的 jwt。</li>
+</ol>
+
+
+    <h2 class="related-content__title">Related readings 📖</h2>
+    
+        <p class="related-content__item"><a href="https://raviwu.github.io/use-paperclip-to-store-uri-in-rails/" data-rel="prefetch">Rails 中使用 Paperclip 存 URI 附件</a></p>
+    
+        <p class="related-content__item"><a href="https://raviwu.github.io/early-termination/" data-rel="prefetch">程設風格 | 早期終止執行</a></p>
+    
+        <p class="related-content__item"><a href="https://raviwu.github.io/command-line-tools-notes/" data-rel="prefetch">終端機工具</a></p>
+    
+
+    <section class="author">
+        
+            <p class="author__name">Ravi Wu</p>
+        
+        
+        
+        <p class="author__cta">If you liked it share and comment!</p>
+        <div class="social-share"><amp-social-share class="social-share__button"
+    aria-label="Share content" type="system" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Facebook" type="facebook" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Twitter" type="twitter" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Linkedin" type="linkedin" width="50" height="50"></amp-social-share>
+<amp-social-share class="social-share__button"
+    aria-label="Share on Pinterest" type="pinterest" width="50" height="50"></amp-social-share></div>
+    </section>
+</article>
+
+		</main>
+		<footer class="footer"><div class="footer__copyright">© Ravi Wu 2020</div><div class="footer__languages">
+	
+</div></footer>
+		
+
+
+<amp-next-page>
+    <script type="application/json">
+        [{
+                    "image": "",
+                    "title": "Rails 中使用 Paperclip 存 URI 附件",
+                    "url": "https:\/\/raviwu.github.io\/use-paperclip-to-store-uri-in-rails\/"
+                },{
+                    "image": "",
+                    "title": "程設風格 | 早期終止執行",
+                    "url": "https:\/\/raviwu.github.io\/early-termination\/"
+                },{
+                    "image": "",
+                    "title": "終端機工具",
+                    "url": "https:\/\/raviwu.github.io\/command-line-tools-notes\/"
+                }]
+    </script>
+</amp-next-page>
+
+	</body>
+</html>
