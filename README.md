@@ -4,4 +4,4 @@
 
 ## Theme
 
-https://github.com/kimcc/hugo-theme-noteworthy
+https://github.com/EmielH/tale-hugo

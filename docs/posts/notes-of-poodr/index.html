@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>筆記 | Practical Object-Oriented Design in Ruby (POODR) &middot; Ravi Wu</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/fonts.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Ravi Wu" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Ravi Wu</h2>
+				</a>
+				<ul>
+    
+    
+        <li>
+            <a href="/posts/">
+                
+                <span>Posts</span>
+                
+            </a>
+        </li>
+    
+        <li>
+            <a href="/tags/">
+                
+                <span>Tags</span>
+                
+            </a>
+        </li>
+    
+        <li>
+            <a href="https://www.linkedin.com/in/raviwu">
+                
+                <span>Linkedin</span>
+                
+            </a>
+        </li>
+    
+        <li>
+            <a href="https://github.com/raviwu">
+                
+                <span>GitHub</span>
+                
+            </a>
+        </li>
+    
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span></span>
+        Ravi Wu
+        <br>
+        <span>&nbsp;</span><time datetime="2017-01-03 13:20:41 &#43;0800 CST"></time>
+</div>
+
+		<h1 class="post-title">筆記 | Practical Object-Oriented Design in Ruby (POODR)</h1>
+<div class="post-line"></div>
+
+		
+
+		<p><a href="http://www.poodr.com/">Practical Object-Oriented Design in Ruby (POODR)</a> 不會很厚，循序漸進地介紹物件導向設計的各種重要概念，而且範例用的是 Ruby 來解說，挺親切的。</p>
+<p>除了各種設計原則之外，也簡要解釋了 Inheritance / Module / Composition 的使用時機與差異。</p>
+<p>最後一章介紹測試原則，除了說明一般的測試原則之外（例如主要應測試 public interface / incoming message / outgoing command ），也很清楚地說明要怎樣去分別把不同的測試責任分在 module / test double / test class 上，以及讓 test double 與實際的程式碼同步的技巧，可以反覆閱讀的參考書。</p>
+<h1 id="chapter-1---object-oriented-design">Chapter 1 - Object-Oriented Design</h1>
+<blockquote>
+<p>P.4</p>
+<p>Practical design does not anticipate what will happen to your application, it merely accepts that something will and that, in the present, you cannot know what. It doesn’t guess the future; it preserves your options for accommodating the future. It doesn’t choose; it leaves you room to move.
+The purpose of design is to allow you to do design later and its primary goal is to reduce the cost of change.</p>
+</blockquote>
+<blockquote>
+<p>P.63</p>
+<p>The design goal, as always, is to retain maximum future flexibility while writing only enough code to meet today’s requirements.</p>
+</blockquote>
+<h2 id="design-principles">Design Principles</h2>
+<ul>
+<li>Single Responsibility</li>
+<li>Open-Closed</li>
+<li>Liskov Substitution</li>
+<li>Interface Segregation</li>
+<li>Dependency Inversion</li>
+<li>DRY (Don&rsquo;t Repeat Yourself)</li>
+<li>LoD (Law of Demeter)</li>
+</ul>
+<h2 id="design-patterns">Design Patterns</h2>
+<p>Specific patterns are aim to solve specific problem, only apply pattern on the problem if the problem is what that pattern aims to solve.</p>
+<h1 id="chapter-2---designing-classes-with-a-single-responsibility">Chapter 2 - Designing Classes with a Single Responsibility</h1>
+<p>What means easy to change in Programming?</p>
+<ul>
+<li>Change has no unexpected side effects</li>
+<li>Small changes in requirements require correspondingly small changes in code</li>
+<li>Existing code is easy to reuse</li>
+<li>The easiest way to make a change is to add code that in itself is easy to change</li>
+</ul>
+<p>Code should be</p>
+<ul>
+<li>Transparent = The consequences of changes should be obvious in the code that is changing and in distant code that relies upon it</li>
+<li>Resonable = The cost of any change should be proportional to the benefits the change achieves</li>
+<li>Usable = Existing code should be usable in new and unexpected contexts</li>
+<li>Exemplary = The code itself should encourage those who change it to perperuate these qualities</li>
+</ul>
+<p>How to help find out whether a Class is having single responsibility:</p>
+<ul>
+<li>Ask questions like = ‘Dear Mr. Gear, what is your ratio?’, ‘Dear Mr. Gear, what is your tire size?’, if the question seems like asking the wrong guys, then the responsibility is probably belongs to others.</li>
+<li>Use one sentenct to describe the class. The sentence should not have ‘and’ or ‘or’ that indicating out the class is doing more than one thing.</li>
+</ul>
+<p>Tips to write code embraces change:</p>
+<ul>
+<li>Depends on behavior, not data.
+<ul>
+<li>Always wrap instance variables in accessor methods instead of directly referring to variables.</li>
+<li>Hide data structure, if a object relying on a data argument like <code>locations = [[5, 12], [2, 3], [4, 2]]</code> wherein each <code>location[0]</code> means <code>x</code> and <code>location[1]</code> means <code>y</code>, then better wrap the <code>location</code> to a Location Class that stores x and y as its property. Ruby has a convinient <code>Struct</code> class to easily provide simple object that stores the data and creates methods to response with stored data.</li>
+</ul>
+</li>
+<li>Extract Responsibilities from methods. Method itself should be single responsibility if possible, benifits to extract reponsibilities from methods:
+<ul>
+<li>Expose previously hidden qualities = refactoring a class so that all of its methods have a single responsibility has a clarifying effect on the class.</li>
+<li>Avoid the need for comments</li>
+<li>Encourage reuse</li>
+<li>Easy to move to another class</li>
+</ul>
+</li>
+<li>Isolate Extra Responsibilities in Classes</li>
+</ul>
+<h1 id="chapter-3---managing-dependencies">Chapter 3 - Managing Dependencies</h1>
+<blockquote>
+<p>P.35</p>
+<p>Because well designed objects have a single responsibility, their very nature requires that they collaborate to accomplish complex tasks. This collaboration is powerful and perilous. To collaborate, an object must know something know about others. Knowing creates a dependency. If not managed carefully, these dependencies will strangle your application.</p>
+</blockquote>
+<h2 id="recognizing-dependencies">Recognizing Dependencies</h2>
+<p>An object has a dependency when it knows:</p>
+<ul>
+<li>The name of another class</li>
+<li>The name of a message that it intends to send to someone other than self</li>
+<li>The arguments that a message requires</li>
+<li>The order of those arguments</li>
+<li>Other Dependencies:
+<ul>
+<li>a object knowing the name of a message you plan to send to someone other than <code>self</code>, this is a violation of LoD, can be resolve by flexible interface, checkout chapter 4 creating flexible interfaces</li>
+<li>test depends on code, checkout chapter 9 designing cost-effective tests</li>
+</ul>
+</li>
+</ul>
+<h2 id="resolving-dependencies">Resolving Dependencies</h2>
+<h3 id="inject-dependencies">Inject Dependencies</h3>
+<p>Try not to hard code dependencies, use &lsquo;message&rsquo; the method or the class really cares:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:rim</span>, <span style="color:#e6db74">:tire</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
+    <span style="color:#f92672">...</span>
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#75715e"># hard code the Wheel in gear_inches method</span>
+  <span style="color:#75715e"># call this method with Gear.new(52, 11, 26, 1.5).gear_inches#</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> <span style="color:#66d9ef">Wheel</span><span style="color:#f92672">.</span>new(rim, tire)<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chaining</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:wheel</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, wheel)
+    <span style="color:#f92672">...</span>
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#75715e"># Moving the creation of Wheel outside the Gear class, decoupling the Wheel and Gear class.</span>
+  <span style="color:#75715e"># call this method with Gear.new(52, 11, Wheel.new(26, 1.5)).gear_inches</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> wheel<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h3 id="isolate-dependencies">Isolate Dependencies</h3>
+<p>Prepare a space to isolate dependencies within given zone</p>
+<h4 id="isolate-instance-creation">Isolate Instance creation</h4>
+<ol>
+<li>Create Dependencies when initialize</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:wheel</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
+    <span style="color:#f92672">...</span>
+    @wheel <span style="color:#f92672">=</span> <span style="color:#66d9ef">Wheel</span><span style="color:#f92672">.</span>new(rim, tire)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> wheel<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><ol start="2">
+<li>Isolate the Dependency in method</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:rim</span>, <span style="color:#e6db74">:tire</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
+    <span style="color:#f92672">...</span>
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> wheel<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">private</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wheel</span>
+    @wheel <span style="color:#f92672">||=</span> <span style="color:#66d9ef">Wheel</span><span style="color:#f92672">.</span>new(rim, tire)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h4 id="isolate-vulnerable-external-messages">Isolate Vulnerable External Messages</h4>
+<p>external messages = messasges that are &lsquo;send to someone other than <code>self</code>&rsquo;</p>
+<p>This refactor depends on whether this extraction is worth to be DRYed out.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+  ratio <span style="color:#f92672">*</span> diameter
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">private</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diameter</span>
+  wheel<span style="color:#f92672">.</span>diameter
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h3 id="remove-augument-order-dependencies">Remove Augument-Order Dependencies</h3>
+<p>Use args Hash to initialize the object, keys does not has order issue.</p>
+<p>Explicity define default or raise argument error in case the argument does not provide required values.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># this line will fall back to default value 18 whenever the args[:cog] are evaluated to false,</span>
+<span style="color:#75715e"># in other word, if args[:cog] are assigned to &#39;false&#39; then @cog will be assigned to 18</span>
+@cog <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:cog</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> <span style="color:#ae81ff">18</span>
+
+<span style="color:#75715e"># To use the provided value whenever the key existed, can use fetch</span>
+<span style="color:#75715e"># the default value is assigned only when the fetched key does not exist</span>
+@cog <span style="color:#f92672">=</span> args<span style="color:#f92672">.</span>fetch(<span style="color:#e6db74">:cog</span>, <span style="color:#ae81ff">18</span>)
+
+<span style="color:#75715e"># have a default hash to be merged is another solution</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_args</span>
+  { cog <span style="color:#f92672">=</span> <span style="color:#ae81ff">18</span> }
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(args)
+  args <span style="color:#f92672">=</span> default_args<span style="color:#f92672">.</span>merge(args)
+  <span style="color:#f92672">...</span>
+  @cog <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:cog</span><span style="color:#f92672">]</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>If the object belongs to external libs, then constructing a <code>LibObjectWrapper</code> for that object that use Hash parameter to initialize <code>LibObject</code> instead of a ordered argument array might worth the efforts. This is called factory patterns. An object whose purpose is to create other objects is a factory; the word factory implies nothing more, and use of it is the most expedient way to communicate this idea.</p>
+<h2 id="manageing-dependency-direction">Manageing Dependency Direction</h2>
+<p>Object should depend on the Class that tends to have less changes if possible.</p>
+<ul>
+<li>Some classes are more likely than others to have changes in requirements.</li>
+<li>Concrete classes are more likely to change than abstract classes.</li>
+<li>Changing a class that has many dependents will result in widespread consequences.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Gear depends on Wheel</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:wheel</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
+    <span style="color:#f92672">...</span>
+    @wheel <span style="color:#f92672">=</span> <span style="color:#66d9ef">Wheel</span><span style="color:#f92672">.</span>new(rim, tire)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    ratio <span style="color:#f92672">*</span> wheel<span style="color:#f92672">.</span>diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Wheel depends on Gear</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog)
+    <span style="color:#f92672">...</span>
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>(diameter)
+    ratio <span style="color:#f92672">*</span> diameter
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Wheel</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:rim</span>, <span style="color:#e6db74">:tire</span>, <span style="color:#e6db74">:gear</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(rim, tire, chainring, cog)
+    <span style="color:#f92672">...</span>
+    @gear <span style="color:#f92672">=</span> <span style="color:#66d9ef">Gear</span><span style="color:#f92672">.</span>new(chainring, cog)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diameter</span>
+    rim <span style="color:#f92672">+</span> (tire <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+    gear<span style="color:#f92672">.</span>gear_inches(diameter)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><blockquote>
+<p>P.57</p>
+<p>Dependency management is core to creating future-proof applications. Injecting dependencies creates loosely coupled objects that can be reused in novel ways. Isolating dependencies allows objects to quickly adapt to unexpected changes. Depending on abstractions decreases the likelihood of facing these changes.</p>
+<p>The key to managing dependencies is to control their direction. The road to maintenance nirvana is paved with classes that depend on things that change less often than they do.</p>
+</blockquote>
+<h1 id="chapter-4---creating-flexible-interfaces">Chapter 4 - Creating Flexible Interfaces</h1>
+<p>There are two kinds of interface:</p>
+<ul>
+<li>Classes implement methods, some of those methods are intended to be used by others and these methods make up its public interface.</li>
+<li>A set of messages where the messages themselves define the interface. Many different classes may, as part of their whole, implement the methods that the interface requires. It’s almost as if the interface defines a virtual class; that is, any class that implements the required methods can act like the interface kind of thing.</li>
+</ul>
+<p>This chapter is handling first kind of interface, left the last kind being handled in Chapter 5 - Reducing Costs with Duck Typing.</p>
+<h2 id="defining-interface">Defining interface</h2>
+<p><strong>Public Interfaces</strong> The methods that make up the public interface of your class comprise the face it presents to the world. They:</p>
+<ul>
+<li>Reveal its primary responsibility</li>
+<li>Are expected to be invoked by others</li>
+<li>Will not change on a whim</li>
+<li>Are safe for others to depend on</li>
+<li>Are thoroughly documented in the tests</li>
+</ul>
+<p><strong>Private Interfaces</strong> All other methods in the class are part of its private interface. They:</p>
+<ul>
+<li>Handle implementation details</li>
+<li>Are not expected to be sent by other objects</li>
+<li>Can change for any reason whatsoever</li>
+<li>Are unsafe for others to depend on</li>
+<li>May not even be referenced in the tests</li>
+</ul>
+<h3 id="using-sequence-diagrams">Using Sequence Diagrams</h3>
+<p>Illustrating out the message between classes in sequence diagrams can help to visualize the interaction between classes' interfaces.</p>
+<h3 id="asking-for-what-instead-of-telling-how">Asking for “What” Instead of Telling “How”</h3>
+<p>Message being sent to object is better to ask result instead of instruct how to perform the action, for instance, <code>Customer</code> class does not need to instruct <code>place_order</code>, <code>deduct_stock</code>, <code>process_payment</code>, <code>generate_invoice</code> to <code>Store</code>. <code>Customer</code> will be better off by <code>checkout</code> with his <code>Cart</code> instance and get a <code>Invoice</code> back.</p>
+<h3 id="seeking-context-independence">Seeking Context Independence</h3>
+<p>The things that <code>DomainClass</code> knows about other objects make up its context. Context is a coat that <code>DomainClass</code> wears everywhere; any use of <code>DomainClass</code>, be it for testing or otherwise, requires that its context be established. Deduce the context of <code>DomainClass</code> can help to reuse the class and easier to be test with.</p>
+<h3 id="trusting-other-objects">Trusting Other Objects</h3>
+<p><code>DomainClass</code> just need to provide <code>what</code> they need and <code>what</code> they are, then trust the <code>result</code> that message receiver respond with.</p>
+<blockquote>
+<p>P.74</p>
+<p>This blind trust is a keystone of object-oriented design. It allows objects to collab- orate without binding themselves to context and is necessary in any application that expects to grow and change.</p>
+</blockquote>
+<h3 id="using-messages-to-discover-objects">Using Messages to Discover Objects</h3>
+<p>If you find out current class is handling message that might not be single responsibility enough, then there&rsquo;s a chance that you need a new class to handle this message. For instance, a mailer shall not handle the condition whether not to send out this email, so if there&rsquo;s need to filter out the condition that skipping the mailing action, then you might need to have a new class that picks up this responsibility instead of coding the skip mailing logic within mailer class.</p>
+<h2 id="writing-code-that-puts-its-best-interface-forward">Writing Code That Puts Its Best (Inter)Face Forward</h2>
+<h3 id="create-explicit-interfaces">Create Explicit Interfaces</h3>
+<p>Every time you create a class, declare its interfaces. Methods in the public interface should</p>
+<ul>
+<li>Be explicitly identified as such</li>
+<li>Be more about what than how</li>
+<li>Have names that, insofar as you can anticipate, will not change</li>
+<li>Take a hash as an options parameter</li>
+</ul>
+<p>Use of <code>public</code>, <code>protected</code>, <code>private</code> keywords serves two distinct purposes. First, they indicate which methods are stable and which are unstable. Second, they control how visible a method is to other parts of your application.</p>
+<h3 id="honor-the-public-interfaces-of-others">Honor the Public Interfaces of Others</h3>
+<blockquote>
+<p>P.78</p>
+<p>Do your best to interact with other classes using only their public interfaces. &hellip; If your design forces the use of a private method in another class, first rethink your design. It’s possible that a committed effort will unearth an alternative; you should try very hard to find one.</p>
+</blockquote>
+<p>If depending on other class&rsquo;s private method is required in your design no matter how hard you try to avoid, isolate the dependencies within safe zone.</p>
+<h2 id="the-law-of-demeter">The Law of Demeter</h2>
+<blockquote>
+<p>P.80</p>
+<p>The Law of Demeter (LoD) is a set of coding rules that results in loosely coupled objects. Loose coupling is nearly always a virtue but is just one component of design and must be balanced against competing needs. Some Demeter violations are harmless, but others expose a failure to correctly identify and define public interfaces.</p>
+<p>Demeter is often paraphrased as “only talk to your immediate neighbors” or “use only one dot.”</p>
+</blockquote>
+<p>The risk of violating the LoD is that if there&rsquo;s any change occurs between the chained method&rsquo;s return value, the result of final output might break.</p>
+<p>Code like <code>message.conversation.project.start_project!</code> will break whenever the implementation of each Class or method call is changed, or when the records does not found in DB. Better avoid a long method chain like this.</p>
+<p>To be clear, a method chain like <code>hash.keys.sort.join</code> are chaining basic object in Ruby Core that tends to be very stable, this kind of &lsquo;violations&rsquo; would probably not harming the application at all. LoD is more like a recommendation than a restriction.</p>
+<p>Something like <code>message.conversation.project.start_project!</code> shows that the code is instructing not only &lsquo;what&rsquo; they want, but also &lsquo;I know how exactly to get the thing I want&rsquo;. When this is happening, maybe the caller is appropriate to be responsible to get the result that even though it knows how to get it.</p>
+<blockquote>
+<p>P.83</p>
+<p>Focusing on messages reveals objects that might otherwise be overlooked. When messages are trusting and ask for what the sender wants instead of telling the receiver how to behave, objects naturally evolve public interfaces that are flexible and reusable in novel and unexpected ways.</p>
+</blockquote>
+<h1 id="chapter-5---reducing-costs-with-duck-typing">Chapter 5 - Reducing Costs with Duck Typing</h1>
+<blockquote>
+<p>P.85</p>
+<p>Duck typed objects are chameleons that are defined more by their behavior than by their class. This is how the technique gets its name; if an object quacks like a duck and walks like a duck, then its class is immaterial, it’s a duck.</p>
+</blockquote>
+<p>Use duck typing as a proxy of a group of class that behaves like a duck in the point of the caller&rsquo;s view. If a <code>Trip</code> instance requires a <code>Preparer</code> that can handle <code>prepare_trip</code> message, the <code>Trip</code> does not cares about whether the preparer is a <code>Bus</code>, <code>TourGuide</code>, <code>Mechanic</code>.</p>
+<p>Something like below occurs in your code, then you might need a duck:</p>
+<ul>
+<li>Case statements that switch on class</li>
+<li><code>kind_of?</code> and <code>is_a?</code></li>
+<li><code>responds_to?</code></li>
+</ul>
+<p>The Trip has to know exactly the Class of preparer and the public method calls to prepare the trip</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Trip</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:bicycles</span>, <span style="color:#e6db74">:customers</span>, <span style="color:#e6db74">:bus</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare</span>(preparers)
+    preparers<span style="color:#f92672">.</span>each <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>preparer<span style="color:#f92672">|</span>
+      <span style="color:#66d9ef">case</span> preparer
+      <span style="color:#66d9ef">when</span> <span style="color:#66d9ef">Mechanic</span>
+        preparer<span style="color:#f92672">.</span>prepare_bicycles(bicycles)
+      <span style="color:#66d9ef">when</span> <span style="color:#66d9ef">TourGuide</span>
+        preparer<span style="color:#f92672">.</span>buy_food(customers)
+      <span style="color:#66d9ef">when</span> <span style="color:#66d9ef">Driver</span>
+        preparer<span style="color:#f92672">.</span>gas_up(bus)
+        preparer<span style="color:#f92672">.</span>fill_water_tank(bus)
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> preparer<span style="color:#f92672">.</span>kind_of?(<span style="color:#66d9ef">Mechanic</span>)
+  preparer<span style="color:#f92672">.</span>prepare_bycycles(bicycles)
+<span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>kind_of?(<span style="color:#66d9ef">TourGuide</span>)
+  preparer<span style="color:#f92672">.</span>buy_food(customers)
+<span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>kind_of?(<span style="color:#66d9ef">Driver</span>)
+  preparer<span style="color:#f92672">.</span>gas_up(bus)
+  preparer<span style="color:#f92672">.</span>fill_water_tank(bus)
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> preparer<span style="color:#f92672">.</span>responds_to?(<span style="color:#e6db74">:prepare_bicycles</span>)
+  preparer<span style="color:#f92672">.</span>prepare_bycycles(bicycles)
+<span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>responds_to?(<span style="color:#e6db74">:buy_food</span>)
+  preparer<span style="color:#f92672">.</span>buy_food(customers)
+<span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>responds_to?(<span style="color:#e6db74">:gas_up</span>)
+  preparer<span style="color:#f92672">.</span>gas_up(bus)
+  preparer<span style="color:#f92672">.</span>fill_water_tank(bus)
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Changing above code to duck typing will rearrange the public interface between <code>Trip</code>, <code>Mechanic</code>, <code>TourGuide</code>, and <code>Driver</code>. Instead of letting <code>Trip</code> knows about how all kinds of preparer class and how to let them prepare things, <code>Trip</code> only send a <code>prepare_trip</code> messages to the preparer, and all preparers has to get correct repsonses, whether asking for more inputs or handling the provided ones.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Trip</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare</span>(preparers)
+    preparers<span style="color:#f92672">.</span>each { <span style="color:#f92672">|</span>preparer<span style="color:#f92672">|</span> preparer<span style="color:#f92672">.</span>prepare_trip(vehicle <span style="color:#f92672">=</span> bus, customers <span style="color:#f92672">=</span> customers, bicycles <span style="color:#f92672">=</span> bicycles) }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Driver</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare_trip</span>(trip_requirement<span style="color:#f92672">=</span>{})
+    gas_up(trip_requirement<span style="color:#f92672">[</span><span style="color:#e6db74">:vehicle</span><span style="color:#f92672">]</span>)
+    fill_water_tank(trip_requirement<span style="color:#f92672">[</span><span style="color:#e6db74">:vehicle</span><span style="color:#f92672">]</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TourGuide</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare_trip</span>(trip_requirement<span style="color:#f92672">=</span>{})
+    buy_food(trip_requirement<span style="color:#f92672">[</span><span style="color:#e6db74">:customers</span><span style="color:#f92672">]</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Mechanic</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare_trip</span>(trip_requirement<span style="color:#f92672">=</span>{})
+    prepare_bycycles(trip_requirement<span style="color:#f92672">[</span><span style="color:#e6db74">:bicycles</span><span style="color:#f92672">]</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Better can share the Duck Type code through Modules.</p>
+<blockquote>
+<p>P104.</p>
+<p>Messages are at the center of object-oriented applications and they pass among objects along public interfaces. Duck typing detaches these public interfaces from specific classes, creating virtual types that are defined by what they do instead of by who they are.</p>
+<p>Duck typing reveals underlying abstractions that might otherwise be invisible. Depending on these abstractions reduces risk and increases flexibility, making your application cheaper to maintain and easier to change.</p>
+</blockquote>
+<h1 id="chapter-6---acquiring-behavior-through-inheritance">Chapter 6 - Acquiring Behavior Through Inheritance</h1>
+<blockquote>
+<p>P105.</p>
+<p>Inheritance is, at its core, a mechanism for automatic message delegation. It defines a forwarding path for not-understood messages.</p>
+</blockquote>
+<blockquote>
+<p>P112.</p>
+<p>objects receive messages. No matter how complicated the code, the receiving object ultimately handles any message in one of two ways. It either responds directly or it passes the message on to some other object for a response.
+Inheritance provides a way to define two objects as having a relationship such that when the first receives a message that it does not understand, it automatically forwards, or delegates, the message to the second.</p>
+<p>Ruby has single inheritance. A superclass may have many subclasses, but each subclass is permitted only one superclass.</p>
+</blockquote>
+<p>Every new class defined in Ruby will be automatically inherit from <code>Object</code>, Ruby automatically forward message to subclass chain in search of a matching method implementation.</p>
+<blockquote>
+<p>P113.</p>
+<p>subclasses are everything their superclasses are, plus more. An instance of String is a String, but it’s also an Object.</p>
+</blockquote>
+<blockquote>
+<p>P117.</p>
+<p>Subclasses are specializations of their superclasses. For inheritance to work, two things must always be true. First, the objects that you are modeling must truly have a generalization–specialization relationship. Second, you must use the cor- rect coding techniques.</p>
+</blockquote>
+<p>Create an abstract superclass that contains the common behavior of the subclasses, but the initialization will be from the fully featured subclasses, not the abstract superclass.</p>
+<blockquote>
+<p>P118.</p>
+<p>Abstract classes exist to be subclassed. This is their sole purpose. They provide a common repository for behavior that is shared across a set of subclasses—subclasses that in turn supply specializations.</p>
+</blockquote>
+<p>Extracting the common behavior to an abstract class is easier to demote the specific behavior down to subclass from an inflated class. The &lsquo;push-everything-down-and-then-pull-some-things-up&rsquo; strategy is an important part of extracting abstract superclass refactoring.</p>
+<blockquote>
+<p>P122.</p>
+<p>If you begin this refactoring with that first version of Bicycle, attempting to isolate the concrete code and push it down to RoadBike, any failure on your part will leave dangerous remnants of concreteness in the superclass. However, if you start by moving every bit of the Bicycle code to RoadBike, you can then carefully identify and promote the abstract parts without fear of leaving concrete artifacts.</p>
+</blockquote>
+<h2 id="template-method-pattern">Template method pattern</h2>
+<p>Defining a basic structure in the superclass and sending messages to acquire subclass-specific contributions.</p>
+<p>To prevent the subclass not implementing all required template methods. Any class that uses the template method pattern must supply an implementation for every message it sends, a simple exception raise could done this job.</p>
+<blockquote>
+<p>P129.</p>
+<p>Creating code that fails with reasonable error messages takes minor effort in the present but provides value forever. Each error message is a small thing, but small things accumulate to produce big effects and it is this attention to detail that marks you as a serious programmer.</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
+  <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:size</span>, <span style="color:#e6db74">:chain</span>, <span style="color:#e6db74">:tire_size</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(args<span style="color:#f92672">=</span>{})
+    @size <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:size</span><span style="color:#f92672">]</span>
+    @chain <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:chain</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> default_chain
+    @tire_size <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:tire_size</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> default_tire_size
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_chain</span>
+    <span style="color:#e6db74">&#39;10-speed&#39;</span>
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_tire_size</span>
+    <span style="color:#66d9ef">raise</span> <span style="color:#66d9ef">NotImplementedError</span>, <span style="color:#e6db74">&#34;This </span><span style="color:#e6db74">#{</span>self<span style="color:#f92672">.</span>class<span style="color:#e6db74">}</span><span style="color:#e6db74"> cannot respond to:&#34;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#75715e"># ...</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_tire_size</span>
+    <span style="color:#e6db74">&#39;23&#39;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MountainBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#75715e"># ...</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_tire_size</span>
+    <span style="color:#e6db74">&#39;2.1&#39;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h2 id="managing-coupling-between-superclasses-and-subclasses">Managing Coupling between Superclasses and subclasses</h2>
+<p>When a subclass is implementing a method that send <code>super</code> to its superclass, it implies that the subclass is knowing things about its superclass.</p>
+<blockquote>
+<p>P132.</p>
+<p>Knowing things about other classes, as always, creates dependencies and dependencies couple objects together. The dependencies in the code above are also the booby traps; both are created by the sends of super in the subclasses.</p>
+</blockquote>
+<blockquote>
+<p>P134.</p>
+<p>forcing a subclass to know how to interact with its abstract superclass causes many problems. When a subclass sends super it’s effectively declaring that it knows the algo- rithm; it depends on this knowledge. If the algorithm changes, then the subclasses may break even if their own specializations are not otherwise affected.</p>
+</blockquote>
+<h3 id="using-hook-messages-to-decoupling-subclasses">Using hook messages to decoupling subclasses</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(args<span style="color:#f92672">=</span>{})
+    @size <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:size</span><span style="color:#f92672">]</span>
+    @chain <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:chain</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> default_chain
+    @tire_size <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:tire_size</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> default_tire_size
+
+    post_initialize(args)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">post_initialize</span>(args)
+    <span style="color:#66d9ef">nil</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">post_initialize</span>(args)
+    @tape_color <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:tape_color</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Provide a hook method to subclass can remove the dependencies that letting subclass knowing what is implemented in superclass.</p>
+<blockquote>
+<p>P135.</p>
+<p>RoadBike is still responsible for what initialization it needs but is no longer responsible for when its initialization occurs. This change allows RoadBike to know less about Bicycle, reducing the coupling between them and making each more flexible in the face of an uncertain future. RoadBike doesn’t know when its post_initialize method will be called and it doesn’t care what object actually sends the message. Bicycle (or any other object) could send this message at any time, there is no requirement that it be sent during object initialization.</p>
+</blockquote>
+<p>Using the hook method on the method can looks like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
+  <span style="color:#75715e"># ...</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">spares</span>
+    { tire_size <span style="color:#f92672">=</span> tire_size,
+      chain <span style="color:#f92672">=</span> chain }<span style="color:#f92672">.</span>merge(local_spares)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">local_spares</span> <span style="color:#75715e"># hook for subclasses to override</span>
+    {}
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#75715e"># ...</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">local_spares</span>
+    { tape_color <span style="color:#f92672">=</span> tape_color }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h1 id="chapter-7---sharing-role-behavior-with-modules">Chapter 7 - Sharing Role Behavior with Modules</h1>
+<blockquote>
+<p>P142.</p>
+<p>Some problems require sharing behavior among otherwise unrelated objects. This common behavior is orthogonal to class; it’s a <code>role</code> an object plays. Many of the roles needed by an application will be obvious at design time, but it’s also common to discover unanticipated roles as you write the code.</p>
+</blockquote>
+<blockquote>
+<p>P143.</p>
+<p>Many object-oriented languages provide a way to define a named group of methods that are independent of class and can be mixed in to any object. In Ruby, these mix-ins are called modules. Methods can be defined in a module and then the module can be added to any object.</p>
+</blockquote>
+<p>Module and Inheritance is a <code>behaves-like-a</code> versus <code>is-a</code> difference, each choice has distinct consequences.</p>
+<h2 id="method-looking-up-path">Method Looking Up Path</h2>
+<p>When a method is called on an object, the lookup path of that methods has principle as below, take a <code>mountain_bike = MountainBike.new</code> instance as example:</p>
+<ul>
+<li>Check the method defined by Singleton Class in <code>mountain_bike</code> (Methods defined only in this <code>mountain_bike</code> instance)</li>
+<li>Check module extended into the Singleton Class (Methods defined in modules with which this <code>mountain_bike</code> instance has been extended)</li>
+<li>Check method defined within the object&rsquo;s own class (Method defined in <code>MountainBike</code> class)</li>
+<li>Check module included in the object&rsquo;s class (Methods defined in modules included in class <code>MountainBike</code>)</li>
+<li>Check method defines within the object&rsquo;s superclass (Method defined in <code>Bike</code> class)</li>
+<li>Check module included in the object&rsquo;s superclass (Methods defined in modules included in class <code>Bike</code>)</li>
+</ul>
+<h2 id="recognizing-the-antipatterns">Recognizing the antipatterns</h2>
+<ul>
+<li>if an object uses a variable with a name like <code>type</code> or <code>category</code> to determine what message to send to self, this implies the code has to be changed whenever there&rsquo;s new <code>type</code> or <code>category</code> being added.</li>
+<li>when a sending object checks the class of a receiving object to determine what message to send, there&rsquo;s possible that we have a duck type here.</li>
+</ul>
+<h2 id="respect-the-contract">Respect the Contract</h2>
+<blockquote>
+<p>P.160</p>
+<p>Subclasses agree to a contract; they promise to be substitutable for their superclasses. Substitutability is possible only when objects behave as expected and subclasses are expected to conform to their superclass’s interface. They must respond to every message in that interface, taking the same kinds of inputs and returning the same kinds of outputs. They are not permitted to do anything that forces others to check their type in order to know how to treat them or what to expect of them.</p>
+</blockquote>
+<h3 id="liskov-substitution-principle-lsp">Liskov Substitution Principle (LSP)</h3>
+<blockquote>
+<p>Let q(x) be a property provable about objects x of type T. Then q(y)
+should be true for objects y of type S where S is a subtype of T.</p>
+</blockquote>
+<p>Checkout Chinese explaination for LSP <a href="http://teddy-chen-tw.blogspot.tw/2012/01/4.html">here</a></p>
+<h2 id="decouple-classes">Decouple Classes</h2>
+<blockquote>
+<p>P.161</p>
+<p>Avoid writing code that requires its inheritors to send <code>super</code>, use hook messages to allow subclasses to participate while absolving them of responsibility for knowing that abstract algorithm.</p>
+</blockquote>
+<blockquote>
+<p>P162.</p>
+<p>Shallow, narrow hierarchies are easy to understand.
+Shallow, wide hierarchies are slightly more complicated.
+Deep, narrow hierarchies are a bit more challenging and unfortunately have a natural tendency to get wider, strictly as a side effect of their depth.
+Deep, wide hierarchies are difficult to understand, costly to maintain, and should be avoided.</p>
+</blockquote>
+<h1 id="chapter-8---combining-objects-with-composition">Chapter 8 - Combining Objects with Composition</h1>
+<p>Use an association like relation to let an instance of <code>Users</code> class act like an <code>array</code> of <code>User</code> instance, is like compose the <code>Users</code> with lots of <code>User</code> that behaves like <code>User</code>, these <code>User</code> does not requires to be all the same class implementation, it just needs to be able to response the message that <code>Users</code> might want to passing to its every <code>user</code> component.</p>
+<p>To construct a class to act like an <code>Array</code> in Ruby, the convinient way is to include <code>Enumerable</code> module into the Class <code>Users</code> and define <code>each</code> method for the <code>Users</code> class so that other methods defined in <code>Enumerable</code> are able to follow with.</p>
+<blockquote>
+<p>P.183</p>
+<p>Delegation creates dependen- cies; the receiving object must recognize the message and know where to send it. Composition often involves delegation but the term means something more. A composed object is made up of parts with which it expects to interact via well-defined interfaces. Composition describes a has-a relationship. Meals have appetizers, uni- versities have departments, bicycles have parts. Meals, universities, and bicy- cles are composed objects. Appetizers, departments, and parts are roles. The composed object depends on the interface of the role.</p>
+<p>This leaves a gap in the definition that is filled by the term aggregation. Aggregation is exactly like composition except that the contained object has an independent life. Universities have departments, which in turn have pro- fessors. If your application manages many universities and knows about thousands of professors, it’s quite reasonable to expect that although a depart- ment completely disappears when its university goes defunct, its professors continue to exist. The university–department relationship is one of composition (in its strictest sense) and the department–professor relationship is aggregation.</p>
+</blockquote>
+<h2 id="deciding-between-inheritance-and-composition">Deciding Between Inheritance and Composition</h2>
+<h3 id="pros-and-cons-of-inheritance">Pros and Cons of Inheritance</h3>
+<p>Well organized inheritance structure is easy to extend and maintain, adding new subclass to an existing hierarchy requires no changes to existing code.</p>
+<p>The downside of the inheritance then becomes the subclass might not want all of the superclass&rsquo;s attributes and behavior. And messy inheritance structure makes the code less reusable as it supposed to be.</p>
+<h3 id="pros-and-cons-of-composition">Pros and Cons of Composition</h3>
+<p>Object that participate in composition are small, structurally independent, and have well-defined interfaces. This allows their seamless transition into pluggable, interchangeable components. Well-composed objects are therefore easily usable in new and unexpected contexts.</p>
+<p>On the other hand, a composed object relies on its many parts.</p>
+<blockquote>
+<p>P.187</p>
+<p>The benefits of structural independence are gained at the cost of automatic mes- sage delegation. The composed object must explicitly know which messages to delegate and to whom. Identical delegation code may be needed by many different objects;
+composition provides no way to share this code.</p>
+</blockquote>
+<ul>
+<li>Use Inheritance for is-a Relationships</li>
+<li>Use Duck Types for behaves-like-a Relationships</li>
+<li>Use Composition for has-a Relationships</li>
+</ul>
+<h1 id="chapter-9---designing-cost-effective-tests">Chapter 9 - Designing Cost-Effective tests</h1>
+<p>The intentions of Tests:</p>
+<ul>
+<li>Finding Bugs</li>
+<li>Supplying Documentation</li>
+<li>Deferring Design Decisions</li>
+<li>Supporting Abstractions</li>
+<li>Exposing Design Flaws</li>
+</ul>
+<p>Knowing what to test = The safest way to accomplish this is to test everything just once and in the proper place.</p>
+<blockquote>
+<p>P.195</p>
+<p>The design principles you are enforcing in your application apply to your tests as well. Each test is merely another application object that needs to use an existing class. The more the test gets coupled to that class, the more entangled the two become and the more vulnerable the test is to unnecessarily being forced to change.</p>
+</blockquote>
+<p>Test the response of the incoming message of the receiver object, and only test the outgoing message that has side effect is correctly triggered.</p>
+<blockquote>
+<p>P.197</p>
+<p>These messages are commands and it is the responsibility of the sending object to prove that they are properly sent. Proving that a message gets sent is a test of behavior, not state, and involves assertions about the number of times, and with what arguments, the message is sent.</p>
+</blockquote>
+<h2 id="test-approach--bdd-versus-tdd">Test Approach = BDD versus TDD</h2>
+<blockquote>
+<p>P.199</p>
+<p>BDD takes an outside-in approach, creating objects at the boundary of an application and working its way inward, mock- ing as necessary to supply as-yet-unwritten objects. TDD takes an inside-out ap- proach, usually starting with tests of domain objects and then reusing these newly created domain objects in the tests of adjacent layers of code.</p>
+</blockquote>
+<h2 id="deleting-unused-interfaces">Deleting Unused Interfaces</h2>
+<blockquote>
+<p>P.202</p>
+<p>Do not test an incoming message that has no dependents; delete it. You application is improved by ruthlessly eliminating code that is not actively being used. Such code is negative cash flow, it adds testing and maintenance burdens but provides no value. Deleting unused code saves money right now, if you do not do so you must test it.</p>
+</blockquote>
+<h2 id="proving-the-public-interface">Proving the Public Interface</h2>
+<p>Test on the class&rsquo;s public interface, make sure the class&rsquo;s interface is stable and predictable.</p>
+<p>If one class uses another object, then the test will rely on creating classes that is required to interact with the tested interface, choose the approach that requires less resources to setup those dependencies, in other word, make the test run as fast as you can so that you will be more willing to run the test as frequent as it should be.</p>
+<h2 id="isolating-the-object-under-test">Isolating the Object Under Test</h2>
+<p>Use module to extract the role that shared among classes, increase the reuse of the test configuration.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> PreparerInterfaceTest
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_implements_the_preparer_interface</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:prepare_trip</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MechanicTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">PreparerInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @mechanic <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Mechanic</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+  <span style="color:#75715e"># other tests which rely on @mechanic</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TripCoordinatorTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">PreparerInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @trip_coordinator <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">TripCoordinator</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DriverTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">PreparerInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @driver <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Driver</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><blockquote>
+<p>P.223</p>
+<p>Defining the PreparerInterfaceTest as a module allows you to write the test once and then reuse it in every object that plays the role. The module serves as a test and as documentation. It raises the visibility of the role and makes it easy to prove that any newly created Preparer successfully fulfills its obligations.</p>
+</blockquote>
+<h2 id="creating-test-doubles-that-can-sense-the-reasonable-failed">Creating test doubles that can sense the reasonable failed</h2>
+<p>Using mock might create a heaven like environment for each tests if all mocks are perfectly return the exact epect values that the test expect, changes on the mocked classes might not get reflected on the test results since the changes on mocked class does not impact on the mock behavior itself.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> DiameterizableInterfaceTest
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_implements_the_diameterizable_interface</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:width</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DiameterDouble</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diameter</span>
+    <span style="color:#ae81ff">10</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e"># Prove the test double honors the interface this # test expects.</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DiameterDoubleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">DiameterizableInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">DiameterDouble</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GearTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_calculates_gear_inches</span>
+    gear <span style="color:#f92672">=</span> <span style="color:#66d9ef">Gear</span><span style="color:#f92672">.</span>new(
+      chainring <span style="color:#f92672">=</span> <span style="color:#ae81ff">52</span>,
+      cog <span style="color:#f92672">=</span> <span style="color:#ae81ff">11</span>,
+      wheel <span style="color:#f92672">=</span> <span style="color:#66d9ef">DiameterDouble</span><span style="color:#f92672">.</span>new
+    )
+    assert_in_delta(<span style="color:#ae81ff">47</span><span style="color:#f92672">.</span><span style="color:#ae81ff">27</span>, gear<span style="color:#f92672">.</span>gear_inches, <span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#ae81ff">01</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Above <code>DiameterizableInterfaceTest</code> ensures the double is expected to respond to <code>width</code> message, so the unsync between <code>DiameterDouble</code> and the <code>DiameterizableInterfaceTest</code> can now expose the defect of current code / test.</p>
+<p>and when we fix the Double to have latest <code>diameter</code> interface, then the <code>GearTest</code> that using the previous <code>width</code> interface will failed, hence expose the possible defect existed in the <code>Gear</code> class.</p>
+<h2 id="testing-inherited-code">Testing Inherited Code</h2>
+<h3 id="specifying-the-inherited-interface">Specifying the Inherited Interface</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> BicycleInterfaceTest
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_default_tire_size</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:default_tire_size</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_default_chain</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:default_chain</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_chain</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:chain</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_size</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:size</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_tire_size</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:tire_size</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_spares</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:spares</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BicycleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Bicycle</span><span style="color:#f92672">.</span>new(tire_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">RoadBike</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h3 id="specifying-subclass-responsibilities">Specifying Subclass Responsibilities</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> BicycleSubclassTest
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_post_initialize</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:post_initialize</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_local_spares</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:local_spares</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_default_tire_size</span>
+    assert_respond_to(@object, <span style="color:#e6db74">:default_tire_size</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleSubclassTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">RoadBike</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h3 id="confirming-superclass-enforcement">Confirming Superclass Enforcement</h3>
+<p>The Bicycle class should raise an error if a subclass does not implement default_tire_size. Even though this requirement applies to subclasses, the actual enforcement behavior is in Bicycle.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BicycleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Bicycle</span><span style="color:#f92672">.</span>new(tire_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_forces_subclasses_to_implement_default_tire_size</span>
+    assert_raises(<span style="color:#66d9ef">NotImplementedError</span>) { @bike<span style="color:#f92672">.</span>default_tire_size }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h3 id="testing-unique-behavior">Testing Unique Behavior</h3>
+<p>After testing the shared interface and the configurations with modules, it&rsquo;s time to test the concrete subclass behavior. The concrete behavior is therefore existed in the Concrete Subclass test.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleSubclassTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">RoadBike</span><span style="color:#f92672">.</span>new(tape_color <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">‘</span>red<span style="color:#960050;background-color:#1e0010">’</span>)
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_puts_tape_color_in_local_spares</span>
+    assert_equal <span style="color:#e6db74">&#39;red&#39;</span>, @bike<span style="color:#f92672">.</span>local_spares<span style="color:#f92672">[</span><span style="color:#e6db74">:tape_color</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h3 id="testing-abstract-superclass-behavior">Testing Abstract Superclass Behavior</h3>
+<p>Create a Stub itself subclass from the to-be-tested Superclass to test the Superclass Behavior could decouple especific subclass from the Superclass tests.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Make sure this StubbedBike behaves correctly the class can be checked by</span>
+<span style="color:#75715e"># the BicycleSubclassTest module like the DiameterizableInterfaceTest we did</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubbedBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleSubclassTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">StubbedBike</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubbedBike</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Bicycle</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default_tire_size</span>
+    <span style="color:#ae81ff">0</span>
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">local_spares</span>
+    { saddle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;painful&#39;</span> }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BicycleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Bicycle</span><span style="color:#f92672">.</span>new(tire_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
+    @stubbed_bike <span style="color:#f92672">=</span> <span style="color:#66d9ef">StubbedBike</span><span style="color:#f92672">.</span>new
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_forces_subclasses_to_implement_default_tire_size</span>
+    assert_raises(<span style="color:#66d9ef">NotImplementedError</span>) { @bike<span style="color:#f92672">.</span>default_tire_size }
+  <span style="color:#66d9ef">end</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_includes_local_spares_in_spares</span>
+    assert_equal @stubbed_bike<span style="color:#f92672">.</span>spares, { tire_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>,
+                                         chain <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;10-speed&#39;</span>,
+                                         saddle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;painful&#39;</span> }
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div>
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/use-find-in-batches-during-migration/" class="left arrow">&#8592;</a>
+		<a href="/posts/elementary-trailblazer/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			
+			<span>
+			&copy; <time datetime="2020-11-01 11:34:02.228409 &#43;0800 CST m=&#43;0.211475297">2020</time> Ravi Wu. 
+			</span>
+		</footer>
+
+    </body>
+</html>

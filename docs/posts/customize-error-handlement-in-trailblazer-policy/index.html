@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>在 Trailblazer 的 Policy 中透過客制 Exception 來處理複雜的「錯誤回應」 &middot; Ravi Wu</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/fonts.css">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Ravi Wu" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Ravi Wu</h2>
+				</a>
+				<ul>
+    
+    
+        <li>
+            <a href="/posts/">
+                
+                <span>Posts</span>
+                
+            </a>
+        </li>
+    
+        <li>
+            <a href="/tags/">
+                
+                <span>Tags</span>
+                
+            </a>
+        </li>
+    
+        <li>
+            <a href="https://www.linkedin.com/in/raviwu">
+                
+                <span>Linkedin</span>
+                
+            </a>
+        </li>
+    
+        <li>
+            <a href="https://github.com/raviwu">
+                
+                <span>GitHub</span>
+                
+            </a>
+        </li>
+    
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span></span>
+        Ravi Wu
+        <br>
+        <span>&nbsp;</span><time datetime="2017-01-14 13:25:31 &#43;0800 CST"></time>
+</div>
+
+		<h1 class="post-title">在 Trailblazer 的 Policy 中透過客制 Exception 來處理複雜的「錯誤回應」</h1>
+<div class="post-line"></div>
+
+		
+
+		<p>為了盡量貼近 Trailblazer 的設計概念，許多原先會透過 Controller <code>before_action</code> 去處理的權限管控，盡量都搬進 Trailblazer 的 <a href="http://trailblazer.to/gems/operation/1.1/policy.html">Policy</a> 裡。</p>
+<p>Policy 採用類似 <a href="https://github.com/elabs/pundit">Pundit</a> 的語法，典型的 Policy 如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Thing</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Policy</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(user, thing)
+    @user, @thing <span style="color:#f92672">=</span> user, thing
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create?</span>
+    (admin? <span style="color:#f92672">||</span> approved?) <span style="color:#f92672">&amp;&amp;</span> @thing<span style="color:#f92672">.</span>persisted?
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">private</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">admin?</span>
+    @user<span style="color:#f92672">.</span>admin <span style="color:#f92672">==</span> <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">approved?</span>
+    @user<span style="color:#f92672">.</span>is_approved
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>在 Operation 中若要調用這隻 Policy 的話要宣告：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Thing</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Create</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Trailblazer</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Operation</span>
+    builds <span style="color:#f92672">-&gt;</span> (params) { dispatched_class_accroding_to(params) }
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">dispatched_class_accroding_to</span>(params)
+    <span style="color:#66d9ef">Thing</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Create</span>
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">Trailblazer</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Operation</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Policy</span>
+    policy <span style="color:#66d9ef">Thing</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Policy</span>, <span style="color:#e6db74">:create?</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">process</span>(params)
+    validate(params<span style="color:#f92672">[</span><span style="color:#e6db74">:thing</span><span style="color:#f92672">]</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>f<span style="color:#f92672">|</span>
+        f<span style="color:#f92672">.</span>save
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Operation 在 controller 裡被 <code>call</code> 的時候，會先跑 <code>builds</code> 去回傳 Operation 類別，此時，正是個機會去依照 params 內容 dispatch 到其他的 Operation 去，改天再分享利用 <code>builds</code> 簡化路由的實作。</p>
+<p>透過 builds 確認 operation 後，所有的參數會先經過 <code>setup!(params)</code> &gt; <code>setup_params!(params)</code> &gt; <code>model!(params)</code> &gt; <code>setup_model!</code> 等 operation 的 method 去建立這隻 operation 操作所需的背景條件（基本上都是要依照條件去撈 model 出來，或是要對參數做前處理等，詳細 callstack 請參考這個<a href="http://trailblazer.to/gems/operation/1.1/api.html">頁面</a>），跑完整個 setup 的過程後，如果有指定 Policy 才會送進 Policy 的對應 method 裡。</p>
+<p>Policy initialize 裡的 <code>user</code> 跟 <code>thing</code> 對應到 <code>params[:current_user]</code> 跟 <code>operation.model</code> 這兩個物件，前述的 <code>params[:current_user]</code> 如果跑完 <code>setup!(params)</code> &gt; <code>setup_params!(params)</code> &gt; <code>model!(params)</code> &gt; <code>setup_model!</code> 都沒有指定的話會預設 <code>nil</code> 值，而 <code>operation.model</code> 則是 <code>model!(params)</code> &gt; <code>setup_model!</code> 中所指定的 resource。如果 <code>user</code> / <code>thing</code> 的狀態在 <code>Thing::Policy#create?</code> 裡的運算結果為 <code>true</code> 時，才會繼續送到 <code>process(params)</code> 的方法中繼續處理，不然就會丟 <code>Trailblazer::NotAuthorizedError</code> 例外。</p>
+<p>問題來了，在 controller 裡面，案例給的很乾淨：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CommentsController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationController</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create</span>
+    run <span style="color:#66d9ef">Comment</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Create</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>op<span style="color:#f92672">|</span>
+        flash<span style="color:#f92672">[</span><span style="color:#e6db74">:notice</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Success!&#34;</span> <span style="color:#75715e"># only run for successful/valid operation.</span>
+        <span style="color:#66d9ef">return</span> redirect_to thing_path(@model<span style="color:#f92672">.</span>thing)
+    <span style="color:#66d9ef">end</span>
+
+    render <span style="color:#e6db74">:new</span>
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>但如果需要針對不同的 <code>Trailblazer::NotAuthorizedError</code> 情況來轉址或者是設定錯誤訊息，在只使用 <code>Trailblazer::NotAuthorizedError</code> 的情況下，變成要在 controller 端另外加判斷，例如：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CommentsController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationController</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create</span>
+    run <span style="color:#66d9ef">Comment</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Create</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>op<span style="color:#f92672">|</span>
+        flash<span style="color:#f92672">[</span><span style="color:#e6db74">:notice</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Success!&#34;</span> <span style="color:#75715e"># only run for successful/valid operation.</span>
+        <span style="color:#66d9ef">return</span> redirect_to thing_path(@model<span style="color:#f92672">.</span>thing)
+    <span style="color:#66d9ef">end</span>
+
+    render <span style="color:#e6db74">:new</span>
+    <span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">Trailblazer</span><span style="color:#f92672">::</span><span style="color:#66d9ef">NotAuthorizedError</span>
+    flash<span style="color:#f92672">[</span><span style="color:#e6db74">:alert</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;You&#39;re not Admin!&#34;</span> <span style="color:#66d9ef">unless</span> @user<span style="color:#f92672">.</span>admin
+    flash<span style="color:#f92672">[</span><span style="color:#e6db74">:alert</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Your account is not approved!&#34;</span> <span style="color:#66d9ef">unless</span> @user<span style="color:#f92672">.</span>is_approved
+
+    redirect_to root_path
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>安捏很奇怪，因為權限在 Policy 裡面判斷了一次，然後跑到 controller 裡又得再重新跑一次幾乎一樣的判斷，目前暫時的解法，是在 Policy 裡面加一個 custom error 讓 controller 統一處理需要特別關照的 <code>Trailblazer::NotAuthorizedError</code> 狀況。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> Thing
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Policy</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(user, thing)
+        @user, @thing <span style="color:#f92672">=</span> user, thing
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create?</span>
+        <span style="color:#66d9ef">raise</span> <span style="color:#66d9ef">Thing</span><span style="color:#f92672">::</span><span style="color:#66d9ef">NotAuthorizedError</span>, <span style="color:#e6db74">&#34;You&#39;re not Admin!&#34;</span> <span style="color:#66d9ef">unless</span> admin?
+        <span style="color:#66d9ef">raise</span> <span style="color:#66d9ef">Thing</span><span style="color:#f92672">::</span><span style="color:#66d9ef">NotAuthorizedError</span>, <span style="color:#e6db74">&#34;Your account is not approved!&#34;</span> <span style="color:#66d9ef">unless</span> approved?
+        @thing<span style="color:#f92672">.</span>persisted?
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">private</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">admin?</span>
+        @user<span style="color:#f92672">.</span>admin <span style="color:#f92672">==</span> <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">approved?</span>
+        @user<span style="color:#f92672">.</span>is_approved
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NotAuthorizedError</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">StandardError</span>; <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e"># in controller</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CommentsController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationController</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create</span>
+    run <span style="color:#66d9ef">Comment</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Create</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>op<span style="color:#f92672">|</span>
+        flash<span style="color:#f92672">[</span><span style="color:#e6db74">:notice</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Success!&#34;</span> <span style="color:#75715e"># only run for successful/valid operation.</span>
+        <span style="color:#66d9ef">return</span> redirect_to thing_path(@model<span style="color:#f92672">.</span>thing)
+    <span style="color:#66d9ef">end</span>
+
+    render <span style="color:#e6db74">:new</span>
+    <span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">Thing</span><span style="color:#f92672">::</span><span style="color:#66d9ef">NotAuthorizedError</span> <span style="color:#f92672">=&gt;</span> e
+    flash<span style="color:#f92672">[</span><span style="color:#e6db74">:alert</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span>message
+    redirect_to root_path
+    <span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">Trailblazer</span><span style="color:#f92672">::</span><span style="color:#66d9ef">NotAuthorizedError</span>
+    flash<span style="color:#f92672">[</span><span style="color:#e6db74">:alert</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Action not authorized.&#34;</span>
+    redirect_to root_path
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>改成這樣後，雖然 controller 還是對於例外細節如何處理仍有耦合，但至少邏輯判斷不再在 Policy / Controller 裡重複，然後也能進一步將一般性的 <code>Trailblazer::NotAuthorizedError</code> 抽到 ApplicationController 裡面統一處理，對於一些複雜的例外處理需求，目前這麼做還算暫時可以接受，如果你有發現其他更好的方式，跪求指教。</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/elementary-trailblazer/" class="left arrow">&#8592;</a>
+		<a href="/posts/tools-kcfu-for-kindle-clipping/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			
+			<span>
+			&copy; <time datetime="2020-11-01 11:34:02.128094 &#43;0800 CST m=&#43;0.111163709">2020</time> Ravi Wu. 
+			</span>
+		</footer>
+
+    </body>
+</html>

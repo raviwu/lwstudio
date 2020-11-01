@@ -5,27 +5,28 @@
     <link>https://raviwu.github.io/</link>
     <description>Recent content on Ravi Wu</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>zh-tw</language>
+    <copyright>Copyright © 2020, Ravi Wu.</copyright>
     <lastBuildDate>Wed, 28 Oct 2020 12:05:03 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go | 型別（Type）</title>
-      <link>https://raviwu.github.io/go-type/</link>
+      <link>https://raviwu.github.io/posts/go-type/</link>
       <pubDate>Wed, 28 Oct 2020 12:05:03 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/go-type/</guid>
+      <guid>https://raviwu.github.io/posts/go-type/</guid>
       <description>Go 的型別（Type）可以讓編譯器知道兩樣資訊：
  需要使用的記憶體大小 這些記憶體所代表的內容  以內建的型別為例：
-   型別 記憶體大小 內容     int64 8 bytes 整數   float32 4 bytes  IEEE-754 浮點數   bool 1 byte true OR false    有一些型別所代表的內容會跟著 build 機器的不同架構有所差異，例如同樣的 int 在 64 位元電腦裡佔 8 bytes 但在 32 位元電腦裡只佔 4 bytes。
+   型別 記憶體大小 內容     int64 8 bytes 整數   float32 4 bytes IEEE-754 浮點數   bool 1 byte true OR false    有一些型別所代表的內容會跟著 build 機器的不同架構有所差異，例如同樣的 int 在 64 位元電腦裡佔 8 bytes 但在 32 位元電腦裡只佔 4 bytes。
 自定義型別 Go 容許自定義型別，最簡單的宣告方式為 struct
 type user struct { name string email string ext int isAdmin bool } 使用 var ravi user 可以宣告一個 ravi 的變數，代表一個 user 型別。宣告的當下，型別的欄位值會使用各欄位之型別的零值。</description>
     </item>
     
     <item>
       <title>Go | Map</title>
-      <link>https://raviwu.github.io/go-map/</link>
+      <link>https://raviwu.github.io/posts/go-map/</link>
       <pubDate>Mon, 26 Oct 2020 14:42:56 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/go-map/</guid>
+      <guid>https://raviwu.github.io/posts/go-map/</guid>
       <description>Go 的 map 是鍵值對的資料結構。
 // 宣告一個空白 map colors := map[string]string{} // 加入或修改鍵值對 colors[&amp;#34;Yello&amp;#34;] = &amp;#34;#cc8500&amp;#34; // 刪除鍵值（鍵不存在時並不會噴錯誤） delete(colors, &amp;#34;Red&amp;#34;) // 宣告一個空 map var numbers map[int]string numbers[1] = &amp;#34;One&amp;#34; // panic: runtime error: assignment ot entry in nil map 檢查鍵是否存在，如果指定的鍵不存在，會回傳零值給 value
 value, exists := colors[&amp;#34;Blue&amp;#34;] if exists { fmt.Println(value) } else { fmt.Println(value) // &amp;#34;&amp;#34; } 迭代 map numbers := map[int]string{ 1: &amp;#34;one&amp;#34;, 2: &amp;#34;two&amp;#34;, 3: &amp;#34;three&amp;#34;, } for key, value := range numbers { fmt.</description>
@@ -33,35 +34,36 @@ value, exists := colors[&amp;#34;Blue&amp;#34;] if exists { fmt.Println(value) }
     
     <item>
       <title>Go | 切片（Slice）</title>
-      <link>https://raviwu.github.io/go-slice/</link>
+      <link>https://raviwu.github.io/posts/go-slice/</link>
       <pubDate>Mon, 26 Oct 2020 13:14:21 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/go-slice/</guid>
-      <description>切片（Slice）是操作其指向之 陣列（Array）的物件。
+      <guid>https://raviwu.github.io/posts/go-slice/</guid>
+      <description>切片（Slice）是操作其指向之陣列（Array）的物件。
 [指標|長度|最大長度] // 切片 | [1,2,3,4,5] // 陣列 切片的初始化 // 宣告一個長度與最大長度都是 5 的字串陣列 slice1 := make([]string, 5) // 宣告一個長度為 3 最大長度為 5 的整數陣列 slice2 := make([]int, 3, 5) 長度不能大於最大長度，不然編譯器會噴錯誤。一般來說，宣告切片的同時也會同時賦值：
 // 宣告一個長度與最大長度為 3 的切片 slice1 := []string{&amp;#34;One&amp;#34;, &amp;#34;Two&amp;#34;, &amp;#34;Three&amp;#34;} // 宣告一個長度與最大長度為 100 的切片 slice2 := []string{99: &amp;#34;&amp;#34;} 空切片（nil slice）與空白切片（empty slice） 不管是空切片還是空白切片，標準函式庫裡的 append 、 len 跟 cap 的使用行為都一樣。
 空切片（nil slice） 在 Go 程式中，空切片很常出現，通常被當成不存在資料時的回傳值，例如 return nilSlice, error。
 空切片的宣吿方式：
-var slice []int 空切片長成這樣：</description>
+var slice []int 空切片長成這樣：
+   位置 0 1 2     用途 指標 長度 最大長度   值 nil 0 0    空白切片（empty slice） 空白切片通常是用來表達零資料集合，例如查詢資料庫後回傳零筆資料。空白切片的指標指向空陣列，所以並不會另外佔用記憶體。</description>
     </item>
     
     <item>
       <title>Go | 陣列（Array）</title>
-      <link>https://raviwu.github.io/go-array/</link>
+      <link>https://raviwu.github.io/posts/go-array/</link>
       <pubDate>Mon, 26 Oct 2020 11:36:46 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/go-array/</guid>
+      <guid>https://raviwu.github.io/posts/go-array/</guid>
       <description>Go 的陣列是連續空間內儲存了固定數目之相同型別物件的容器。當使用 var array [5]int 宣告時，陣列內儲存的型別或者長度都不能再改變，如果需要更多的空間來儲存新的物件，需要宣告一個新的陣列後把原先的值搬過去新的陣列。
-在 Go 語言中宣告新的變數且無賦值時，這些變數所指向的物件都會以其零值（Zero Value）初始化。有關於 Go 的零值，請參考 這邊。常用的零值：
+在 Go 語言中宣告新的變數且無賦值時，這些變數所指向的物件都會以其零值（Zero Value）初始化。有關於 Go 的零值，請參考這邊。常用的零值：
    類型 零值     數值 0   布林值 false   字串 &amp;quot;&amp;quot;    初始化陣列的同時賦值 // 宣告一個 array1 變數的 int 陣列，長度為 5 且值依序分別為 1,2,3,4,5 array1 := [5]int{1,2,3,4,5} // 宣告一個 array2 變數的 int 陣列，長度為 5 且值依序分別為 0,1,2,0,0 array2 := [5]int{1: 1, 2: 2} // 宣告一個 array3 變數的 int 陣列，長度為取決於賦值內容 // 如以下 array3 的長度為 3 array3 := [.</description>
     </item>
     
     <item>
       <title>產品的七個面向（The 7 Product Dimensions）</title>
-      <link>https://raviwu.github.io/methodology-the-seven-product-dimensions/</link>
+      <link>https://raviwu.github.io/posts/methodology-the-seven-product-dimensions/</link>
       <pubDate>Mon, 21 Sep 2020 13:48:42 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/methodology-the-seven-product-dimensions/</guid>
+      <guid>https://raviwu.github.io/posts/methodology-the-seven-product-dimensions/</guid>
       <description>從 More Agile Testing 裡讀到各種方法論，在這邊隨機筆記一下。這次探討的是用 The seven product dimensions 來協助更全面性地探討規劃中的產品開發。
 七個可以在團隊中詢問的面向分別是：
  使用者（User）：使用、評價或者是從此產品受益的對象。不限於自然人。如果是自然人的話，使用 Personas 來勾勒出使用者是不錯的方法。 介面（Interface）：使用何種介面來連結產品以及使用者？產品送出何種訊息？關係圖、脈絡圖或者是原型都是不錯的視覺化工具。 動作（Action）：產品能做什麼事？這些動作是怎麼驅動的？有沒有順序之分？產品如何回應不同的動作？這些動作如何影響資料？ 資料（Data）：產品接受什麼類型的資料？資料來源為何？上下文脈絡？資料的有效期間多長？ 控制（Control）：產品本身受到什麼政策、法規、商業邏輯等限制？違反這些限制的風險如何？ 環境（Environment）：斟酌一下產品的物理特徵，會在何種情境使用？如何安裝、設定、授權、營運？開發環境中所需的環境條件又是如何？ 品質特徵（Quality Attribute）：產品需要達到何種程度的服務品質？可靠度？停機率？安全性？可使用性？想想可測試性、可延展性，思考一下該如何評價這些品質特徵。  在產品規劃、衝刺週期計畫會議或是規格討論會議中，提醒自己用這七個面向的問題來增加思慮與討論過程的考量涵蓋度。</description>
@@ -69,12 +71,12 @@ var slice []int 空切片長成這樣：</description>
     
     <item>
       <title>InputStream 、 DataInputStream 與 BufferedInputStream</title>
-      <link>https://raviwu.github.io/java-inputstream-datainputstream-and-bufferedinputstream/</link>
+      <link>https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/</link>
       <pubDate>Fri, 11 Sep 2020 13:46:57 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/java-inputstream-datainputstream-and-bufferedinputstream/</guid>
+      <guid>https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/</guid>
       <description>Java 有很多不同的 InputStream 類別，老是搞不清楚，InputStream、DataInputStream跟BufferedInputStream最近出現在我看的書的練習題裡，一些從 Java Doc (1.8) 文件中拉出來的相關連結：
-  Closeable  FilterInputStream  InputStream  DataInputStream  BufferedInputStream  InputStream是抽象類別，實踐了Closeable，所以可以當成try with resource裡的資源。類別方法裡定義了InputStream.nullInputStream()可以產生空的InputStream。另外也規範所有實作子類別必須提供public int read() throws IOException方法來回傳下一個 byte 的內容。
+ Closeable FilterInputStream InputStream DataInputStream BufferedInputStream  InputStream是抽象類別，實踐了Closeable，所以可以當成try with resource裡的資源。類別方法裡定義了InputStream.nullInputStream()可以產生空的InputStream。另外也規範所有實作子類別必須提供public int read() throws IOException方法來回傳下一個 byte 的內容。
 FilterInputStream在生成時吃進InputStream後把InputStream存起來，並且覆寫了所有InputStream裡的方法，大部分覆寫的方法都是把原來的操作轉到物件生成時丟進去的InputStream上，以供更細分的子類別使用，例如：
 public int read(byte b[], int off, int len) throws IOException { return in.read(b, off, len); } DataInputStream跟BufferedInputStream都進一步繼承FilterInputStream。DataInputStream主要是從InputStream直接讀入 Java 的 primitive data type。
 BufferedInputStream在內部會產生一個緩衝陣列（buffer array）來支援mark跟reset方法，透過額外使用的緩衝空間來先讀入資料，以優化資料讀入的效能。</description>
@@ -82,10 +84,10 @@ BufferedInputStream在內部會產生一個緩衝陣列（buffer array）來支�
     
     <item>
       <title>泛型 Java Functional Interface 的特規化</title>
-      <link>https://raviwu.github.io/java-generic-functional-interface-specilization/</link>
+      <link>https://raviwu.github.io/posts/java-generic-functional-interface-specilization/</link>
       <pubDate>Fri, 11 Sep 2020 13:44:04 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/java-generic-functional-interface-specilization/</guid>
+      <guid>https://raviwu.github.io/posts/java-generic-functional-interface-specilization/</guid>
       <description>如果某個特殊型別的 Functional Interface 常常被使用時，有時候直接宣告型別會比較方便引用。可以透過兩種方式來做特規，介面與抽象類別：
 Generic Functional Interface
 @FunctionalInterface public interface TwoArgsProcessor&amp;lt;X&amp;gt; { X process(X arg1, X arg2); } 介面（Interface）
@@ -95,10 +97,10 @@ abstract class TwoIntsProcessorAbstract implements TwoArgsProcessor&amp;lt;Integ
     
     <item>
       <title>使用複合條件來判斷是否進入下一輪 Java 迴圈</title>
-      <link>https://raviwu.github.io/java-use-combo-condition-for-loop/</link>
+      <link>https://raviwu.github.io/posts/java-use-combo-condition-for-loop/</link>
       <pubDate>Thu, 10 Sep 2020 13:41:31 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/java-use-combo-condition-for-loop/</guid>
+      <guid>https://raviwu.github.io/posts/java-use-combo-condition-for-loop/</guid>
       <description>在 Java 迴圈寫法中，假如我想要透過一個外部判斷來提前中斷這個迴圈，之前我習慣寫：
 public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&amp;lt;ints.length; i++) { continueCond = ints[i] &amp;lt; 4; if (!continueCond) break; System.out.println(ints[i]); } } } 但這樣寫其實有點冗，今天看到在 Functional Interfaces in Java 裡的一個範例寫法：
 public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&amp;lt;ints.length &amp;amp;&amp;amp; continueCond; i++) { continueCond &amp;amp;= ints[i] &amp;lt; 4; System.</description>
@@ -106,23 +108,23 @@ public class Test { public static void main(String[] args) { int [] ints = {1,2,
     
     <item>
       <title>Windows 裡的類 homebrew 工具： scoop.sh</title>
-      <link>https://raviwu.github.io/tools-scoop-sh/</link>
+      <link>https://raviwu.github.io/posts/tools-scoop-sh/</link>
       <pubDate>Fri, 10 Aug 2018 13:39:10 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/tools-scoop-sh/</guid>
+      <guid>https://raviwu.github.io/posts/tools-scoop-sh/</guid>
       <description>新工作的環境是 Windows 系統，所有的開發工具生態系都要重新摸索。剛開始發現可以用 Git for Windows 裝好後的 console 下平常習慣的 bash 指令後，努力想要自己寫一些 shell script 去自動化開發工具跟環境變數的初始化，簡單的情境下好似都還堪用。
 可是如果要安裝的套件都要一個一個手刻 script 好像又有些白癡。
 因緣際會下被提點去找其他平台上的類 Homebrew 方案，權衡系統權限低落等實際情況下，好像也只剩 scoop.sh 可以用了。
-搞了一整天反覆試驗了一陣子，總算是把裝機清單給列了出來，放在 這裡。雖然還是要手動輸入指令，但是可以統一管理這些套件，用指令反安裝等已經比之前的原始人狀態進步多了。
+搞了一整天反覆試驗了一陣子，總算是把裝機清單給列了出來，放在這裡。雖然還是要手動輸入指令，但是可以統一管理這些套件，用指令反安裝等已經比之前的原始人狀態進步多了。
 被 oh my zsh 慣壞眼睛的我，有幸發現可以用 concfg 稍微把 PowerShell 的顏色弄得順眼一點。所謂山不轉路轉，路不轉人轉，接下來還需要努力爬行。（握拳）</description>
     </item>
     
     <item>
       <title>在 RSpec 裡測試 Rake Task</title>
-      <link>https://raviwu.github.io/testing-rake-task-in-rspec/</link>
+      <link>https://raviwu.github.io/posts/testing-rake-task-in-rspec/</link>
       <pubDate>Sun, 07 May 2017 13:36:08 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/testing-rake-task-in-rspec/</guid>
+      <guid>https://raviwu.github.io/posts/testing-rake-task-in-rspec/</guid>
       <description>最近被 Rake Task 的測試設定搞得一頭霧水，簡單記錄一下測試 Rake Task 的測試設定，以及各種鬼打牆的血淚史：
 TL;DR 為了避免各種 task 載入、執行狀態等相互干擾導致 test case 會偶發性失敗，每一次執行 test case 時就去做「載入」、「卸載」會比較沒有鬼打牆狀況出現。
 # spec_helper.rb config.before(:each, rake: true) do Rails.application.load_tasks end config.after(:each, rake: true) do Rake::Task.clear end 把 Rails.application.load_tasks 放在 before(:each) 確保每次載入 test case 前都有正確 load 到要測試的那隻 task ，並在 after(:each) 時用 Rake::Task.clear 去清空剛剛載入的 Rake Task。
@@ -132,10 +134,10 @@ TL;DR 為了避免各種 task 載入、執行狀態等相互干擾導致 test ca
     
     <item>
       <title>書摘 | Soft Skills = The software developer&#39;s life manual</title>
-      <link>https://raviwu.github.io/notes-soft-skills/</link>
+      <link>https://raviwu.github.io/posts/notes-soft-skills/</link>
       <pubDate>Wed, 22 Feb 2017 13:28:15 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/notes-soft-skills/</guid>
+      <guid>https://raviwu.github.io/posts/notes-soft-skills/</guid>
       <description>公司前輩分享了 Soft Skills: The software developer&amp;rsquo;s life manual 這本書，後來又在 Soft &amp;amp; Share 看到推廣介紹，抱著當休閒讀物的心情來閱讀是很不錯的。
 作者 John Z. Sonmez 在這本書中想要涵括的內容實在包山包海，如果對於人生迷惘的捧油，的確只要看了這本書所簡單介紹的內容就大概可以對人生重拾一些希望，也能循著這些主題繼續往深探索。比較特別的是，每個章節的篇幅被設計成大概一篇 Blog 文長度，所以閱讀起來的節奏感很是不錯，即使有些主題令人打哈欠，有些主題不斷地出現各種課程推銷，但都還能在睡著與失去耐心之前看完一個段落，這點是很值得效尤的閱讀設計技巧。
 討論的主題分成七大部分：
@@ -151,10 +153,10 @@ Section 3 - Learning 作者提出了一套學習的方法論，大致上是：
     
     <item>
       <title>工具 | Kindle &#34;My Clippings.txt&#34; 的轉檔 gem KCFU</title>
-      <link>https://raviwu.github.io/tools-kcfu-for-kindle-clipping/</link>
+      <link>https://raviwu.github.io/posts/tools-kcfu-for-kindle-clipping/</link>
       <pubDate>Sat, 28 Jan 2017 13:33:09 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/tools-kcfu-for-kindle-clipping/</guid>
+      <guid>https://raviwu.github.io/posts/tools-kcfu-for-kindle-clipping/</guid>
       <description>Kindle 的剪貼簿功能雖然在 Kindle 上很好用，但真的要抽出來另外處理書摘的時候還真的麻煩，因為 My Clippings.txt 就是一個很簡單的純文字檔，每次在 Kindle 上面 hightlight / bookmark / notes 時就會依照書的 title 去新增一段特定格式的文字段落，所以如果同時看很多本的時候，打開 My Clippings.txt 會發現裡面就依照 clippings 時序夾雜著來自不同書裡的內容，得再經過一些處理才能分成不同的來源。
 原先有找到 firewood 這個套件，不過沒辦法在我的電腦上使用 QQ，乾脆就自己刻個輪子吧。
 GitHub 上面的 kindleclippings 是用 Ruby 寫的，簡單又方便使用，站在小巨人的肩膀上刻了一個 kcfu 來做基本的拆分檔案，另外加配了一個陽春的 Markdown 格式轉換器方便做書摘。
@@ -165,10 +167,10 @@ gem install kcfu # Under folder of your kcfu.rb and &amp;#39;My Clippings.</desc
     
     <item>
       <title>在 Trailblazer 的 Policy 中透過客制 Exception 來處理複雜的「錯誤回應」</title>
-      <link>https://raviwu.github.io/customize-error-handlement-in-trailblazer-policy/</link>
+      <link>https://raviwu.github.io/posts/customize-error-handlement-in-trailblazer-policy/</link>
       <pubDate>Sat, 14 Jan 2017 13:25:31 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/customize-error-handlement-in-trailblazer-policy/</guid>
+      <guid>https://raviwu.github.io/posts/customize-error-handlement-in-trailblazer-policy/</guid>
       <description>為了盡量貼近 Trailblazer 的設計概念，許多原先會透過 Controller before_action 去處理的權限管控，盡量都搬進 Trailblazer 的 Policy 裡。
 Policy 採用類似 Pundit 的語法，典型的 Policy 如下：
 class Thing::Policy def initialize(user, thing) @user, @thing = user, thing end def create? (admin? || approved?) &amp;amp;&amp;amp; @thing.persisted? end private def admin? @user.admin == true end def approved? @user.is_approved end end 在 Operation 中若要調用這隻 Policy 的話要宣告：
@@ -177,35 +179,35 @@ class Thing::Create &amp;lt; Trailblazer::Operation builds -&amp;gt; (params) { 
     
     <item>
       <title>初探 Trailblazer 框架</title>
-      <link>https://raviwu.github.io/elementary-trailblazer/</link>
+      <link>https://raviwu.github.io/posts/elementary-trailblazer/</link>
       <pubDate>Sat, 07 Jan 2017 13:23:29 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/elementary-trailblazer/</guid>
+      <guid>https://raviwu.github.io/posts/elementary-trailblazer/</guid>
       <description>最近公司的 Rails 專案試用了 Trailblazer 這套整理 Rails 程式碼的框架。（目前使用的是 1.1 版）
-Trailblazer 是擺在 Rails 上的一套工具，雖然有本 專書可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 Nick Sutterer 設想的情況不一樣時，小小撞牆是難免的。
+Trailblazer 是擺在 Rails 上的一套工具，雖然有本專書可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 Nick Sutterer 設想的情況不一樣時，小小撞牆是難免的。
 Trailblazer 是模組化設計，所以並非所有模組需要安裝才能開始享受 Trailblazer 帶來的方便感，除了主要的 Operation / Policy / Contract / Cell 等稍微有摸過外，其他的眉眉角角尚待開發。稍微整理一下截至目前為止使用這套框架的個人認知，這套 Trailblazer 的目的是將原先 Rails 單純 MVC 架構下可能會散亂在 Controller / Model 層的商業邏輯，集中起來包在 Operation 的概念裡，（在理想狀況下）分別簡化日益肥大的 Controller / Model / View 邏輯：
  Controller  讓 controller 單純負責傳送 current_user / resource 到正確的 operation 並視操作結果導向相對應的路由 權限控管交給 Policy 處理，用 controller 塞給 operation 的 current_user 配合 operation 的 model!</description>
     </item>
     
     <item>
       <title>筆記 | Practical Object-Oriented Design in Ruby (POODR)</title>
-      <link>https://raviwu.github.io/notes-of-poodr/</link>
+      <link>https://raviwu.github.io/posts/notes-of-poodr/</link>
       <pubDate>Tue, 03 Jan 2017 13:20:41 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/notes-of-poodr/</guid>
+      <guid>https://raviwu.github.io/posts/notes-of-poodr/</guid>
       <description>Practical Object-Oriented Design in Ruby (POODR) 不會很厚，循序漸進地介紹物件導向設計的各種重要概念，而且範例用的是 Ruby 來解說，挺親切的。
 除了各種設計原則之外，也簡要解釋了 Inheritance / Module / Composition 的使用時機與差異。
 最後一章介紹測試原則，除了說明一般的測試原則之外（例如主要應測試 public interface / incoming message / outgoing command ），也很清楚地說明要怎樣去分別把不同的測試責任分在 module / test double / test class 上，以及讓 test double 與實際的程式碼同步的技巧，可以反覆閱讀的參考書。
 Chapter 1 - Object-Oriented Design  P.4
-Practical design does not anticipate what will happen to your application, it merely accepts that something will and that, in the present, you cannot know what.</description>
+Practical design does not anticipate what will happen to your application, it merely accepts that something will and that, in the present, you cannot know what. It doesn’t guess the future; it preserves your options for accommodating the future.</description>
     </item>
     
     <item>
       <title>利用 find_in_batches 在 Rails 做跨資料庫的資料移轉操作</title>
-      <link>https://raviwu.github.io/use-find-in-batches-during-migration/</link>
+      <link>https://raviwu.github.io/posts/use-find-in-batches-during-migration/</link>
       <pubDate>Fri, 02 Sep 2016 05:05:44 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/use-find-in-batches-during-migration/</guid>
+      <guid>https://raviwu.github.io/posts/use-find-in-batches-during-migration/</guid>
       <description>在處理跨資料庫搬動並且需要一筆一筆資料去做各種運算處理時，最直覺的方式，是把表格裡的所有資料通通透過 ORM 撈到 ActiveRecord::Association 陣列裡，再用 each 去做操作：
 User.all.each do |user| user.email = &amp;#34;assign@new.email&amp;#34; ... end 但由於 Rails 會需要先去建立這些 objects，如果資料筆數很多的話，一次通通撈出來會佔用過多不必要的記憶體，可以使用 find_in_batches 做批次處理，減少系統 RAM 的負擔。
 User.find_in_batches do |group| group.each do |user| user.email = &amp;#34;assign@new.email&amp;#34; ... end end 但如果要做跨資料庫的處理時，需要特別安插 ActiveRecord::Base.establish_connection 讓 Rails 知道當前操作需要連到哪個資料庫，舉例而言，假如想把資料一批一批從 :origin 調出來，然後檢查、編輯以後塞到 :migrated 資料庫裡，那麼需要在 Query 前去告訴 Rails 目前要連到哪個資料去撈資料：
@@ -214,10 +216,10 @@ User.find_in_batches do |group| group.each do |user| user.email = &amp;#34;assig
     
     <item>
       <title>使用 Google Sheets API 拉資料到 Rails APP 裡</title>
-      <link>https://raviwu.github.io/pull-data-to-rails-from-google-sheet/</link>
+      <link>https://raviwu.github.io/posts/pull-data-to-rails-from-google-sheet/</link>
       <pubDate>Sat, 09 Jul 2016 05:17:26 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/pull-data-to-rails-from-google-sheet/</guid>
+      <guid>https://raviwu.github.io/posts/pull-data-to-rails-from-google-sheet/</guid>
       <description>Google Sheets 很好用，一些程式中需要跨部門討論的字串定義，又或者是需要讓不方便存取原始碼的同事也能清楚知道原始碼裡部分設定字串的時候，通常都可以利用 Google Sheet 來做討論平台，再以 Google Sheets 上面的文件為基礎，匯入主程式中做各種處理，確保主程式的內容與 Google Sheets 上的內容同步。
 要匯入 Google Sheets 內容到程式裡最簡單的方式，是輸出 csv 後寫個小 script 去讀取 csv 資料，轉成 Array 後就能靈活使用。
 但若是開發過程當中常常要不斷更新 Google Sheets 欄位後再手動匯出 csv 跑 script 去後處理，這種半自動的方式還是令人覺得太過麻煩。可以考慮進一步用 Google Sheets API 去拉特定 Google Sheets 工作表資料，把半自動的「到瀏覽器視窗匯出 csv &amp;gt; 儲存檔案到特定資料夾 &amp;gt; 執行 script 完成匯入」簡化為「執行 script 完成匯入」。
@@ -227,12 +229,12 @@ User.find_in_batches do |group| group.each do |user| user.email = &amp;#34;assig
     
     <item>
       <title>在 rails 上實作轉移 Parse 手機推播服務到 Amazon SNS</title>
-      <link>https://raviwu.github.io/migrate-push-notification-from-parse-to-aws-sns/</link>
+      <link>https://raviwu.github.io/posts/migrate-push-notification-from-parse-to-aws-sns/</link>
       <pubDate>Fri, 24 Jun 2016 05:05:44 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/migrate-push-notification-from-parse-to-aws-sns/</guid>
+      <guid>https://raviwu.github.io/posts/migrate-push-notification-from-parse-to-aws-sns/</guid>
       <description>簡要說明 為了避免使用者因服務轉換而被迫強制更新，移轉過程採用漸進方式。
-如果不需要如此痛苦的同時使用兩種服務的捧油，可以參考 這一篇的實作，直接用 AWS Mobile Hub 的服務做批次資料移轉。
+如果不需要如此痛苦的同時使用兩種服務的捧油，可以參考這一篇的實作，直接用 AWS Mobile Hub 的服務做批次資料移轉。
 由於在轉換期需要同時支援兩邊服務運作，又要避免使用者重複收到相同的推播，需要實作「對同一裝置擇一服務進行推播」。本篇實作的概念是，使用者只有在用新版本的 APP 登入時，伺服器才會從 APP 取得 device_token 去註冊 Amazon SNS endpoint_arn，同時刪除 Parse 服務上的使用者的所有 Installation 紀錄。
 Parse 跟 Amazon SNS 的 API 邏輯有些不同，主要差別在於，Parse 只需要在同一 request 裡就可以達到「推播給符合某條件的 channels 組合，並且可以指定其中的特定 users 組合」，但是 Amazon 的推播就是 topic_arn / target_arn 兩種，要收到 topic_arn 的話要先讓 endpoint_arn 訂閱特定的 topic_arn，而 target_arn 則是一個 request 只能推播給單一 target_arn (endpoint_arn)。
 開發步驟  打包一隻 AmazonSnsWrapper 把 Amazon SDK 提供的 method 客製成符合需求的介面，專門負責跟 Amazon server 溝通。 新增 AmazonSnsInfo Model 以記錄使用者的 SNS 訂閱狀況。 新增 ParseInstallationWrapper 打包 Parse RESTful API 裡的 method，查詢使用者之前透過 APP 註冊的 Installations，並且刪除已經成功轉換到 Amazon SNS 的 Installation。 新增 update_push_subscription / logout API 來針對 APP 傳送的 device_token 做各種 push subscription / unsubscription 的操作。 新增 PushServicesWrapper 把所有 Push 行為的邏輯打包在一起方便做服務切換。  一、 AmazonSnsWrapper 首先，我們得先建好 Amazon SNS 服務中 endpoint_arn / topic_arn / subscription_arn 新增、查詢、訂閱與刪除等機制，我習慣把第三方 API 的互動包成一個 Ruby Class 方便測試跟管理，建一個 AmazonSnsWrapper 來打包 SDK 相關的程式碼。</description>
@@ -240,12 +242,12 @@ Parse 跟 Amazon SNS 的 API 邏輯有些不同，主要差別在於，Parse 只
     
     <item>
       <title>Rails grape API 上實作 JWT 多重登入</title>
-      <link>https://raviwu.github.io/implement-jwt-in-grape-api/</link>
+      <link>https://raviwu.github.io/posts/implement-jwt-in-grape-api/</link>
       <pubDate>Fri, 10 Jun 2016 05:05:44 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/implement-jwt-in-grape-api/</guid>
+      <guid>https://raviwu.github.io/posts/implement-jwt-in-grape-api/</guid>
       <description>多重登入的需求，在服務本身允許「跨裝置體驗」或者是「接受不同 request agent (APP request / mobile browser)」的時候顯得重要。
-理想情況下，可以讓使用者在介面上面清楚知道目前帳號的登入狀態，並在登入數超過服務上限的時候，讓使用者自己選擇要移除登入授權的裝置，使用者流程大概會像（ 這篇文）那樣，要做到類似參考連結這樣的管理介面，需要我目前還不會的前端的配合建置與基本的 session 管理 API。本篇只先建置允許使用多重登入的資料結構與登入驗證 API。
+理想情況下，可以讓使用者在介面上面清楚知道目前帳號的登入狀態，並在登入數超過服務上限的時候，讓使用者自己選擇要移除登入授權的裝置，使用者流程大概會像（這篇文）那樣，要做到類似參考連結這樣的管理介面，需要我目前還不會的前端的配合建置與基本的 session 管理 API。本篇只先建置允許使用多重登入的資料結構與登入驗證 API。
 選擇用 JWT (Jason Web Token) 作為主要的憑證溝通，優點有一些：
  透過加密 payload 來比對資料庫內容的方式，可以不用在資料表中「直接存入」與憑證相關的訊息，加密跟解密只要透過協定就能進行調整。 payload 裡面塞入的訊息可以自訂，在各服務跟裝置之間交換加密過後的使用者資料。 signing key / protocol 可以在有資安疑慮時更換。  使用 Devise 的 Rails 捧油也可參考 devise_token_auth 這個 gem，整合效果在文件上面看起來很完善，但因為目前我手邊的系統絕大多數的 request 都來自 grape API endpoint ，比較過後，跟搞懂並駕馭 devise 設定比起來，我還是選擇自刻 JWT 較節省開發時間。
  在 Rails grape API 上實作 JWT 多重登入，分 4 個階段。
@@ -254,10 +256,10 @@ Parse 跟 Amazon SNS 的 API 邏輯有些不同，主要差別在於，Parse 只
     
     <item>
       <title>Rails 中使用 Paperclip 存 URI 附件</title>
-      <link>https://raviwu.github.io/use-paperclip-to-store-uri-in-rails/</link>
+      <link>https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/</link>
       <pubDate>Thu, 12 May 2016 04:38:49 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/use-paperclip-to-store-uri-in-rails/</guid>
+      <guid>https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/</guid>
       <description>使用 Rails APP + Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。
 由於部分圖片附件在存取時還會同步進行縮圖，如果要用 s3-cmd 這類的外部工具直接搬資料，得連各種不同 model 的縮圖定義一起處理，痛苦指數不低。
 原先預計要從 HTTP GET request 的 response body 裡直接塞 tempfile ：
@@ -268,10 +270,10 @@ attachment_file = { :filename =&amp;gt; /^.</description>
     
     <item>
       <title>程設風格 | 早期終止執行</title>
-      <link>https://raviwu.github.io/early-termination/</link>
+      <link>https://raviwu.github.io/posts/early-termination/</link>
       <pubDate>Fri, 15 Apr 2016 04:22:50 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/early-termination/</guid>
+      <guid>https://raviwu.github.io/posts/early-termination/</guid>
       <description>剛開始寫程式的時候，以為所謂邏輯判斷就是很多個若 A 則 B 包起來的複雜地圖。這樣的程式碼，很容易因為邏輯判斷太過複雜，很難一眼就看到到底目前程式會跑到哪一個 if 分支裡面執行。
 taget = Dog.new if target.is_a?(Animal) if target.has_four_legs? if target.is_a?(Dog) puts &amp;quot;wolf!&amp;quot; else puts &amp;quot;four leg animal can say yeah&amp;quot; end else puts &amp;quot;don&#39;t know what that is&amp;quot; end else puts &amp;quot;don&#39;t know what that is&amp;quot; end =&amp;gt; &amp;quot;wolf!&amp;quot; 如果透過層層過濾只是要剔除一些情況讓程式不處理，例如有很多個分支其實是「不處理」或是「同樣的簡單處理」，例如上面的 puts &amp;quot;don&#39;t know what that is&amp;quot; ，可以改用「早期終止」的模式來改寫。
 def what_it_says(target) # 如果不符合條件的參數就會在此提早回傳值 return &amp;quot;don&#39;t know what that is&amp;quot; unless target.is_a?(Animal) &amp;amp;&amp;amp; target.has_four_legs? # 符合資格的參數才會進入真正的必要判斷 if target.</description>
@@ -279,10 +281,10 @@ def what_it_says(target) # 如果不符合條件的參數就會在此提早回�
     
     <item>
       <title>終端機工具</title>
-      <link>https://raviwu.github.io/command-line-tools-notes/</link>
+      <link>https://raviwu.github.io/posts/command-line-tools-notes/</link>
       <pubDate>Sun, 27 Mar 2016 04:07:31 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/command-line-tools-notes/</guid>
+      <guid>https://raviwu.github.io/posts/command-line-tools-notes/</guid>
       <description>轉型後端工程師的路上，看了很多教學，裝了很多套件，用過很多軟體。目前用得還算不手殘的工具只有終端機（terminal）跟文本編輯器（text editor）。
 因為要經常性切換不同的 Git Branch，MacOX 本來附掛的 terminal 顯得有點陽春，需要極大注意力才能清楚知道自己究竟目前身在何處又在哪支 branch 裡。
 先烈做了很多很棒的工具改善工作體驗與視覺效果，iTerm 2 很是不錯，搭配上一些快捷熱鍵可以有效增加效率。

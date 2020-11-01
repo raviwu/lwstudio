@@ -5,14 +5,15 @@
     <link>https://raviwu.github.io/tags/google-sheet/</link>
     <description>Recent content in google sheet on Ravi Wu</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>zh-tw</language>
+    <copyright>Copyright © 2020, Ravi Wu.</copyright>
     <lastBuildDate>Sat, 09 Jul 2016 05:17:26 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/google-sheet/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>使用 Google Sheets API 拉資料到 Rails APP 裡</title>
-      <link>https://raviwu.github.io/pull-data-to-rails-from-google-sheet/</link>
+      <link>https://raviwu.github.io/posts/pull-data-to-rails-from-google-sheet/</link>
       <pubDate>Sat, 09 Jul 2016 05:17:26 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/pull-data-to-rails-from-google-sheet/</guid>
+      <guid>https://raviwu.github.io/posts/pull-data-to-rails-from-google-sheet/</guid>
       <description>Google Sheets 很好用，一些程式中需要跨部門討論的字串定義，又或者是需要讓不方便存取原始碼的同事也能清楚知道原始碼裡部分設定字串的時候，通常都可以利用 Google Sheet 來做討論平台，再以 Google Sheets 上面的文件為基礎，匯入主程式中做各種處理，確保主程式的內容與 Google Sheets 上的內容同步。
 要匯入 Google Sheets 內容到程式裡最簡單的方式，是輸出 csv 後寫個小 script 去讀取 csv 資料，轉成 Array 後就能靈活使用。
 但若是開發過程當中常常要不斷更新 Google Sheets 欄位後再手動匯出 csv 跑 script 去後處理，這種半自動的方式還是令人覺得太過麻煩。可以考慮進一步用 Google Sheets API 去拉特定 Google Sheets 工作表資料，把半自動的「到瀏覽器視窗匯出 csv &amp;gt; 儲存檔案到特定資料夾 &amp;gt; 執行 script 完成匯入」簡化為「執行 script 完成匯入」。

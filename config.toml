@@ -1,80 +1,40 @@
-baseURL = "https://raviwu.github.io/"
+baseURL = "https://raviwu.github.io"
 
 title = "Ravi Wu"
-# copyright = "Copyright © 2020 | Ravi Wu"
-languageCode = "en"
-DefaultContentLanguage = "en"
+languageCode = "zh-tw"
+defaultContentLanguage = "zh"
+theme = 'tale'
+
+author = "Ravi Wu"
+copyright = "Copyright © 2020, Ravi Wu."
 
 publishDir = "docs"
-theme = "amperage"
 
-paginate = 10
+[Author]
+    name = "Ravi Wu"
 
-pygmentsCodeFences = true
-
-pygmentsUseClasses = true
-
-# Menu elements
-[[menu.main]]
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    title = "Posts"
+    url = "/posts/"
+    weight = 10
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    title = "tags"
+    url = "/tags/"
+    weight = 11
+  [[menu.main]]
     identifier = "github"
     name = "GitHub"
+    title = "GitHub"
     url = "https://github.com/raviwu"
-    weight = 10
-[[menu.main]]
-    identifier = "Linkedin"
+    weight = 91
+  [[menu.main]]
+    identifier = "linkedin"
     name = "Linkedin"
-    url = "https://www.linkedin.com/in/raviwu/"
-    weight = 10
-
-# Enable only tags taxonomy
-[taxonomies]
-    tag = "tags"
-
-[params]
-    copyright = "Ravi Wu" # Name shown on footer copyright
-    themeColor = "#333" # Theme color displayed on mobile browsers
-
-    # Default AMP components for the whole site
-    ampElements = ["amp-analytics", "amp-social-share", "amp-install-serviceworker", "amp-iframe"]
-
-    # Google Analytics code
-    # googleAnalytics = "UA-128498798-1"
-
-    # Adsense publisher code
-    # adsensePublisher = "ca-pub-123456789"
-
-    # Comments Iframe URL
-    # commentsEmbedUrl = "https://comments.example.com"
-
-    # Social sites for metatags
-    # facebookSite = "example"
-    # twitterSite = "@example"
-
-    # Structured data elements
-    socialProfiles = ["https://www.linkedin.com/in/raviwu/","https://github.com/raviwu"]
-
-    alternatePageName = "Ravi Wu"
-    organizationLogo = "/lwstudio-logo.png"
-    organizationName = "Ravi Wu"
-
-    publisherName = "Ravi Wu"
-    publisherLogo = "/lwstudio-logo.png"
-    publisherLogoWidth = 600
-    publisherLogoHeight = 60
-
-# Generate json to use as search index
-[outputs]
-    home = [ "HTML", "RSS", "SearchIndex"]
-
-[outputFormats]
-    [outputFormats.SearchIndex]
-        mediaType= "application/json"
-        baseName= "search"
-        isPlainText= true
-        notAlternative= true
-
-# Enable unsafe mode to be able to use HTML on markdown
-[markup]
-    [markup.goldmark]
-        [markup.goldmark.renderer]
-            unsafe = true
+    title = "Linkedin"
+    url = "https://www.linkedin.com/in/raviwu"
+    weight = 90

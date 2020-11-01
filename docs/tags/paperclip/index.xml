@@ -5,14 +5,15 @@
     <link>https://raviwu.github.io/tags/paperclip/</link>
     <description>Recent content in paperclip on Ravi Wu</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>zh-tw</language>
+    <copyright>Copyright © 2020, Ravi Wu.</copyright>
     <lastBuildDate>Thu, 12 May 2016 04:38:49 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/paperclip/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rails 中使用 Paperclip 存 URI 附件</title>
-      <link>https://raviwu.github.io/use-paperclip-to-store-uri-in-rails/</link>
+      <link>https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/</link>
       <pubDate>Thu, 12 May 2016 04:38:49 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/use-paperclip-to-store-uri-in-rails/</guid>
+      <guid>https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/</guid>
       <description>使用 Rails APP + Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。
 由於部分圖片附件在存取時還會同步進行縮圖，如果要用 s3-cmd 這類的外部工具直接搬資料，得連各種不同 model 的縮圖定義一起處理，痛苦指數不低。
 原先預計要從 HTTP GET request 的 response body 裡直接塞 tempfile ：

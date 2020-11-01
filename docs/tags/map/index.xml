@@ -5,14 +5,15 @@
     <link>https://raviwu.github.io/tags/map/</link>
     <description>Recent content in map on Ravi Wu</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>zh-tw</language>
+    <copyright>Copyright © 2020, Ravi Wu.</copyright>
     <lastBuildDate>Mon, 26 Oct 2020 14:42:56 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/map/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go | Map</title>
-      <link>https://raviwu.github.io/go-map/</link>
+      <link>https://raviwu.github.io/posts/go-map/</link>
       <pubDate>Mon, 26 Oct 2020 14:42:56 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/go-map/</guid>
+      <guid>https://raviwu.github.io/posts/go-map/</guid>
       <description>Go 的 map 是鍵值對的資料結構。
 // 宣告一個空白 map colors := map[string]string{} // 加入或修改鍵值對 colors[&amp;#34;Yello&amp;#34;] = &amp;#34;#cc8500&amp;#34; // 刪除鍵值（鍵不存在時並不會噴錯誤） delete(colors, &amp;#34;Red&amp;#34;) // 宣告一個空 map var numbers map[int]string numbers[1] = &amp;#34;One&amp;#34; // panic: runtime error: assignment ot entry in nil map 檢查鍵是否存在，如果指定的鍵不存在，會回傳零值給 value
 value, exists := colors[&amp;#34;Blue&amp;#34;] if exists { fmt.Println(value) } else { fmt.Println(value) // &amp;#34;&amp;#34; } 迭代 map numbers := map[int]string{ 1: &amp;#34;one&amp;#34;, 2: &amp;#34;two&amp;#34;, 3: &amp;#34;three&amp;#34;, } for key, value := range numbers { fmt.</description>

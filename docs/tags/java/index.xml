@@ -5,16 +5,17 @@
     <link>https://raviwu.github.io/tags/java/</link>
     <description>Recent content in java on Ravi Wu</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>zh-tw</language>
+    <copyright>Copyright © 2020, Ravi Wu.</copyright>
     <lastBuildDate>Fri, 11 Sep 2020 13:46:57 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>InputStream 、 DataInputStream 與 BufferedInputStream</title>
-      <link>https://raviwu.github.io/java-inputstream-datainputstream-and-bufferedinputstream/</link>
+      <link>https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/</link>
       <pubDate>Fri, 11 Sep 2020 13:46:57 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/java-inputstream-datainputstream-and-bufferedinputstream/</guid>
+      <guid>https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/</guid>
       <description>Java 有很多不同的 InputStream 類別，老是搞不清楚，InputStream、DataInputStream跟BufferedInputStream最近出現在我看的書的練習題裡，一些從 Java Doc (1.8) 文件中拉出來的相關連結：
-  Closeable  FilterInputStream  InputStream  DataInputStream  BufferedInputStream  InputStream是抽象類別，實踐了Closeable，所以可以當成try with resource裡的資源。類別方法裡定義了InputStream.nullInputStream()可以產生空的InputStream。另外也規範所有實作子類別必須提供public int read() throws IOException方法來回傳下一個 byte 的內容。
+ Closeable FilterInputStream InputStream DataInputStream BufferedInputStream  InputStream是抽象類別，實踐了Closeable，所以可以當成try with resource裡的資源。類別方法裡定義了InputStream.nullInputStream()可以產生空的InputStream。另外也規範所有實作子類別必須提供public int read() throws IOException方法來回傳下一個 byte 的內容。
 FilterInputStream在生成時吃進InputStream後把InputStream存起來，並且覆寫了所有InputStream裡的方法，大部分覆寫的方法都是把原來的操作轉到物件生成時丟進去的InputStream上，以供更細分的子類別使用，例如：
 public int read(byte b[], int off, int len) throws IOException { return in.read(b, off, len); } DataInputStream跟BufferedInputStream都進一步繼承FilterInputStream。DataInputStream主要是從InputStream直接讀入 Java 的 primitive data type。
 BufferedInputStream在內部會產生一個緩衝陣列（buffer array）來支援mark跟reset方法，透過額外使用的緩衝空間來先讀入資料，以優化資料讀入的效能。</description>
@@ -22,10 +23,10 @@ BufferedInputStream在內部會產生一個緩衝陣列（buffer array）來支�
     
     <item>
       <title>泛型 Java Functional Interface 的特規化</title>
-      <link>https://raviwu.github.io/java-generic-functional-interface-specilization/</link>
+      <link>https://raviwu.github.io/posts/java-generic-functional-interface-specilization/</link>
       <pubDate>Fri, 11 Sep 2020 13:44:04 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/java-generic-functional-interface-specilization/</guid>
+      <guid>https://raviwu.github.io/posts/java-generic-functional-interface-specilization/</guid>
       <description>如果某個特殊型別的 Functional Interface 常常被使用時，有時候直接宣告型別會比較方便引用。可以透過兩種方式來做特規，介面與抽象類別：
 Generic Functional Interface
 @FunctionalInterface public interface TwoArgsProcessor&amp;lt;X&amp;gt; { X process(X arg1, X arg2); } 介面（Interface）
@@ -35,10 +36,10 @@ abstract class TwoIntsProcessorAbstract implements TwoArgsProcessor&amp;lt;Integ
     
     <item>
       <title>使用複合條件來判斷是否進入下一輪 Java 迴圈</title>
-      <link>https://raviwu.github.io/java-use-combo-condition-for-loop/</link>
+      <link>https://raviwu.github.io/posts/java-use-combo-condition-for-loop/</link>
       <pubDate>Thu, 10 Sep 2020 13:41:31 +0800</pubDate>
       
-      <guid>https://raviwu.github.io/java-use-combo-condition-for-loop/</guid>
+      <guid>https://raviwu.github.io/posts/java-use-combo-condition-for-loop/</guid>
       <description>在 Java 迴圈寫法中，假如我想要透過一個外部判斷來提前中斷這個迴圈，之前我習慣寫：
 public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&amp;lt;ints.length; i++) { continueCond = ints[i] &amp;lt; 4; if (!continueCond) break; System.out.println(ints[i]); } } } 但這樣寫其實有點冗，今天看到在 Functional Interfaces in Java 裡的一個範例寫法：
 public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&amp;lt;ints.length &amp;amp;&amp;amp; continueCond; i++) { continueCond &amp;amp;= ints[i] &amp;lt; 4; System.</description>
