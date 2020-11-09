@@ -68,6 +68,22 @@
 <main>
 	<div class="catalogue">
 		
+			<a href="https://raviwu.github.io/posts/concurrency-and-parallelism/" class="catalogue-item">
+    <div>
+        <time datetime="2020-11-06 15:26:38 &#43;0800 CST" class="catalogue-time"></time>
+        <h1 class="catalogue-title">多執行緒（Concurrency）與平行處理（Parallelism）</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            進程（Process） 使用系統資源執行程式的實體
+ 電腦中執行程式的實體 每個進程都互相獨立 Process 是執行緒的容器 Process 會佔用系統資源 多工作業系統中可以同時執行數個 Process，但單個 CPU 一次只能執行一個 Process  線程、執行緒（Thread）  同個 Process 裡有至少個 Thread 同個 Process 裡的 Thread 共享系統資源 在多執行緒（Multithreading）環境中若兩個以上的執行緒對同一個變數進行改動可能產生死結（Deadlock）  多執行緒（Concurrency） 在同一進程的多執行緒環境中，把工作拆成數個子集，利用不同的執行緒分別完成每個子集。
+平行處理（Parallelism） 透過負載平衡機制把數個工作分配到不同的工作單元裡「同時」進行。
+參考文章  Concurrency 與 Parallelism 的不同之處 Concurrency vs. Parallelism — A brief view  
+        </p>
+    </div>
+</a>
+
+		
 			<a href="https://raviwu.github.io/posts/go-type/" class="catalogue-item">
     <div>
         <time datetime="2020-10-28 12:05:03 &#43;0800 CST" class="catalogue-time"></time>
@@ -215,23 +231,6 @@ public class Test { public static void main(String[] args) { int [] ints = {1,2,
 </a>
 
 		
-			<a href="https://raviwu.github.io/posts/testing-rake-task-in-rspec/" class="catalogue-item">
-    <div>
-        <time datetime="2017-05-07 13:36:08 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">在 RSpec 裡測試 Rake Task</h1>
-        <div class="catalogue-line"></div>
-
-        <p>
-            最近被 Rake Task 的測試設定搞得一頭霧水，簡單記錄一下測試 Rake Task 的測試設定，以及各種鬼打牆的血淚史：
-TL;DR 為了避免各種 task 載入、執行狀態等相互干擾導致 test case 會偶發性失敗，每一次執行 test case 時就去做「載入」、「卸載」會比較沒有鬼打牆狀況出現。
-# spec_helper.rb config.before(:each, rake: true) do Rails.application.load_tasks end config.after(:each, rake: true) do Rake::Task.clear end 把 Rails.application.load_tasks 放在 before(:each) 確保每次載入 test case 前都有正確 load 到要測試的那隻 task ，並在 after(:each) 時用 Rake::Task.clear 去清空剛剛載入的 Rake Task。
-透過 rake: true 這個 flag 可以避免其他不相關的單元測試也去載入 Rake Task。
-透過每個 each 都做載入跟卸載 Rake Task 後，就可以在 test case 單純使用 Rake::Task['task_name'].invoke 來手動執行 Task 而不用另外去作載入或卸載。
-        </p>
-    </div>
-</a>
-
-		
 	</div>
 	
 	<div class="pagination">
@@ -248,7 +247,7 @@ TL;DR 為了避免各種 task 載入、執行狀態等相互干擾導致 test ca
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2020-11-06 14:02:59.222873 &#43;0800 CST m=&#43;0.158603612">2020</time> Ravi Wu. 
+			&copy; <time datetime="2020-11-09 12:59:48.730634 &#43;0800 CST m=&#43;0.219269086">2020</time> Ravi Wu. 
 			</span>
 		</footer>
 

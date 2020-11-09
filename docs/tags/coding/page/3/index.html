@@ -69,6 +69,21 @@
     <h1>Tag coding</h1>
 	<div class="catalogue">
 		
+			<a href="https://raviwu.github.io/posts/early-termination/" class="catalogue-item">
+    <div>
+        <time datetime="2016-04-15 04:22:50 &#43;0800 CST" class="catalogue-time"></time>
+        <h1 class="catalogue-title">程設風格 | 早期終止執行</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            剛開始寫程式的時候，以為所謂邏輯判斷就是很多個若 A 則 B 包起來的複雜地圖。這樣的程式碼，很容易因為邏輯判斷太過複雜，很難一眼就看到到底目前程式會跑到哪一個 if 分支裡面執行。
+taget = Dog.new if target.is_a?(Animal) if target.has_four_legs? if target.is_a?(Dog) puts &quot;wolf!&quot; else puts &quot;four leg animal can say yeah&quot; end else puts &quot;don't know what that is&quot; end else puts &quot;don't know what that is&quot; end =&gt; &quot;wolf!&quot; 如果透過層層過濾只是要剔除一些情況讓程式不處理，例如有很多個分支其實是「不處理」或是「同樣的簡單處理」，例如上面的 puts &quot;don't know what that is&quot; ，可以改用「早期終止」的模式來改寫。
+def what_it_says(target) # 如果不符合條件的參數就會在此提早回傳值 return &quot;don't know what that is&quot; unless target.is_a?(Animal) &amp;&amp; target.has_four_legs? # 符合資格的參數才會進入真正的必要判斷 if target.
+        </p>
+    </div>
+</a>
+
+		
 			<a href="https://raviwu.github.io/posts/command-line-tools-notes/" class="catalogue-item">
     <div>
         <time datetime="2016-03-27 04:07:31 &#43;0800 CST" class="catalogue-time"></time>
@@ -106,7 +121,7 @@ cursor ctrl + a to go to the beginning of line
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2020-11-06 14:02:59.341872 &#43;0800 CST m=&#43;0.277598495">2020</time> Ravi Wu. 
+			&copy; <time datetime="2020-11-09 12:59:48.912649 &#43;0800 CST m=&#43;0.401279032">2020</time> Ravi Wu. 
 			</span>
 		</footer>
 

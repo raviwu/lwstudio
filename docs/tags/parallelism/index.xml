@@ -7,16 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
     <copyright>Copyright © 2020, Ravi Wu.</copyright>
-    <lastBuildDate>Wed, 28 Oct 2020 15:26:38 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/parallelism/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 06 Nov 2020 15:26:38 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/parallelism/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>多執行緒（Concurrency）與平行處理（Parallelism）</title>
       <link>https://raviwu.github.io/posts/concurrency-and-parallelism/</link>
-      <pubDate>Wed, 28 Oct 2020 15:26:38 +0800</pubDate>
+      <pubDate>Fri, 06 Nov 2020 15:26:38 +0800</pubDate>
       
       <guid>https://raviwu.github.io/posts/concurrency-and-parallelism/</guid>
-      <description>基本名詞解釋：
- 進程（Process）：使用系統資源執行程式的實體  電腦中執行程式的實體 每個進程都互相獨立 Process 是執行緒的容器 Process 會佔用系統資源 多工作業系統中可以同時執行數個 Process，但單個 CPU 一次只能執行一個 Process   線程、執行緒（Thread）：  同個 Process 裡有至少個 Thread 同個 Process 裡的 Thread 共享系統資源 在多執行緒（Multithreading）環境中若兩個以上的執行緒對同一個變數進行改動可能產生死結（Deadlock）    多執行緒（Concurrency） 在同一進程的多執行緒環境中，把工作拆成數個子集，利用不同的執行緒分別完成每個子集。
-平行處理（Parallelism） 透過負載平衡機制把數個工作分配到不同的工作單元裡「同時」進行。</description>
+      <description>進程（Process） 使用系統資源執行程式的實體
+ 電腦中執行程式的實體 每個進程都互相獨立 Process 是執行緒的容器 Process 會佔用系統資源 多工作業系統中可以同時執行數個 Process，但單個 CPU 一次只能執行一個 Process  線程、執行緒（Thread）  同個 Process 裡有至少個 Thread 同個 Process 裡的 Thread 共享系統資源 在多執行緒（Multithreading）環境中若兩個以上的執行緒對同一個變數進行改動可能產生死結（Deadlock）  多執行緒（Concurrency） 在同一進程的多執行緒環境中，把工作拆成數個子集，利用不同的執行緒分別完成每個子集。
+平行處理（Parallelism） 透過負載平衡機制把數個工作分配到不同的工作單元裡「同時」進行。
+參考文章  Concurrency 與 Parallelism 的不同之處 Concurrency vs. Parallelism — A brief view  </description>
     </item>
     
   </channel>
