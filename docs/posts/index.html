@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
     <head>
+		
+		
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>Posts &middot; Ravi Wu</title>
 
 		
-  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="/css/fonts.css">
 		
+		<link rel="icon" href="favicon.ico" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
@@ -22,7 +25,9 @@
         		<nav class="nav">
 			<div class="nav-container">
 				<a href="/">
-					<h2 class="nav-title">Ravi Wu</h2>
+					
+						<h1 class="nav-title">Ravi Wu</h1>
+					
 				</a>
 				<ul>
     
@@ -68,10 +73,26 @@
 <main>
 	<div class="catalogue">
 		
+			<a href="https://raviwu.github.io/posts/sast-scan-integration/" class="catalogue-item">
+    <div>
+        <time datetime="2021-09-18 20:08:30 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">安全性靜態掃描工具 sast-scan 與 Bitbucket 整合</h2>
+        <div class="catalogue-line"></div>
+
+        <p>
+            安全性掃描一直以來都是有點微妙的存在，之前的公司規定專案要上線要過 Fortify + Blackduck 的掃描，可是這類掃描都得花一點時間，所以就跟跑很慢的 Test 公司所有團隊 一樣，總是淪落為有需要交差的時候才跑，然後每次掃完都得另外撥出時間來修復被掃到的弱點。
+這回又遇上一樣的需求，只是這次有機會可以從頭評估，趁這這個勢頭，研究一下有沒有更好整進開發週期，掃描不太慢結果也，是不是就能某種程度上趨近「越痛的事情就要越常做才會慢慢不痛」，展開尋找與探索之旅。
+TL;DR  sast-scan 跟 SonarQube 掃出來的結果，安全性項目更多，煩人的假警報較少，掃描大專案的時候比較快。 使用 sast-scan 的 Docker image 配合客製化的 bitbucket pipe 執行掃描結果判讀，可以實現不用花大錢就能提高系統安全性信心，而且還能滿足初步的 Rule 客製化的需求。  sast-scan 與 SonarQube 實際上拿了一些專案來掃，幾個發現記錄一下：
+ SonarQube 跟 sast-scan 掃出來的東西用檔案名稱跟行數去對，重疊率在 5% 以下 SonarQube 的預設掃描規則，有一大部分是類似 Linter 的 Code Smell 項目 SonarQube 的 Docker image 跑在 local 的話 Docker 的記憶體不給高一點會爆，因為 SonarQube 的 embed ElasticSearch DB 需要至少 2G 的資源來跑，後來用 docker run -d -m 8G --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:8.
+        </p>
+    </div>
+</a>
+
+		
 			<a href="https://raviwu.github.io/posts/concurrency-and-parallelism/" class="catalogue-item">
     <div>
-        <time datetime="2020-11-06 15:26:38 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">多執行緒（Concurrency）與平行處理（Parallelism）</h1>
+        <time datetime="2020-11-06 15:26:38 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">多執行緒（Concurrency）與平行處理（Parallelism）</h2>
         <div class="catalogue-line"></div>
 
         <p>
@@ -86,8 +107,8 @@
 		
 			<a href="https://raviwu.github.io/posts/go-type/" class="catalogue-item">
     <div>
-        <time datetime="2020-10-28 12:05:03 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">Go | 型別（Type）</h1>
+        <time datetime="2020-10-28 12:05:03 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">Go | 型別（Type）</h2>
         <div class="catalogue-line"></div>
 
         <p>
@@ -103,8 +124,8 @@ type user struct { name string email string ext int isAdmin bool } 使用 var ra
 		
 			<a href="https://raviwu.github.io/posts/go-map/" class="catalogue-item">
     <div>
-        <time datetime="2020-10-26 14:42:56 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">Go | Map</h1>
+        <time datetime="2020-10-26 14:42:56 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">Go | Map</h2>
         <div class="catalogue-line"></div>
 
         <p>
@@ -118,8 +139,8 @@ value, exists := colors[&#34;Blue&#34;] if exists { fmt.Println(value) } else { 
 		
 			<a href="https://raviwu.github.io/posts/go-slice/" class="catalogue-item">
     <div>
-        <time datetime="2020-10-26 13:14:21 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">Go | 切片（Slice）</h1>
+        <time datetime="2020-10-26 13:14:21 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">Go | 切片（Slice）</h2>
         <div class="catalogue-line"></div>
 
         <p>
@@ -137,8 +158,8 @@ var slice []int 空切片長成這樣：
 		
 			<a href="https://raviwu.github.io/posts/go-array/" class="catalogue-item">
     <div>
-        <time datetime="2020-10-26 11:36:46 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">Go | 陣列（Array）</h1>
+        <time datetime="2020-10-26 11:36:46 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">Go | 陣列（Array）</h2>
         <div class="catalogue-line"></div>
 
         <p>
@@ -152,8 +173,8 @@ var slice []int 空切片長成這樣：
 		
 			<a href="https://raviwu.github.io/posts/methodology-the-seven-product-dimensions/" class="catalogue-item">
     <div>
-        <time datetime="2020-09-21 13:48:42 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">產品的七個面向（The 7 Product Dimensions）</h1>
+        <time datetime="2020-09-21 13:48:42 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">產品的七個面向（The 7 Product Dimensions）</h2>
         <div class="catalogue-line"></div>
 
         <p>
@@ -167,8 +188,8 @@ var slice []int 空切片長成這樣：
 		
 			<a href="https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/" class="catalogue-item">
     <div>
-        <time datetime="2020-09-11 13:46:57 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">InputStream 、 DataInputStream 與 BufferedInputStream</h1>
+        <time datetime="2020-09-11 13:46:57 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">InputStream 、 DataInputStream 與 BufferedInputStream</h2>
         <div class="catalogue-line"></div>
 
         <p>
@@ -184,8 +205,8 @@ BufferedInputStream在內部會產生一個緩衝陣列（buffer array）來支�
 		
 			<a href="https://raviwu.github.io/posts/java-generic-functional-interface-specilization/" class="catalogue-item">
     <div>
-        <time datetime="2020-09-11 13:44:04 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">泛型 Java Functional Interface 的特規化</h1>
+        <time datetime="2020-09-11 13:44:04 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">泛型 Java Functional Interface 的特規化</h2>
         <div class="catalogue-line"></div>
 
         <p>
@@ -201,31 +222,14 @@ abstract class TwoIntsProcessorAbstract implements TwoArgsProcessor&lt;Integer&g
 		
 			<a href="https://raviwu.github.io/posts/java-use-combo-condition-for-loop/" class="catalogue-item">
     <div>
-        <time datetime="2020-09-10 13:41:31 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">使用複合條件來判斷是否進入下一輪 Java 迴圈</h1>
+        <time datetime="2020-09-10 13:41:31 &#43;0800 &#43;0800" class="catalogue-time"></time>
+        <h2 class="catalogue-title">使用複合條件來判斷是否進入下一輪 Java 迴圈</h2>
         <div class="catalogue-line"></div>
 
         <p>
             在 Java 迴圈寫法中，假如我想要透過一個外部判斷來提前中斷這個迴圈，之前我習慣寫：
 public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&lt;ints.length; i++) { continueCond = ints[i] &lt; 4; if (!continueCond) break; System.out.println(ints[i]); } } } 但這樣寫其實有點冗，今天看到在 Functional Interfaces in Java 裡的一個範例寫法：
 public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&lt;ints.length &amp;&amp; continueCond; i++) { continueCond &amp;= ints[i] &lt; 4; System.
-        </p>
-    </div>
-</a>
-
-		
-			<a href="https://raviwu.github.io/posts/tools-scoop-sh/" class="catalogue-item">
-    <div>
-        <time datetime="2018-08-10 13:39:10 &#43;0800 CST" class="catalogue-time"></time>
-        <h1 class="catalogue-title">Windows 裡的類 homebrew 工具： scoop.sh</h1>
-        <div class="catalogue-line"></div>
-
-        <p>
-            新工作的環境是 Windows 系統，所有的開發工具生態系都要重新摸索。剛開始發現可以用 Git for Windows 裝好後的 console 下平常習慣的 bash 指令後，努力想要自己寫一些 shell script 去自動化開發工具跟環境變數的初始化，簡單的情境下好似都還堪用。
-可是如果要安裝的套件都要一個一個手刻 script 好像又有些白癡。
-因緣際會下被提點去找其他平台上的類 Homebrew 方案，權衡系統權限低落等實際情況下，好像也只剩 scoop.sh 可以用了。
-搞了一整天反覆試驗了一陣子，總算是把裝機清單給列了出來，放在這裡。雖然還是要手動輸入指令，但是可以統一管理這些套件，用指令反安裝等已經比之前的原始人狀態進步多了。
-被 oh my zsh 慣壞眼睛的我，有幸發現可以用 concfg 稍微把 PowerShell 的顏色弄得順眼一點。所謂山不轉路轉，路不轉人轉，接下來還需要努力爬行。（握拳）
         </p>
     </div>
 </a>
@@ -247,7 +251,7 @@ public class Test { public static void main(String[] args) { int [] ints = {1,2,
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2020-11-09 12:59:48.730634 &#43;0800 CST m=&#43;0.219269086">2020</time> Ravi Wu. 
+			&copy; <time datetime="2021-09-18 21:28:33.781352 &#43;0800 CST m=&#43;0.081549738">2021</time> Ravi Wu. 
 			</span>
 		</footer>
 

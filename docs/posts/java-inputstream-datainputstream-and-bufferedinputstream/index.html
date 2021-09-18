@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
     <head>
+		
+		
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>InputStream 、 DataInputStream 與 BufferedInputStream &middot; Ravi Wu</title>
 
 		
-  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="/css/fonts.css">
 		
+		<link rel="icon" href="favicon.ico" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
@@ -22,7 +25,9 @@
         		<nav class="nav">
 			<div class="nav-container">
 				<a href="/">
-					<h2 class="nav-title">Ravi Wu</h2>
+					
+						<h2 class="nav-title">Ravi Wu</h2>
+					
 				</a>
 				<ul>
     
@@ -71,7 +76,7 @@
     <span></span>
         Ravi Wu
         <br>
-        <span>&nbsp;</span><time datetime="2020-09-11 13:46:57 &#43;0800 CST"></time>
+        <span>&nbsp;</span><time datetime="2020-09-11 13:46:57 &#43;0800 &#43;0800"></time>
 </div>
 
 		<h1 class="post-title">InputStream 、 DataInputStream 與 BufferedInputStream</h1>
@@ -89,7 +94,7 @@
 </ul>
 <p><code>InputStream</code>是抽象類別，實踐了<code>Closeable</code>，所以可以當成<code>try with resource</code>裡的資源。類別方法裡定義了<code>InputStream.nullInputStream()</code>可以產生空的<code>InputStream</code>。另外也規範所有實作子類別必須提供<code>public int read() throws IOException</code>方法來回傳下一個 byte 的內容。</p>
 <p><code>FilterInputStream</code>在生成時吃進<code>InputStream</code>後把<code>InputStream</code>存起來，並且覆寫了所有<code>InputStream</code>裡的方法，大部分覆寫的方法都是把原來的操作轉到物件生成時丟進去的<code>InputStream</code>上，以供更細分的子類別使用，例如：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">read</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[],</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">read</span><span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span> b<span style="color:#f92672">[],</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
     <span style="color:#66d9ef">return</span> in<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> off<span style="color:#f92672">,</span> len<span style="color:#f92672">);</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p><code>DataInputStream</code>跟<code>BufferedInputStream</code>都進一步繼承<code>FilterInputStream</code>。<code>DataInputStream</code>主要是從<code>InputStream</code>直接讀入 Java 的 primitive data type。</p>
@@ -111,7 +116,7 @@
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2020-11-09 12:59:48.689708 &#43;0800 CST m=&#43;0.178345044">2020</time> Ravi Wu. 
+			&copy; <time datetime="2021-09-18 21:28:33.759037 &#43;0800 CST m=&#43;0.059233901">2021</time> Ravi Wu. 
 			</span>
 		</footer>
 

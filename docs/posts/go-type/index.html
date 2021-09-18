@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
     <head>
+		
+		
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>Go | 型別（Type） &middot; Ravi Wu</title>
 
 		
-  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="/css/fonts.css">
 		
+		<link rel="icon" href="favicon.ico" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
@@ -22,7 +25,9 @@
         		<nav class="nav">
 			<div class="nav-container">
 				<a href="/">
-					<h2 class="nav-title">Ravi Wu</h2>
+					
+						<h2 class="nav-title">Ravi Wu</h2>
+					
 				</a>
 				<ul>
     
@@ -71,7 +76,7 @@
     <span></span>
         Ravi Wu
         <br>
-        <span>&nbsp;</span><time datetime="2020-10-28 12:05:03 &#43;0800 CST"></time>
+        <span>&nbsp;</span><time datetime="2020-10-28 12:05:03 &#43;0800 &#43;0800"></time>
 </div>
 
 		<h1 class="post-title">Go | 型別（Type）</h1>
@@ -114,7 +119,7 @@
 <p>有一些型別所代表的內容會跟著 build 機器的不同架構有所差異，例如同樣的 <code>int</code> 在 64 位元電腦裡佔 8 bytes 但在 32 位元電腦裡只佔 4 bytes。</p>
 <h2 id="自定義型別">自定義型別</h2>
 <p>Go 容許自定義型別，最簡單的宣告方式為 struct</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">user</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">user</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>
     <span style="color:#a6e22e">email</span> <span style="color:#66d9ef">string</span>
     <span style="color:#a6e22e">ext</span> <span style="color:#66d9ef">int</span>
@@ -122,7 +127,7 @@
 }
 </code></pre></div><p>使用 <code>var ravi user</code> 可以宣告一個 <code>ravi</code> 的變數，代表一個 <code>user</code> 型別。宣告的當下，型別的欄位值會使用各欄位之型別的零值。</p>
 <p>當需要直接復值時也可以使用以下語法：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">tom</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">user</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">tom</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">user</span> {
     <span style="color:#a6e22e">name</span>: <span style="color:#e6db74">&#34;Tom&#34;</span>,
     <span style="color:#a6e22e">email</span>: <span style="color:#e6db74">&#34;tom@foo.bar&#34;</span>,
     <span style="color:#a6e22e">ext</span>: <span style="color:#ae81ff">321</span>,
@@ -130,13 +135,13 @@
 }
 </code></pre></div><p>或者也可以使用 <code>tom := user{&quot;Tom&quot;, &quot;tom@foo.bar&quot;, 321, true}</code> 來宣告，通常都會把所有值放在同一行以縮減最後一個值的逗點。用單行宣告時，變數順序至關重要，需要依照自定義欄位的順序提供。</p>
 <p>已知自定義型別也能被當成欄位使用：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">admin</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">admin</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">person</span> <span style="color:#a6e22e">user</span>
     <span style="color:#a6e22e">level</span> <span style="color:#66d9ef">string</span>
 }
 </code></pre></div><h2 id="自定義型別的函數宣告">自定義型別的函數宣告</h2>
 <p>型別函數宣告使用 <code>(u user)</code> 或 <code>(u *user)</code> 的時機：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Value Receiver
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Value Receiver
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">u</span> <span style="color:#a6e22e">user</span>) <span style="color:#a6e22e">notify</span>() {
     <span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">email</span>)
 }
@@ -147,11 +152,11 @@
 }
 </code></pre></div><p>如果函數取值做操作，不需要改變原物件欄位時，使用傳值的方式 <code>(u user)</code> 宣告；如果函數需要針對物件作操作，更改欄位值的內容時，使用傳指標的方式 <code>(u *user)</code> 去做宣告。</p>
 <h3 id="go-的貼心動作">Go 的貼心動作</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">ravi</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">user</span>(<span style="color:#e6db74">&#34;Ravi&#34;</span>, <span style="color:#e6db74">&#34;ravi@foo.bar&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">ravi</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">user</span>(<span style="color:#e6db74">&#34;Ravi&#34;</span>, <span style="color:#e6db74">&#34;ravi@foo.bar&#34;</span>)
 <span style="color:#a6e22e">ravi</span>.<span style="color:#a6e22e">notify</span>()
 </code></pre></div><p>即使上面的 <code>ravi</code> 變數透過 <code>&amp;user</code> 被指定為指標，對指摽 <code>ravi</code> 呼叫宣告傳值的 <code>notify()</code> 仍可以編譯執行。原因在於 Go 編譯器在函數呼叫時另行處理為 <code>(*ravi).notify()</code> 並且複製了一份 <code>*ravi</code> 物件進函數處理。</p>
 <p>同樣地：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">tomas</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">tomas</span>(<span style="color:#e6db74">&#34;Tomas&#34;</span>, <span style="color:#e6db74">&#34;tomas@foo.bar&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">tomas</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">tomas</span>(<span style="color:#e6db74">&#34;Tomas&#34;</span>, <span style="color:#e6db74">&#34;tomas@foo.bar&#34;</span>)
 <span style="color:#a6e22e">tomas</span>.<span style="color:#a6e22e">changeEmail</span>(<span style="color:#e6db74">&#34;newTomas@foo.bar&#34;</span>)
 </code></pre></div><p>也可以編譯成功，因為 Go 在做函數呼叫時實際上是長這樣： <code>(&amp;tomas).changeEmail(&quot;newTomas@foo.bar&quot;)</code></p>
 <h2 id="go-的內建原始型別primative-types">Go 的內建原始型別（Primative Types）</h2>
@@ -163,7 +168,7 @@
 <p>Struct 可以包含原始或非原始型別，在定義過程應該根據 Struct 欄位或者是其設計目的來決定這個 Struct 應該適用傳值或是傳指標式操作。</p>
 <p>以標準庫的範例來看：</p>
 <h3 id="time">Time</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Time</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Time</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">sec</span> <span style="color:#66d9ef">int64</span>
     <span style="color:#a6e22e">nsec</span> <span style="color:#66d9ef">int32</span>
     <span style="color:#a6e22e">loc</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Location</span>
@@ -175,7 +180,7 @@
 }
 </code></pre></div><p>Time 的屬性多是原始性質，所以大多數的內建函數是回傳一個新的 Time。</p>
 <h3 id="file">File</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">File</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">File</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#f92672">*</span><span style="color:#a6e22e">file</span>
 }
 
@@ -186,7 +191,7 @@
     <span style="color:#a6e22e">nepipe</span> <span style="color:#66d9ef">int32</span>
 }
 </code></pre></div><p>從定義看，File 型別根據定義，屬於參照型別。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Open</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>) (<span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Open</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>) (<span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">OpenFile</span>(<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">O_RDONLY</span>, <span style="color:#ae81ff">0</span>)
 }
 </code></pre></div><p>Go 的標準庫實作回傳一個 File 的指標。</p>
@@ -194,7 +199,7 @@
 <p>多型（Polyporphism）是型別（Type）透過實作不同介面（Interface）來產生不同的行為。</p>
 <p>介面定義了行為，而實際上的實作內容要在自定義型別上界定。</p>
 <p>把值指定給 <code>notifer</code> 介面的變數時：</p>
-<pre><code>             var n notifier
+<pre tabindex="0"><code>             var n notifier
   notifier   n = user{&quot;Ravi&quot;}
   介面的值                     iTable
  [位址]
@@ -203,7 +208,7 @@
  [位址]       儲存值             Method set
   user   --&gt; [User]
 </code></pre><p>把指標指定給 <code>notifer</code> 介面的變數時：</p>
-<pre><code>             var n notifier
+<pre tabindex="0"><code>             var n notifier
   notifier   n = &amp;user{&quot;Ravi&quot;}
   介面的值                     iTable
  [位址]
@@ -213,7 +218,7 @@
   user   --&gt; [User]
 </code></pre><h3 id="函數集method-sets">函數集（Method sets）</h3>
 <p>函數集定義了介面實作是否合規。假如實作時只宣告指標作為 Method call 的 Receiver 時，那只有指標實作了介面，呼叫介面方法時需傳入指標。這個限制的理由是因為單就值本身並不能總是取得位址。</p>
-<pre><code>Values          Methods Receivers
+<pre tabindex="0"><code>Values          Methods Receivers
 ---------------------------------
   T                (t T)
   *T               (t T) and (t *T)
@@ -227,7 +232,7 @@ Methods Receivers      Values
 <p>再回顧一次，因為，值本身並不能總是解析出確切的位址。</p>
 <h2 id="嵌入型別embedded-type">嵌入型別（Embedded Type）</h2>
 <p>Go 允許使用者復用現有型別，而且使用者可以在復用時覆寫型別的行為。以下方程式碼為例：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">user</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">user</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>
     <span style="color:#a6e22e">email</span> <span style="color:#66d9ef">string</span>
 }
@@ -242,7 +247,7 @@ Methods Receivers      Values
 }
 </code></pre></div><p><code>user</code> 是 <code>admin</code> 的內嵌型別，所以如果初始化 <code>ad := admin { ... }</code> 後，可以透過 <code>ad.user.notify()</code> 來呼叫綁定給 <code>user</code> 類別的 <code>notify()</code> 函數。特別的是，也可以直接使用 <code>ad.notify()</code> 的方式呼叫函數。</p>
 <p>來試試看用介面的方式來呼叫函數：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">notifier</span> <span style="color:#66d9ef">interface</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">notifier</span> <span style="color:#66d9ef">interface</span> {
     <span style="color:#a6e22e">notify</span>()
 }
 
@@ -276,7 +281,7 @@ Methods Receivers      Values
     <span style="color:#a6e22e">sendNotification</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">ad</span>)
 }
 </code></pre></div><p>從這個範例可以看出，嵌入型別的同時，外型別同時也具有內型別實作的介面。如果想要覆寫內型別的介面行為呢？</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">admin</span>) <span style="color:#a6e22e">notify</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">admin</span>) <span style="color:#a6e22e">notify</span>() {
     <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Sending admin email: %v\n&#34;</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">email</span>)
 }
 </code></pre></div><p>由於外型別自己也實作了 <code>notify()</code>，此時 <code>ad.user.notify()</code> 和 <code>ad.notify()</code> 所引用的函數就會不同了：只有特地援用內型別的寫法才會引用到原先內型別的實作。</p>
@@ -296,7 +301,7 @@ Methods Receivers      Values
 <li>Var / Const</li>
 </ol>
 <p>要注意的是，型別的欄位可以選擇性匯出：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// package auth
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// package auth
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">User</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
     <span style="color:#a6e22e">email</span> <span style="color:#66d9ef">string</span>
@@ -330,7 +335,7 @@ Methods Receivers      Values
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2020-11-09 12:59:48.696844 &#43;0800 CST m=&#43;0.185480033">2020</time> Ravi Wu. 
+			&copy; <time datetime="2021-09-18 21:28:33.772 &#43;0800 CST m=&#43;0.072197737">2021</time> Ravi Wu. 
 			</span>
 		</footer>
 

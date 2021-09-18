@@ -5,3 +5,10 @@
 ## Theme
 
 https://github.com/EmielH/tale-hugo
+
+## Edit
+
+```shell
+git submodule update --remote --rebase
+hugo server -t tale
+```

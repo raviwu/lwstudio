@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
     <head>
+		
+		
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>程設風格 | 早期終止執行 &middot; Ravi Wu</title>
 
 		
-  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="/css/fonts.css">
 		
+		<link rel="icon" href="favicon.ico" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
@@ -22,7 +25,9 @@
         		<nav class="nav">
 			<div class="nav-container">
 				<a href="/">
-					<h2 class="nav-title">Ravi Wu</h2>
+					
+						<h2 class="nav-title">Ravi Wu</h2>
+					
 				</a>
 				<ul>
     
@@ -71,7 +76,7 @@
     <span></span>
         Ravi Wu
         <br>
-        <span>&nbsp;</span><time datetime="2016-04-15 04:22:50 &#43;0800 CST"></time>
+        <span>&nbsp;</span><time datetime="2016-04-15 04:22:50 &#43;0800 &#43;0800"></time>
 </div>
 
 		<h1 class="post-title">程設風格 | 早期終止執行</h1>
@@ -80,7 +85,7 @@
 		
 
 		<p>剛開始寫程式的時候，以為所謂邏輯判斷就是很多個若 A 則 B 包起來的複雜地圖。這樣的程式碼，很容易因為邏輯判斷太過複雜，很難一眼就看到到底目前程式會跑到哪一個 if 分支裡面執行。</p>
-<pre><code>taget = Dog.new
+<pre tabindex="0"><code>taget = Dog.new
 
 if target.is_a?(Animal)
   if target.has_four_legs?
@@ -98,7 +103,7 @@ end
 
 =&gt; &quot;wolf!&quot;
 </code></pre><p>如果透過層層過濾只是要剔除一些情況讓程式不處理，例如有很多個分支其實是「不處理」或是「同樣的簡單處理」，例如上面的 <code>puts &quot;don't know what that is&quot;</code> ，可以改用「早期終止」的模式來改寫。</p>
-<pre><code>def what_it_says(target)
+<pre tabindex="0"><code>def what_it_says(target)
   # 如果不符合條件的參數就會在此提早回傳值
   return &quot;don't know what that is&quot; unless target.is_a?(Animal) &amp;&amp; target.has_four_legs?
 
@@ -133,7 +138,7 @@ puts what_it_says(taget)
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2020-11-09 12:59:48.664832 &#43;0800 CST m=&#43;0.153469659">2020</time> Ravi Wu. 
+			&copy; <time datetime="2021-09-18 21:28:33.754661 &#43;0800 CST m=&#43;0.054858246">2021</time> Ravi Wu. 
 			</span>
 		</footer>
 

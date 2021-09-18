@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
     <head>
+		
+		
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>筆記 | Practical Object-Oriented Design in Ruby (POODR) &middot; Ravi Wu</title>
 
 		
-  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="/css/fonts.css">
 		
+		<link rel="icon" href="favicon.ico" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
@@ -22,7 +25,9 @@
         		<nav class="nav">
 			<div class="nav-container">
 				<a href="/">
-					<h2 class="nav-title">Ravi Wu</h2>
+					
+						<h2 class="nav-title">Ravi Wu</h2>
+					
 				</a>
 				<ul>
     
@@ -71,7 +76,7 @@
     <span></span>
         Ravi Wu
         <br>
-        <span>&nbsp;</span><time datetime="2017-01-03 13:20:41 &#43;0800 CST"></time>
+        <span>&nbsp;</span><time datetime="2017-01-03 13:20:41 &#43;0800 &#43;0800"></time>
 </div>
 
 		<h1 class="post-title">筆記 | Practical Object-Oriented Design in Ruby (POODR)</h1>
@@ -164,7 +169,7 @@ The purpose of design is to allow you to do design later and its primary goal is
 <h2 id="resolving-dependencies">Resolving Dependencies</h2>
 <h3 id="inject-dependencies">Inject Dependencies</h3>
 <p>Try not to hard code dependencies, use &lsquo;message&rsquo; the method or the class really cares:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:rim</span>, <span style="color:#e6db74">:tire</span>
 
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
@@ -177,7 +182,7 @@ The purpose of design is to allow you to do design later and its primary goal is
     ratio <span style="color:#f92672">*</span> <span style="color:#66d9ef">Wheel</span><span style="color:#f92672">.</span>new(rim, tire)<span style="color:#f92672">.</span>diameter
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chaining</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:wheel</span>
 
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, wheel)
@@ -196,7 +201,7 @@ The purpose of design is to allow you to do design later and its primary goal is
 <ol>
 <li>Create Dependencies when initialize</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:wheel</span>
 
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
@@ -211,7 +216,7 @@ The purpose of design is to allow you to do design later and its primary goal is
 </code></pre></div><ol start="2">
 <li>Isolate the Dependency in method</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:rim</span>, <span style="color:#e6db74">:tire</span>
 
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(chainring, cog, rim, tire)
@@ -231,7 +236,7 @@ The purpose of design is to allow you to do design later and its primary goal is
 </code></pre></div><h4 id="isolate-vulnerable-external-messages">Isolate Vulnerable External Messages</h4>
 <p>external messages = messasges that are &lsquo;send to someone other than <code>self</code>&rsquo;</p>
 <p>This refactor depends on whether this extraction is worth to be DRYed out.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gear_inches</span>
   ratio <span style="color:#f92672">*</span> diameter
 <span style="color:#66d9ef">end</span>
 
@@ -243,7 +248,7 @@ The purpose of design is to allow you to do design later and its primary goal is
 </code></pre></div><h3 id="remove-augument-order-dependencies">Remove Augument-Order Dependencies</h3>
 <p>Use args Hash to initialize the object, keys does not has order issue.</p>
 <p>Explicity define default or raise argument error in case the argument does not provide required values.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># this line will fall back to default value 18 whenever the args[:cog] are evaluated to false,</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># this line will fall back to default value 18 whenever the args[:cog] are evaluated to false,</span>
 <span style="color:#75715e"># in other word, if args[:cog] are assigned to &#39;false&#39; then @cog will be assigned to 18</span>
 @cog <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:cog</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> <span style="color:#ae81ff">18</span>
 
@@ -269,7 +274,7 @@ The purpose of design is to allow you to do design later and its primary goal is
 <li>Concrete classes are more likely to change than abstract classes.</li>
 <li>Changing a class that has many dependents will result in widespread consequences.</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Gear depends on Wheel</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Gear depends on Wheel</span>
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>, <span style="color:#e6db74">:wheel</span>
 
@@ -282,7 +287,7 @@ The purpose of design is to allow you to do design later and its primary goal is
     ratio <span style="color:#f92672">*</span> wheel<span style="color:#f92672">.</span>diameter
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Wheel depends on Gear</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Wheel depends on Gear</span>
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Gear</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:chainring</span>, <span style="color:#e6db74">:cog</span>
 
@@ -396,7 +401,7 @@ The purpose of design is to allow you to do design later and its primary goal is
 <li><code>responds_to?</code></li>
 </ul>
 <p>The Trip has to know exactly the Class of preparer and the public method calls to prepare the trip</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Trip</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Trip</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:bicycles</span>, <span style="color:#e6db74">:customers</span>, <span style="color:#e6db74">:bus</span>
 
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare</span>(preparers)
@@ -413,7 +418,7 @@ The purpose of design is to allow you to do design later and its primary goal is
     <span style="color:#66d9ef">end</span>
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> preparer<span style="color:#f92672">.</span>kind_of?(<span style="color:#66d9ef">Mechanic</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> preparer<span style="color:#f92672">.</span>kind_of?(<span style="color:#66d9ef">Mechanic</span>)
   preparer<span style="color:#f92672">.</span>prepare_bycycles(bicycles)
 <span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>kind_of?(<span style="color:#66d9ef">TourGuide</span>)
   preparer<span style="color:#f92672">.</span>buy_food(customers)
@@ -421,7 +426,7 @@ The purpose of design is to allow you to do design later and its primary goal is
   preparer<span style="color:#f92672">.</span>gas_up(bus)
   preparer<span style="color:#f92672">.</span>fill_water_tank(bus)
 <span style="color:#66d9ef">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> preparer<span style="color:#f92672">.</span>responds_to?(<span style="color:#e6db74">:prepare_bicycles</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> preparer<span style="color:#f92672">.</span>responds_to?(<span style="color:#e6db74">:prepare_bicycles</span>)
   preparer<span style="color:#f92672">.</span>prepare_bycycles(bicycles)
 <span style="color:#66d9ef">elsif</span> preparer<span style="color:#f92672">.</span>responds_to?(<span style="color:#e6db74">:buy_food</span>)
   preparer<span style="color:#f92672">.</span>buy_food(customers)
@@ -430,7 +435,7 @@ The purpose of design is to allow you to do design later and its primary goal is
   preparer<span style="color:#f92672">.</span>fill_water_tank(bus)
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Changing above code to duck typing will rearrange the public interface between <code>Trip</code>, <code>Mechanic</code>, <code>TourGuide</code>, and <code>Driver</code>. Instead of letting <code>Trip</code> knows about how all kinds of preparer class and how to let them prepare things, <code>Trip</code> only send a <code>prepare_trip</code> messages to the preparer, and all preparers has to get correct repsonses, whether asking for more inputs or handling the provided ones.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Trip</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Trip</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">prepare</span>(preparers)
     preparers<span style="color:#f92672">.</span>each { <span style="color:#f92672">|</span>preparer<span style="color:#f92672">|</span> preparer<span style="color:#f92672">.</span>prepare_trip(vehicle <span style="color:#f92672">=</span> bus, customers <span style="color:#f92672">=</span> customers, bicycles <span style="color:#f92672">=</span> bicycles) }
   <span style="color:#66d9ef">end</span>
@@ -497,7 +502,7 @@ Inheritance provides a way to define two objects as having a relationship such t
 <p>P129.</p>
 <p>Creating code that fails with reasonable error messages takes minor effort in the present but provides value forever. Each error message is a small thing, but small things accumulate to produce big effects and it is this attention to detail that marks you as a serious programmer.</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
   <span style="color:#66d9ef">attr_reader</span> <span style="color:#e6db74">:size</span>, <span style="color:#e6db74">:chain</span>, <span style="color:#e6db74">:tire_size</span>
 
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(args<span style="color:#f92672">=</span>{})
@@ -539,7 +544,7 @@ Inheritance provides a way to define two objects as having a relationship such t
 <p>forcing a subclass to know how to interact with its abstract superclass causes many problems. When a subclass sends super it’s effectively declaring that it knows the algo- rithm; it depends on this knowledge. If the algorithm changes, then the subclasses may break even if their own specializations are not otherwise affected.</p>
 </blockquote>
 <h3 id="using-hook-messages-to-decoupling-subclasses">Using hook messages to decoupling subclasses</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize</span>(args<span style="color:#f92672">=</span>{})
     @size <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:size</span><span style="color:#f92672">]</span>
     @chain <span style="color:#f92672">=</span> args<span style="color:#f92672">[</span><span style="color:#e6db74">:chain</span><span style="color:#f92672">]</span> <span style="color:#f92672">||</span> default_chain
@@ -564,7 +569,7 @@ Inheritance provides a way to define two objects as having a relationship such t
 <p>RoadBike is still responsible for what initialization it needs but is no longer responsible for when its initialization occurs. This change allows RoadBike to know less about Bicycle, reducing the coupling between them and making each more flexible in the face of an uncertain future. RoadBike doesn’t know when its post_initialize method will be called and it doesn’t care what object actually sends the message. Bicycle (or any other object) could send this message at any time, there is no requirement that it be sent during object initialization.</p>
 </blockquote>
 <p>Using the hook method on the method can looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bicycle</span>
   <span style="color:#75715e"># ...</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">spares</span>
     { tire_size <span style="color:#f92672">=</span> tire_size,
@@ -689,7 +694,7 @@ composition provides no way to share this code.</p>
 <p>If one class uses another object, then the test will rely on creating classes that is required to interact with the tested interface, choose the approach that requires less resources to setup those dependencies, in other word, make the test run as fast as you can so that you will be more willing to run the test as frequent as it should be.</p>
 <h2 id="isolating-the-object-under-test">Isolating the Object Under Test</h2>
 <p>Use module to extract the role that shared among classes, increase the reuse of the test configuration.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> PreparerInterfaceTest
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> PreparerInterfaceTest
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_implements_the_preparer_interface</span>
     assert_respond_to(@object, <span style="color:#e6db74">:prepare_trip</span>)
   <span style="color:#66d9ef">end</span>
@@ -722,7 +727,7 @@ composition provides no way to share this code.</p>
 </blockquote>
 <h2 id="creating-test-doubles-that-can-sense-the-reasonable-failed">Creating test doubles that can sense the reasonable failed</h2>
 <p>Using mock might create a heaven like environment for each tests if all mocks are perfectly return the exact epect values that the test expect, changes on the mocked classes might not get reflected on the test results since the changes on mocked class does not impact on the mock behavior itself.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> DiameterizableInterfaceTest
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> DiameterizableInterfaceTest
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_implements_the_diameterizable_interface</span>
     assert_respond_to(@object, <span style="color:#e6db74">:width</span>)
   <span style="color:#66d9ef">end</span>
@@ -756,7 +761,7 @@ composition provides no way to share this code.</p>
 <p>and when we fix the Double to have latest <code>diameter</code> interface, then the <code>GearTest</code> that using the previous <code>width</code> interface will failed, hence expose the possible defect existed in the <code>Gear</code> class.</p>
 <h2 id="testing-inherited-code">Testing Inherited Code</h2>
 <h3 id="specifying-the-inherited-interface">Specifying the Inherited Interface</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> BicycleInterfaceTest
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> BicycleInterfaceTest
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_default_tire_size</span>
     assert_respond_to(@object, <span style="color:#e6db74">:default_tire_size</span>)
   <span style="color:#66d9ef">end</span>
@@ -796,7 +801,7 @@ composition provides no way to share this code.</p>
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="specifying-subclass-responsibilities">Specifying Subclass Responsibilities</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> BicycleSubclassTest
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> BicycleSubclassTest
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_responds_to_post_initialize</span>
     assert_respond_to(@object, <span style="color:#e6db74">:post_initialize</span>)
   <span style="color:#66d9ef">end</span>
@@ -819,7 +824,7 @@ composition provides no way to share this code.</p>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="confirming-superclass-enforcement">Confirming Superclass Enforcement</h3>
 <p>The Bicycle class should raise an error if a subclass does not implement default_tire_size. Even though this requirement applies to subclasses, the actual enforcement behavior is in Bicycle.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BicycleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BicycleTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
   <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
     @bike <span style="color:#f92672">=</span> @object <span style="color:#f92672">=</span> <span style="color:#66d9ef">Bicycle</span><span style="color:#f92672">.</span>new(tire_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
@@ -831,7 +836,7 @@ composition provides no way to share this code.</p>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="testing-unique-behavior">Testing Unique Behavior</h3>
 <p>After testing the shared interface and the configurations with modules, it&rsquo;s time to test the concrete subclass behavior. The concrete behavior is therefore existed in the Concrete Subclass test.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RoadBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
   <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleInterfaceTest</span>
   <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleSubclassTest</span>
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
@@ -844,7 +849,7 @@ composition provides no way to share this code.</p>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><h3 id="testing-abstract-superclass-behavior">Testing Abstract Superclass Behavior</h3>
 <p>Create a Stub itself subclass from the to-be-tested Superclass to test the Superclass Behavior could decouple especific subclass from the Superclass tests.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Make sure this StubbedBike behaves correctly the class can be checked by</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Make sure this StubbedBike behaves correctly the class can be checked by</span>
 <span style="color:#75715e"># the BicycleSubclassTest module like the DiameterizableInterfaceTest we did</span>
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StubbedBikeTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">MiniTest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Unit</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
   <span style="color:#66d9ef">include</span> <span style="color:#66d9ef">BicycleSubclassTest</span>
@@ -897,7 +902,7 @@ composition provides no way to share this code.</p>
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2020-11-09 12:59:48.890882 &#43;0800 CST m=&#43;0.379512772">2020</time> Ravi Wu. 
+			&copy; <time datetime="2021-09-18 21:28:33.830163 &#43;0800 CST m=&#43;0.130360606">2021</time> Ravi Wu. 
 			</span>
 		</footer>
 

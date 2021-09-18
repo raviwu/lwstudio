@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
     <head>
+		
+		
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>泛型 Java Functional Interface 的特規化 &middot; Ravi Wu</title>
 
 		
-  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="/css/fonts.css">
 		
+		<link rel="icon" href="favicon.ico" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
@@ -22,7 +25,9 @@
         		<nav class="nav">
 			<div class="nav-container">
 				<a href="/">
-					<h2 class="nav-title">Ravi Wu</h2>
+					
+						<h2 class="nav-title">Ravi Wu</h2>
+					
 				</a>
 				<ul>
     
@@ -71,7 +76,7 @@
     <span></span>
         Ravi Wu
         <br>
-        <span>&nbsp;</span><time datetime="2020-09-11 13:44:04 &#43;0800 CST"></time>
+        <span>&nbsp;</span><time datetime="2020-09-11 13:44:04 &#43;0800 &#43;0800"></time>
 </div>
 
 		<h1 class="post-title">泛型 Java Functional Interface 的特規化</h1>
@@ -81,17 +86,17 @@
 
 		<p>如果某個特殊型別的 Functional Interface 常常被使用時，有時候直接宣告型別會比較方便引用。可以透過兩種方式來做特規，介面與抽象類別：</p>
 <p>Generic Functional Interface</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@FunctionalInterface</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@FunctionalInterface</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoArgsProcessor</span><span style="color:#f92672">&lt;</span>X<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
     X <span style="color:#a6e22e">process</span><span style="color:#f92672">(</span>X arg1<span style="color:#f92672">,</span> X arg2<span style="color:#f92672">);</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>介面（Interface）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@FunctionalInterface</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@FunctionalInterface</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoIntsProcessor</span>
     <span style="color:#66d9ef">extends</span> TwoArgsProcessor<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>抽象類別（Abstract Class）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TwoIntsProcessorAbstract</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TwoIntsProcessorAbstract</span>
     <span style="color:#66d9ef">implements</span> TwoArgsProcessor<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 <span style="color:#f92672">}</span>
 </code></pre></div>
@@ -111,7 +116,7 @@
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2020-11-09 12:59:48.68974 &#43;0800 CST m=&#43;0.178376173">2020</time> Ravi Wu. 
+			&copy; <time datetime="2021-09-18 21:28:33.759699 &#43;0800 CST m=&#43;0.059896024">2021</time> Ravi Wu. 
 			</span>
 		</footer>
 

@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
     <head>
+		
+		
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>工具 | Kindle &#34;My Clippings.txt&#34; 的轉檔 gem KCFU &middot; Ravi Wu</title>
 
 		
-  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="/css/fonts.css">
 		
+		<link rel="icon" href="favicon.ico" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
@@ -22,7 +25,9 @@
         		<nav class="nav">
 			<div class="nav-container">
 				<a href="/">
-					<h2 class="nav-title">Ravi Wu</h2>
+					
+						<h2 class="nav-title">Ravi Wu</h2>
+					
 				</a>
 				<ul>
     
@@ -71,7 +76,7 @@
     <span></span>
         Ravi Wu
         <br>
-        <span>&nbsp;</span><time datetime="2017-01-28 13:33:09 &#43;0800 CST"></time>
+        <span>&nbsp;</span><time datetime="2017-01-28 13:33:09 &#43;0800 &#43;0800"></time>
 </div>
 
 		<h1 class="post-title">工具 | Kindle &#34;My Clippings.txt&#34; 的轉檔 gem KCFU</h1>
@@ -83,13 +88,13 @@
 <p>原先有找到 <a href="http://sebpearce.com/blog/firewood/">firewood</a> 這個套件，不過沒辦法在我的電腦上使用 QQ，乾脆就自己刻個輪子吧。</p>
 <p>GitHub 上面的 <a href="https://github.com/georgboe/kindleclippings">kindleclippings</a> 是用 Ruby 寫的，簡單又方便使用，站在小巨人的肩膀上刻了一個 <a href="https://github.com/raviwu/kcfu">kcfu</a> 來做基本的拆分檔案，另外加配了一個陽春的 Markdown 格式轉換器方便做書摘。</p>
 <p>最簡單的用法是開一個資料夾，把你的 <code>My Clippings.txt</code> 放到裡面，再寫個小 Ruby 檔：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># kcfu.rb</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># kcfu.rb</span>
 require <span style="color:#e6db74">&#39;kcfu&#39;</span>
 
 parser <span style="color:#f92672">=</span> <span style="color:#66d9ef">Kcfu</span><span style="color:#f92672">::</span><span style="color:#66d9ef">FileUtil</span><span style="color:#f92672">.</span>new
 parser<span style="color:#f92672">.</span>parse_file(<span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>expand_path(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>dirname(__FILE__)<span style="color:#e6db74">}</span><span style="color:#e6db74">/My Clippings.txt&#34;</span>), <span style="color:#e6db74">convert</span>: <span style="color:#e6db74">:markdown</span>)
 </code></pre></div><p>然後安裝 KCFU（沒有安裝 Ruby 的同學若要服用請先安裝 <a href="https://github.com/rbenv/rbenv">rbenv</a> 跟 ruby ）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">gem install kcfu
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">gem install kcfu
 
 <span style="color:#75715e"># Under folder of your kcfu.rb and &#39;My Clippings.txt&#39; file</span>
 ruby kcfu.rb
@@ -111,7 +116,7 @@ ruby kcfu.rb
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2020-11-09 12:59:48.72057 &#43;0800 CST m=&#43;0.209205682">2020</time> Ravi Wu. 
+			&copy; <time datetime="2021-09-18 21:28:33.770078 &#43;0800 CST m=&#43;0.070275279">2021</time> Ravi Wu. 
 			</span>
 		</footer>
 
