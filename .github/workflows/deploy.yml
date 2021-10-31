@@ -1,0 +1,40 @@
+name: Hugo Publish
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  hugo-publish:
+     name: publish content to public site
+     runs-on: ubuntu-latest
+     steps:
+       - name: checkout private repo
+         uses: actions/checkout@v2
+         with:
+           token: ${{ secrets.PUSH_REPO_TOKEN }}
+
+       - name: checkout submodules
+         shell: bash
+         run: |
+          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+          git submodule sync --recursive
+          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
+       - name: setup hugo
+         uses: peaceiris/actions-hugo@v2
+         with:
+           hugo-version: latest
+           extended: true
+
+       - name: build content to public site
+         run: hugo --minify --gc -t tale
+
+       - name: deploy and publish updates
+         run: |
+           git config --local user.email "action@github.com"
+           git config --local user.name "GitHub Action"
+           git add . -A
+           git commit -m "[chore] Auto publish"
+           git push origin
