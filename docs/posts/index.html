@@ -1,0 +1,190 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Posts &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href=/posts/index.xml rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h1 class=nav-title>Ravi Wu</h1>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<div class=catalogue>
+<a href=https://raviwu.github.io/posts/sast-scan-integration/ class=catalogue-item>
+<div>
+<time datetime="2021-09-18 20:08:30 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>安全性靜態掃描工具 sast-scan 與 Bitbucket 整合</h2>
+<div class=catalogue-line></div>
+<p>
+安全性掃描一直以來都是有點微妙的存在，之前的公司規定專案要上線要過 Fortify + Blackduck 的掃描，可是這類掃描都得花一點時間，所以就跟跑很慢的 Test Suite 一樣，總是淪落為有需要交差的時候才跑，然後每次掃完都得另外撥出時間來修復被掃到的弱點。
+這回又遇上一樣的需求，只是這次有機會可以從頭評估，趁這這個勢頭，研究一下有沒有更好整進開發週期，掃描不太慢結果也不差的方案，是不是就能某種程度上趨近「越痛的事情就要越常做才會慢慢不痛」，展開尋找與探索之旅。
+TL;DR sast-scan 跟 SonarQube 掃出來的結果，安全性項目更多，煩人的假警報較少，掃描大專案的時候比較快。 使用 sast-scan 的 Docker image 配合客製化的 bitbucket pipe 執行掃描結果判讀，可以實現不用花大錢就能提高系統安全性信心，而且還能滿足初步的 Rule 客製化的需求。 sast-scan 與 SonarQube 實際上拿了一些專案來掃，幾個發現記錄一下：
+SonarQube 跟 sast-scan 掃出來的東西用檔案名稱跟行數去對，重疊率在 5% 以下 SonarQube 的預設掃描規則，有一大部分是類似 Linter 的 Code Smell 項目 SonarQube 的 Docker image 跑在 local 的話 Docker 的記憶體不給高一點會爆，因為 SonarQube 的 embed ElasticSearch DB 需要至少 2G 的資源來跑，後來用 docker run -d -m 8G --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:8.
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/concurrency-and-parallelism/ class=catalogue-item>
+<div>
+<time datetime="2020-11-06 15:26:38 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>多執行緒（Concurrency）與平行處理（Parallelism）</h2>
+<div class=catalogue-line></div>
+<p>
+進程（Process） 使用系統資源執行程式的實體
+電腦中執行程式的實體 每個進程都互相獨立 Process 是執行緒的容器 Process 會佔用系統資源 多工作業系統中可以同時執行數個 Process，但單個 CPU 一次只能執行一個 Process 線程、執行緒（Thread） 同個 Process 裡有至少個 Thread 同個 Process 裡的 Thread 共享系統資源 在多執行緒（Multithreading）環境中若兩個以上的執行緒對同一個變數進行改動可能產生死結（Deadlock） 多執行緒（Concurrency） 在同一進程的多執行緒環境中，把工作拆成數個子集，利用不同的執行緒分別完成每個子集。
+平行處理（Parallelism） 透過負載平衡機制把數個工作分配到不同的工作單元裡「同時」進行。
+參考文章 Concurrency 與 Parallelism 的不同之處 Concurrency vs. Parallelism — A brief view
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/go-type/ class=catalogue-item>
+<div>
+<time datetime="2020-10-28 12:05:03 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>Go | 型別（Type）</h2>
+<div class=catalogue-line></div>
+<p>
+Go 的型別（Type）可以讓編譯器知道兩樣資訊：
+需要使用的記憶體大小 這些記憶體所代表的內容 以內建的型別為例：
+型別 記憶體大小 內容 int64 8 bytes 整數 float32 4 bytes IEEE-754 浮點數 bool 1 byte true OR false 有一些型別所代表的內容會跟著 build 機器的不同架構有所差異，例如同樣的 int 在 64 位元電腦裡佔 8 bytes 但在 32 位元電腦裡只佔 4 bytes。
+自定義型別 Go 容許自定義型別，最簡單的宣告方式為 struct
+type user struct { name string email string ext int isAdmin bool } 使用 var ravi user 可以宣告一個 ravi 的變數，代表一個 user 型別。宣告的當下，型別的欄位值會使用各欄位之型別的零值。
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/go-map/ class=catalogue-item>
+<div>
+<time datetime="2020-10-26 14:42:56 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>Go | Map</h2>
+<div class=catalogue-line></div>
+<p>
+Go 的 map 是鍵值對的資料結構。
+// 宣告一個空白 map colors := map[string]string{} // 加入或修改鍵值對 colors["Yello"] = "#cc8500" // 刪除鍵值（鍵不存在時並不會噴錯誤） delete(colors, "Red") // 宣告一個空 map var numbers map[int]string numbers[1] = "One" // panic: runtime error: assignment ot entry in nil map 檢查鍵是否存在，如果指定的鍵不存在，會回傳零值給 value
+value, exists := colors["Blue"] if exists { fmt.Println(value) } else { fmt.Println(value) // "" } 迭代 map numbers := map[int]string{ 1: "one", 2: "two", 3: "three", } for key, value := range numbers { fmt.
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/go-slice/ class=catalogue-item>
+<div>
+<time datetime="2020-10-26 13:14:21 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>Go | 切片（Slice）</h2>
+<div class=catalogue-line></div>
+<p>
+切片（Slice）是操作其指向之陣列（Array）的物件。
+[指標|長度|最大長度] // 切片 | [1,2,3,4,5] // 陣列 切片的初始化 // 宣告一個長度與最大長度都是 5 的字串陣列 slice1 := make([]string, 5) // 宣告一個長度為 3 最大長度為 5 的整數陣列 slice2 := make([]int, 3, 5) 長度不能大於最大長度，不然編譯器會噴錯誤。一般來說，宣告切片的同時也會同時賦值：
+// 宣告一個長度與最大長度為 3 的切片 slice1 := []string{"One", "Two", "Three"} // 宣告一個長度與最大長度為 100 的切片 slice2 := []string{99: ""} 空切片（nil slice）與空白切片（empty slice） 不管是空切片還是空白切片，標準函式庫裡的 append 、 len 跟 cap 的使用行為都一樣。
+空切片（nil slice） 在 Go 程式中，空切片很常出現，通常被當成不存在資料時的回傳值，例如 return nilSlice, error。
+空切片的宣吿方式：
+var slice []int 空切片長成這樣：
+位置 0 1 2 用途 指標 長度 最大長度 值 nil 0 0 空白切片（empty slice） 空白切片通常是用來表達零資料集合，例如查詢資料庫後回傳零筆資料。空白切片的指標指向空陣列，所以並不會另外佔用記憶體。
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/go-array/ class=catalogue-item>
+<div>
+<time datetime="2020-10-26 11:36:46 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>Go | 陣列（Array）</h2>
+<div class=catalogue-line></div>
+<p>
+Go 的陣列是連續空間內儲存了固定數目之相同型別物件的容器。當使用 var array [5]int 宣告時，陣列內儲存的型別或者長度都不能再改變，如果需要更多的空間來儲存新的物件，需要宣告一個新的陣列後把原先的值搬過去新的陣列。
+在 Go 語言中宣告新的變數且無賦值時，這些變數所指向的物件都會以其零值（Zero Value）初始化。有關於 Go 的零值，請參考這邊。常用的零值：
+類型 零值 數值 0 布林值 false 字串 "" 初始化陣列的同時賦值 // 宣告一個 array1 變數的 int 陣列，長度為 5 且值依序分別為 1,2,3,4,5 array1 := [5]int{1,2,3,4,5} // 宣告一個 array2 變數的 int 陣列，長度為 5 且值依序分別為 0,1,2,0,0 array2 := [5]int{1: 1, 2: 2} // 宣告一個 array3 變數的 int 陣列，長度為取決於賦值內容 // 如以下 array3 的長度為 3 array3 := [.
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/methodology-the-seven-product-dimensions/ class=catalogue-item>
+<div>
+<time datetime="2020-09-21 13:48:42 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>產品的七個面向（The 7 Product Dimensions）</h2>
+<div class=catalogue-line></div>
+<p>
+從 More Agile Testing 裡讀到各種方法論，在這邊隨機筆記一下。這次探討的是用 The seven product dimensions 來協助更全面性地探討規劃中的產品開發。
+七個可以在團隊中詢問的面向分別是：
+使用者（User）：使用、評價或者是從此產品受益的對象。不限於自然人。如果是自然人的話，使用 Personas 來勾勒出使用者是不錯的方法。 介面（Interface）：使用何種介面來連結產品以及使用者？產品送出何種訊息？關係圖、脈絡圖或者是原型都是不錯的視覺化工具。 動作（Action）：產品能做什麼事？這些動作是怎麼驅動的？有沒有順序之分？產品如何回應不同的動作？這些動作如何影響資料？ 資料（Data）：產品接受什麼類型的資料？資料來源為何？上下文脈絡？資料的有效期間多長？ 控制（Control）：產品本身受到什麼政策、法規、商業邏輯等限制？違反這些限制的風險如何？ 環境（Environment）：斟酌一下產品的物理特徵，會在何種情境使用？如何安裝、設定、授權、營運？開發環境中所需的環境條件又是如何？ 品質特徵（Quality Attribute）：產品需要達到何種程度的服務品質？可靠度？停機率？安全性？可使用性？想想可測試性、可延展性，思考一下該如何評價這些品質特徵。 在產品規劃、衝刺週期計畫會議或是規格討論會議中，提醒自己用這七個面向的問題來增加思慮與討論過程的考量涵蓋度。
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/ class=catalogue-item>
+<div>
+<time datetime="2020-09-11 13:46:57 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>InputStream 、 DataInputStream 與 BufferedInputStream</h2>
+<div class=catalogue-line></div>
+<p>
+Java 有很多不同的 InputStream 類別，老是搞不清楚，InputStream、DataInputStream跟BufferedInputStream最近出現在我看的書的練習題裡，一些從 Java Doc (1.8) 文件中拉出來的相關連結：
+Closeable FilterInputStream InputStream DataInputStream BufferedInputStream InputStream是抽象類別，實踐了Closeable，所以可以當成try with resource裡的資源。類別方法裡定義了InputStream.nullInputStream()可以產生空的InputStream。另外也規範所有實作子類別必須提供public int read() throws IOException方法來回傳下一個 byte 的內容。
+FilterInputStream在生成時吃進InputStream後把InputStream存起來，並且覆寫了所有InputStream裡的方法，大部分覆寫的方法都是把原來的操作轉到物件生成時丟進去的InputStream上，以供更細分的子類別使用，例如：
+public int read(byte b[], int off, int len) throws IOException { return in.read(b, off, len); } DataInputStream跟BufferedInputStream都進一步繼承FilterInputStream。DataInputStream主要是從InputStream直接讀入 Java 的 primitive data type。
+BufferedInputStream在內部會產生一個緩衝陣列（buffer array）來支援mark跟reset方法，透過額外使用的緩衝空間來先讀入資料，以優化資料讀入的效能。
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/java-generic-functional-interface-specilization/ class=catalogue-item>
+<div>
+<time datetime="2020-09-11 13:44:04 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>泛型 Java Functional Interface 的特規化</h2>
+<div class=catalogue-line></div>
+<p>
+如果某個特殊型別的 Functional Interface 常常被使用時，有時候直接宣告型別會比較方便引用。可以透過兩種方式來做特規，介面與抽象類別：
+Generic Functional Interface
+@FunctionalInterface public interface TwoArgsProcessor&lt;X> { X process(X arg1, X arg2); } 介面（Interface）
+@FunctionalInterface public interface TwoIntsProcessor extends TwoArgsProcessor&lt;Integer> { } 抽象類別（Abstract Class）
+abstract class TwoIntsProcessorAbstract implements TwoArgsProcessor&lt;Integer> { }
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/java-use-combo-condition-for-loop/ class=catalogue-item>
+<div>
+<time datetime="2020-09-10 13:41:31 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>使用複合條件來判斷是否進入下一輪 Java 迴圈</h2>
+<div class=catalogue-line></div>
+<p>
+在 Java 迴圈寫法中，假如我想要透過一個外部判斷來提前中斷這個迴圈，之前我習慣寫：
+public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&lt;ints.length; i++) { continueCond = ints[i] &lt; 4; if (!continueCond) break; System.out.println(ints[i]); } } } 但這樣寫其實有點冗，今天看到在 Functional Interfaces in Java 裡的一個範例寫法：
+public class Test { public static void main(String[] args) { int [] ints = {1,2,3,4,5}; boolean continueCond = true; for (int i=0; i&lt;ints.length && continueCond; i++) { continueCond &= ints[i] &lt; 4; System.
+</p>
+</div>
+</a>
+</div>
+<div class=pagination>
+<a href=/posts/page/2/ class="right arrow">&#8594;</a>
+<span>1</span>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:15:46.682053879 +0000 UTC m=+0.132673979">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

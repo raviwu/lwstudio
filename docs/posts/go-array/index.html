@@ -1,0 +1,316 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Go | 陣列（Array） &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h2 class=nav-title>Ravi Wu</h2>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<div class=post>
+<div class=post-info>
+<span></span>
+Ravi Wu
+<br>
+<span>&nbsp;</span><time datetime="2020-10-26 11:36:46 +0800 +0800"></time>
+</div>
+<h1 class=post-title>Go | 陣列（Array）</h1>
+<div class=post-line></div>
+<p>Go 的陣列是連續空間內儲存了固定數目之相同型別物件的容器。當使用 <code>var array [5]int</code> 宣告時，陣列內儲存的型別或者長度都不能再改變，如果需要更多的空間來儲存新的物件，需要宣告一個新的陣列後把原先的值搬過去新的陣列。</p>
+<p>在 Go 語言中宣告新的變數且無賦值時，這些變數所指向的物件都會以其零值（Zero Value）初始化。有關於 Go 的零值，請參考<a href=https://dave.cheney.net/2013/01/19/what-is-the-zero-value-and-why-is-it-useful>這邊</a>。常用的零值：</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>零值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>數值</td>
+<td>0</td>
+</tr>
+<tr>
+<td>布林值</td>
+<td>false</td>
+</tr>
+<tr>
+<td>字串</td>
+<td>""</td>
+</tr>
+</tbody>
+</table>
+<h2 id=初始化陣列的同時賦值>初始化陣列的同時賦值</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#75715e>// 宣告一個 array1 變數的 int 陣列，長度為 5 且值依序分別為 1,2,3,4,5
+</span><span style=color:#75715e></span><span style=color:#a6e22e>array1</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>5</span>]<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>4</span>,<span style=color:#ae81ff>5</span>}
+
+<span style=color:#75715e>// 宣告一個 array2 變數的 int 陣列，長度為 5 且值依序分別為 0,1,2,0,0
+</span><span style=color:#75715e></span><span style=color:#a6e22e>array2</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>5</span>]<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>: <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>: <span style=color:#ae81ff>2</span>}
+
+<span style=color:#75715e>// 宣告一個 array3 變數的 int 陣列，長度為取決於賦值內容
+</span><span style=color:#75715e>// 如以下 array3 的長度為 3
+</span><span style=color:#75715e></span><span style=color:#a6e22e>array3</span> <span style=color:#f92672>:=</span> [<span style=color:#f92672>...</span>]<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>}
+</code></pre></div><h2 id=陣列的操作>陣列的操作</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#75715e>// 宣告一個 array 變數的 int 陣列，長度為 3 且值依序分別為 1,2,3
+</span><span style=color:#75715e></span><span style=color:#a6e22e>array</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>3</span>]<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>}
+
+<span style=color:#75715e>// 把 index 2 的值改為 5
+</span><span style=color:#75715e></span><span style=color:#a6e22e>array</span>[<span style=color:#ae81ff>2</span>] = <span style=color:#ae81ff>5</span>
+</code></pre></div><h2 id=使用指標為陣列的值>使用指標為陣列的值</h2>
+<p>初始化 <code>array := [3]*int{0: new(int), 1: new(int)}</code> 時：</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>nil</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>0</td>
+<td><code>error: cannot use assignment (array[i]) = (nil) as value</code></td>
+</tr>
+</tbody>
+</table>
+<p>試試看改變陣列指標的值 <code>*array[0] = 100</code> ：</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>nil</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>100</td>
+<td><code>error: cannot use assignment (array[i]) = (nil) as value</code></td>
+</tr>
+</tbody>
+</table>
+<p>這邊可以注意到，指標的記憶體位址是一樣的，但值改變了。</p>
+<p>假如想要替現在為 <code>nil</code> 的位置指定值，首先要在記憶體裡做出一個指標。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>200</span>
+<span style=color:#a6e22e>array</span>[<span style=color:#ae81ff>2</span>] = <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>i</span>
+</code></pre></div><p>透過 <code>i := 200</code> 的方式宣告了 <code>i</code> 以後，使用 <code>&i</code> 取得 <code>i</code> 的指標並賦值給 <code>array[2]</code> 後，會變成：</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>0xc0000b6038</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>100</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<p>假如另外再賦值另一個變數 <code>j</code> 時，指標位址會變：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>j</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>200</span>
+<span style=color:#a6e22e>array</span>[<span style=color:#ae81ff>2</span>] = <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>j</span>
+</code></pre></div><p>這邊例外宣告了變數 <code>j</code> 給整數 200，其實是另外在記憶體裡找了一塊地方塞值 200 給指標 <code>j</code>，到此， <code>i</code> 跟 <code>j</code> 的位置不同，但值相同。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>200</span>
+<span style=color:#a6e22e>j</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>200</span>
+<span style=color:#a6e22e>k</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>j</span>
+
+<span style=color:#a6e22e>i</span> <span style=color:#f92672>==</span> <span style=color:#a6e22e>j</span> <span style=color:#75715e>// true
+</span><span style=color:#75715e></span><span style=color:#a6e22e>k</span> <span style=color:#f92672>==</span> <span style=color:#a6e22e>j</span> <span style=color:#75715e>// true
+</span><span style=color:#75715e></span>
+<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>i</span> <span style=color:#f92672>==</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>j</span> <span style=color:#75715e>// false
+</span><span style=color:#75715e></span><span style=color:#f92672>&amp;</span><span style=color:#a6e22e>k</span> <span style=color:#f92672>==</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>j</span> <span style=color:#75715e>// false
+</span><span style=color:#75715e></span>
+<span style=color:#a6e22e>k</span> = <span style=color:#ae81ff>300</span>
+<span style=color:#a6e22e>k</span> <span style=color:#f92672>==</span> <span style=color:#a6e22e>j</span> <span style=color:#75715e>// false
+</span></code></pre></div><p>突然跳來實驗一下 Go 的指標，可以發現每 <code>:=</code> 了一個指標，都是在記憶體裡拿一塊新的區域來存值，這幾個指標都是不同位置，所以假若 <code>*k</code> 被改值時不會影響到 <code>i</code> 或 <code>j</code> 這兩個指標所指向的值。</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>0xc0000b6058</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>100</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<p>重新指定一個指標給 <code>array[2] = new(int)</code> 也是一樣的意思：</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+<td>0xc0000b6078</td>
+</tr>
+<tr>
+<td>*array[index]</td>
+<td>0</td>
+<td>100</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>要注意的是，如果複製以指標為值的陣列時，指標的位置會一樣：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>array1</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>2</span>]<span style=color:#f92672>*</span><span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>0</span>: new(<span style=color:#66d9ef>int</span>), <span style=color:#ae81ff>1</span>: new(<span style=color:#66d9ef>int</span>)}
+<span style=color:#a6e22e>array1</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#ae81ff>1</span>
+<span style=color:#a6e22e>array1</span>[<span style=color:#ae81ff>1</span>] = <span style=color:#ae81ff>2</span>
+
+<span style=color:#a6e22e>array2</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>array1</span>
+</code></pre></div><p>可以發現 <code>array1</code> 跟 <code>array2</code> 裡頭放的指標，地址都是一樣的。</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array1[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+</tr>
+<tr>
+<td>array2[index]</td>
+<td>0xc0000b6020</td>
+<td>0xc0000b6028</td>
+</tr>
+<tr>
+<td>*array1[index]</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>*array2[index]</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>當然，這就表示，如果改動指標指向的值，兩個陣列都會被影響，請注意！</p>
+<h2 id=傳送陣列給函數>傳送陣列給函數</h2>
+<p>由於 Golang 的函數是傳值（passed by value），所以把陣列直接傳進去函數裡面，對於程式效能會有負面影響。</p>
+<p>可以試試看下面的實驗：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#75715e>// 宣告一個 8MB 的陣列
+</span><span style=color:#75715e></span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>array</span> [<span style=color:#ae81ff>1e6</span>]<span style=color:#66d9ef>int</span>
+
+<span style=color:#75715e>// 把陣列直接傳到 foo 函數裡
+</span><span style=color:#75715e></span><span style=color:#a6e22e>foo</span>(<span style=color:#a6e22e>array</span>)
+
+<span style=color:#75715e>// foo 直接接收陣列
+</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>foo</span>(<span style=color:#a6e22e>array</span> [<span style=color:#ae81ff>1e6</span>]<span style=color:#66d9ef>int</span>) {
+    <span style=color:#f92672>...</span>
+}
+</code></pre></div><p>每一次 <code>foo</code> 這個函數被呼叫，就會有 8MB 的空間在 stack 被取用。然後傳入的陣列會被複製到這個新取用的空間裡。即使你的機器可以處理這樣的負載，但其實有更好的方式。</p>
+<h3 id=使用指標pointer作為參數>使用指標（Pointer）作為參數</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>array</span> [<span style=color:#ae81ff>1e6</span>]<span style=color:#66d9ef>int</span>
+
+<span style=color:#a6e22e>foo</span>(<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>array</span>)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>foo</span>(<span style=color:#a6e22e>array</span> <span style=color:#f92672>*</span>[<span style=color:#ae81ff>1e6</span>]<span style=color:#66d9ef>int</span>) {
+    <span style=color:#f92672>...</span>
+}
+</code></pre></div><p>這麼做，呼叫 <code>foo</code> 的時候就不會浪費額外的記憶體空間去複製傳入的值，而是使用 <code>array</code> 這個已經建立好的陣列。</p>
+<p>但這麼做要小心函數是否對於這個參數的值做改變，由於傳入的是指標，所以對於陣列的值做任何改變時，同一個記憶體中的數值會被更改。</p>
+</div>
+<div class=pagination>
+<a href=/posts/methodology-the-seven-product-dimensions/ class="left arrow">&#8592;</a>
+<a href=/posts/go-slice/ class="right arrow">&#8594;</a>
+<a href=# class=top>Top</a>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:15:46.605852332 +0000 UTC m=+0.056472532">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

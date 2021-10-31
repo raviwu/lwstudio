@@ -1,0 +1,89 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>coding &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href=/tags/coding/index.xml rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h1 class=nav-title>Ravi Wu</h1>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<h1>Tag coding</h1>
+<div class=catalogue>
+<a href=https://raviwu.github.io/posts/early-termination/ class=catalogue-item>
+<div>
+<time datetime="2016-04-15 04:22:50 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>程設風格 | 早期終止執行</h2>
+<div class=catalogue-line></div>
+<p>
+剛開始寫程式的時候，以為所謂邏輯判斷就是很多個若 A 則 B 包起來的複雜地圖。這樣的程式碼，很容易因為邏輯判斷太過複雜，很難一眼就看到到底目前程式會跑到哪一個 if 分支裡面執行。
+taget = Dog.new if target.is_a?(Animal) if target.has_four_legs? if target.is_a?(Dog) puts "wolf!" else puts "four leg animal can say yeah" end else puts "don't know what that is" end else puts "don't know what that is" end => "wolf!" 如果透過層層過濾只是要剔除一些情況讓程式不處理，例如有很多個分支其實是「不處理」或是「同樣的簡單處理」，例如上面的 puts "don't know what that is" ，可以改用「早期終止」的模式來改寫。
+def what_it_says(target) # 如果不符合條件的參數就會在此提早回傳值 return "don't know what that is" unless target.is_a?(Animal) && target.has_four_legs? # 符合資格的參數才會進入真正的必要判斷 if target.
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/command-line-tools-notes/ class=catalogue-item>
+<div>
+<time datetime="2016-03-27 04:07:31 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>終端機工具</h2>
+<div class=catalogue-line></div>
+<p>
+轉型後端工程師的路上，看了很多教學，裝了很多套件，用過很多軟體。目前用得還算不手殘的工具只有終端機（terminal）跟文本編輯器（text editor）。
+因為要經常性切換不同的 Git Branch，MacOX 本來附掛的 terminal 顯得有點陽春，需要極大注意力才能清楚知道自己究竟目前身在何處又在哪支 branch 裡。
+先烈做了很多很棒的工具改善工作體驗與視覺效果，iTerm 2 很是不錯，搭配上一些快捷熱鍵可以有效增加效率。
+Shortcut of iTerms2 windows and tabs command + T to open new tab
+shift + command + [ / ] to switch between tabs
+command + W to close the tab
+command + D to have vertical divided windows
+command + [ / ] to switch between windows
+cursor ctrl + a to go to the beginning of line
+</p>
+</div>
+</a>
+</div>
+<div class=pagination>
+<a href=/tags/coding/page/2/ class="left arrow">&#8592;</a>
+<span>3</span>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:15:46.693558546 +0000 UTC m=+0.144178646">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

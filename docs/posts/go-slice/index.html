@@ -1,0 +1,215 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Go | 切片（Slice） &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h2 class=nav-title>Ravi Wu</h2>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<div class=post>
+<div class=post-info>
+<span></span>
+Ravi Wu
+<br>
+<span>&nbsp;</span><time datetime="2020-10-26 13:14:21 +0800 +0800"></time>
+</div>
+<h1 class=post-title>Go | 切片（Slice）</h1>
+<div class=post-line></div>
+<p>切片（Slice）是操作其指向之<a href=/posts/go-array/>陣列（Array）</a>的物件。</p>
+<pre tabindex=0><code>[指標|長度|最大長度] // 切片
+  |
+[1,2,3,4,5] // 陣列
+</code></pre><h2 id=切片的初始化>切片的初始化</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#75715e>// 宣告一個長度與最大長度都是 5 的字串陣列
+</span><span style=color:#75715e></span><span style=color:#a6e22e>slice1</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>string</span>, <span style=color:#ae81ff>5</span>)
+
+<span style=color:#75715e>// 宣告一個長度為 3 最大長度為 5 的整數陣列
+</span><span style=color:#75715e></span><span style=color:#a6e22e>slice2</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>int</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>5</span>)
+</code></pre></div><p>長度不能大於最大長度，不然編譯器會噴錯誤。一般來說，宣告切片的同時也會同時賦值：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#75715e>// 宣告一個長度與最大長度為 3 的切片
+</span><span style=color:#75715e></span><span style=color:#a6e22e>slice1</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;One&#34;</span>, <span style=color:#e6db74>&#34;Two&#34;</span>, <span style=color:#e6db74>&#34;Three&#34;</span>}
+
+<span style=color:#75715e>// 宣告一個長度與最大長度為 100 的切片
+</span><span style=color:#75715e></span><span style=color:#a6e22e>slice2</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#ae81ff>99</span>: <span style=color:#e6db74>&#34;&#34;</span>}
+</code></pre></div><h2 id=空切片nil-slice與空白切片empty-slice>空切片（nil slice）與空白切片（empty slice）</h2>
+<p>不管是空切片還是空白切片，標準函式庫裡的 <code>append</code> 、 <code>len</code> 跟 <code>cap</code> 的使用行為都一樣。</p>
+<h3 id=空切片nil-slice>空切片（nil slice）</h3>
+<p>在 Go 程式中，空切片很常出現，通常被當成不存在資料時的回傳值，例如 <code>return nilSlice, error</code>。</p>
+<p>空切片的宣吿方式：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>slice</span> []<span style=color:#66d9ef>int</span>
+</code></pre></div><p>空切片長成這樣：</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用途</td>
+<td>指標</td>
+<td>長度</td>
+<td>最大長度</td>
+</tr>
+<tr>
+<td>值</td>
+<td><code>nil</code></td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3 id=空白切片empty-slice>空白切片（empty slice）</h3>
+<p>空白切片通常是用來表達零資料集合，例如查詢資料庫後回傳零筆資料。空白切片的指標指向空陣列，所以並不會另外佔用記憶體。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>slice</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>int</span>, <span style=color:#ae81ff>0</span>)
+<span style=color:#a6e22e>slice</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{}
+</code></pre></div><h2 id=操作切片>操作切片</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>slice</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>100</span>,<span style=color:#ae81ff>200</span>,<span style=color:#ae81ff>300</span>,<span style=color:#ae81ff>400</span>,<span style=color:#ae81ff>500</span>}
+<span style=color:#a6e22e>newSlice</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>slice</span>[<span style=color:#ae81ff>1</span>:<span style=color:#ae81ff>3</span>]
+</code></pre></div><p>看一下記憶體內的樣子：</p>
+<pre tabindex=0><code>   slice := []int{100,200,300,400,500}
+ [ 指標 | 5 | 5 ]
+    |
+   [0]     [1]     [2]     [3]     [4]
+[  100  |  200  |  300  |  400  |  500  ] // 底層陣列
+            |
+         [ 指標 | 2 | 4 ]
+           newSlice := slice[1:3]
+</code></pre><p>雖然 <code>slice</code> 跟 <code>newSlice</code> 都指向同一個陣列，但這兩個切片的世界觀是不同的。對於一個最大長度為 <code>k</code> 的切片 <code>slice[i:j]</code>：</p>
+<pre tabindex=0><code>Length:   j - i
+Capacity: k - i
+</code></pre><p>對 <code>newSlice</code> 而言，陣列裡的第一個元素甚至是不存在的。</p>
+<p>需要注意的是，由於切片是指向某個底層陣列，所以如果有其他的切片對於這個陣列有做任何操作，操作結果將會同時反映到其他也指向此陣列的切片。</p>
+<h2 id=長度與最大長度>長度與最大長度</h2>
+<p>即使最大長度允許，但切片不能存取大於長度的位址。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>slice</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>4</span>,<span style=color:#ae81ff>5</span>} <span style=color:#75715e>// [ pointer | 5 | 5 ]
+</span><span style=color:#75715e></span>
+<span style=color:#a6e22e>newSlice</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>slice</span>[<span style=color:#ae81ff>1</span>:<span style=color:#ae81ff>3</span>] <span style=color:#75715e>// [ pointer | 2 | 4]
+</span><span style=color:#75715e></span>
+<span style=color:#a6e22e>newSlice</span>[<span style=color:#ae81ff>2</span>] = <span style=color:#ae81ff>45</span>
+
+<span style=color:#75715e>// runtime error: index out of range [2] with length 2
+</span></code></pre></div><h3 id=append-切片後的長度在原陣列長度---新切片指向原陣列>append 切片後的長度在原陣列長度 -> 新切片指向原陣列</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>slice</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>100</span>,<span style=color:#ae81ff>200</span>,<span style=color:#ae81ff>300</span>,<span style=color:#ae81ff>400</span>,<span style=color:#ae81ff>500</span>}
+
+<span style=color:#a6e22e>newSlice</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>slice</span>[<span style=color:#ae81ff>1</span>:<span style=color:#ae81ff>3</span>]
+
+<span style=color:#a6e22e>newSlice</span> <span style=color:#f92672>:=</span> append(<span style=color:#a6e22e>newSlice</span>, <span style=color:#ae81ff>600</span>)
+</code></pre></div><p>針對擴長後之新切片的操作會反映到原陣列</p>
+<pre tabindex=0><code>   slice := []int{100,200,300,400,500}
+ [ 指標 | 5 | 5 ]
+    |
+   [0]     [1]     [2]     [3]     [4]
+[  100  |  200  |  300  |  600  |  500  ] // 底層陣列
+           | |
+           | |
+        ---- ----------------------------
+        |                               |
+     [ 指標 | 2 | 4 ]                 [ 指標 | 3 | 4 ]
+       newSlice := slice[1:3]          newSlice := append(newSlice, 600)
+</code></pre><h3 id=append-切片後的長度超出原陣列長度---新切片會指向複製原陣列之值的新陣列>append 切片後的長度超出原陣列長度 -> 新切片會指向複製原陣列之值的新陣列</h3>
+<p><code>append</code> 函數會調節最大長度的擴長，針對長度 1000 以下的切片，會以兩倍增長，對於長度 1000 以上的切片則使用 1.25 的倍數做最大長度擴增。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>slice</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>100</span>,<span style=color:#ae81ff>200</span>,<span style=color:#ae81ff>300</span>,<span style=color:#ae81ff>400</span>,<span style=color:#ae81ff>500</span>}
+
+<span style=color:#a6e22e>newSlice</span> <span style=color:#f92672>:=</span> append(<span style=color:#a6e22e>newSlice</span>, <span style=color:#ae81ff>600</span>)
+</code></pre></div><p>來看看記憶體的狀態：</p>
+<pre tabindex=0><code>   slice := []int{100,200,300,400,500}
+ [ 指標 | 5 | 5 ]
+    |
+   [0]     [1]     [2]     [3]     [4]
+[  100  |  200  |  300  |  400  |  500  ] // 底層陣列
+            |
+         [ 指標 | 2 | 4 ]
+           newSlice := slice[1:3]
+
+   newSlice := append(newSlice, 600)
+ [ 指標 | 6 | 6 ]
+    |
+   [0]     [1]     [2]     [3]     [4]     [5]
+[  100  |  200  |  300  |  400  |  500  |  600  |  0  |  0  |  0  |  0  ]
+// 新的底層陣列
+</code></pre><h2 id=三參數指定切片>三參數指定切片</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>source</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>100</span>,<span style=color:#ae81ff>200</span>,<span style=color:#ae81ff>300</span>,<span style=color:#ae81ff>400</span>,<span style=color:#ae81ff>500</span>}
+<span style=color:#a6e22e>slice</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>source</span>[<span style=color:#ae81ff>2</span>:<span style=color:#ae81ff>3</span>:<span style=color:#ae81ff>4</span>]
+
+<span style=color:#a6e22e>slice</span>[<span style=color:#ae81ff>0</span>] <span style=color:#75715e>// starting from source[2]
+</span><span style=color:#75715e>// Legth:    3 - 2 = 1
+</span><span style=color:#75715e>// Capacity: 4 - 2 = 2
+</span><span style=color:#75715e></span>
+<span style=color:#a6e22e>erroredSlice</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>source</span>[<span style=color:#ae81ff>2</span>:<span style=color:#ae81ff>3</span>:<span style=color:#ae81ff>6</span>]
+<span style=color:#75715e>// Runtime Error: panic: runtime error: slice bounds out of range
+</span></code></pre></div><p>使用同樣的長度與最大長度的好處在於，當進一步透過 append 去拓展切片時，由於原 slice 的最大長度已用盡， append 會在底層新增一個陣列並且把值複製過去新的陣列，後續新增的值只會加到這個新陣列，不會對原陣列有變動。</p>
+<h2 id=range-迭代切片時區塊內的值為新值>range 迭代切片時，區塊內的值為新值</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>slice</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>20</span>, <span style=color:#ae81ff>30</span>, <span style=color:#ae81ff>40</span>}
+
+<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>index</span>, <span style=color:#a6e22e>value</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>slice</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Value: %d Value-Addr: %X ElemAddr: %X\n&#34;</span>,
+        <span style=color:#a6e22e>value</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>value</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>slice</span>[<span style=color:#a6e22e>index</span>])
+}
+
+<span style=color:#75715e>// Output:
+</span><span style=color:#75715e>// Value: 10 Value-Addr: 10500168 ElemAddr: 1052E100
+</span><span style=color:#75715e>// Value: 20 Value-Addr: 10500168 ElemAddr: 1052E104
+</span><span style=color:#75715e>// Value: 30 Value-Addr: 10500168 ElemAddr: 1052E108
+</span><span style=color:#75715e>// Value: 40 Value-Addr: 10500168 ElemAddr: 1052E10C
+</span></code></pre></div><p><code>range</code> 總是會從 0 開始迭代，如果有特殊的起始需求，可以使用一般的 <code>for</code> 操作：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>slice</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>4</span>}
+
+<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>index</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>2</span>; <span style=color:#a6e22e>index</span> &lt; len(<span style=color:#a6e22e>slice</span>); <span style=color:#a6e22e>index</span><span style=color:#f92672>++</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Index: %d Value: %d\n&#34;</span>, <span style=color:#a6e22e>index</span>, <span style=color:#a6e22e>slice</span>[<span style=color:#a6e22e>index</span>])
+}
+</code></pre></div><h2 id=傳送切片為函數參數>傳送切片為函數參數</h2>
+<p>由於切片所佔用的記憶體很少，和陣列不同，直接傳送一個大尺寸的切片進去函數裡並不會增加太多效能負擔。</p>
+</div>
+<div class=pagination>
+<a href=/posts/go-array/ class="left arrow">&#8592;</a>
+<a href=/posts/go-map/ class="right arrow">&#8594;</a>
+<a href=# class=top>Top</a>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:15:46.614859685 +0000 UTC m=+0.065479885">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

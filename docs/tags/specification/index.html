@@ -1,0 +1,72 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>specification &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href=/tags/specification/index.xml rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h1 class=nav-title>Ravi Wu</h1>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<h1>Tag specification</h1>
+<div class=catalogue>
+<a href=https://raviwu.github.io/posts/java-inputstream-datainputstream-and-bufferedinputstream/ class=catalogue-item>
+<div>
+<time datetime="2020-09-11 13:46:57 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>InputStream 、 DataInputStream 與 BufferedInputStream</h2>
+<div class=catalogue-line></div>
+<p>
+Java 有很多不同的 InputStream 類別，老是搞不清楚，InputStream、DataInputStream跟BufferedInputStream最近出現在我看的書的練習題裡，一些從 Java Doc (1.8) 文件中拉出來的相關連結：
+Closeable FilterInputStream InputStream DataInputStream BufferedInputStream InputStream是抽象類別，實踐了Closeable，所以可以當成try with resource裡的資源。類別方法裡定義了InputStream.nullInputStream()可以產生空的InputStream。另外也規範所有實作子類別必須提供public int read() throws IOException方法來回傳下一個 byte 的內容。
+FilterInputStream在生成時吃進InputStream後把InputStream存起來，並且覆寫了所有InputStream裡的方法，大部分覆寫的方法都是把原來的操作轉到物件生成時丟進去的InputStream上，以供更細分的子類別使用，例如：
+public int read(byte b[], int off, int len) throws IOException { return in.read(b, off, len); } DataInputStream跟BufferedInputStream都進一步繼承FilterInputStream。DataInputStream主要是從InputStream直接讀入 Java 的 primitive data type。
+BufferedInputStream在內部會產生一個緩衝陣列（buffer array）來支援mark跟reset方法，透過額外使用的緩衝空間來先讀入資料，以優化資料讀入的效能。
+</p>
+</div>
+</a>
+</div>
+<div class=pagination>
+<span>1</span>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:15:46.711081149 +0000 UTC m=+0.161701349">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>
