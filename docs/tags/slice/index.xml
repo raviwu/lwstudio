@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>slice on Ravi Wu</title><link>https://raviwu.github.io/tags/slice/</link><description>Recent content in slice on Ravi Wu</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><copyright>Copyright © 2020, Ravi Wu.</copyright><lastBuildDate>Mon, 26 Oct 2020 13:14:21 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/slice/index.xml" rel="self" type="application/rss+xml"/><item><title>Go | 切片（Slice）</title><link>https://raviwu.github.io/posts/go-slice/</link><pubDate>Mon, 26 Oct 2020 13:14:21 +0800</pubDate><guid>https://raviwu.github.io/posts/go-slice/</guid><description>切片（Slice）是操作其指向之陣列（Array）的物件。
-[指標|長度|最大長度] // 切片 | [1,2,3,4,5] // 陣列 切片的初始化 // 宣告一個長度與最大長度都是 5 的字串陣列 slice1 := make([]string, 5) // 宣告一個長度為 3 最大長度為 5 的整數陣列 slice2 := make([]int, 3, 5) 長度不能大於最大長度，不然編譯器會噴錯誤。一般來說，宣告切片的同時也會同時賦值：
-// 宣告一個長度與最大長度為 3 的切片 slice1 := []string{&amp;#34;One&amp;#34;, &amp;#34;Two&amp;#34;, &amp;#34;Three&amp;#34;} // 宣告一個長度與最大長度為 100 的切片 slice2 := []string{99: &amp;#34;&amp;#34;} 空切片（nil slice）與空白切片（empty slice） 不管是空切片還是空白切片，標準函式庫裡的 append 、 len 跟 cap 的使用行為都一樣。
-空切片（nil slice） 在 Go 程式中，空切片很常出現，通常被當成不存在資料時的回傳值，例如 return nilSlice, error。
-空切片的宣吿方式：
-var slice []int 空切片長成這樣：
-位置 0 1 2 用途 指標 長度 最大長度 值 nil 0 0 空白切片（empty slice） 空白切片通常是用來表達零資料集合，例如查詢資料庫後回傳零筆資料。空白切片的指標指向空陣列，所以並不會另外佔用記憶體。</description></item></channel></rss>

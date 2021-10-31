@@ -31,10 +31,10 @@ jobs:
        - name: build content to public site
          run: hugo --minify --gc -t tale
 
-      #  - name: deploy and publish updates
-      #    run: |
-      #      git config --local user.email "action@github.com"
-      #      git config --local user.name "GitHub Action"
-      #      git add . -A
-      #      git commit -m "[chore] Auto publish"
-      #      git push origin
+       - name: deploy and publish updates
+         run: |
+           git config --local user.email "action@github.com"
+           git config --local user.name "GitHub Action"
+           git add . -A
+           git commit -m "[chore] Auto publish"
+           git push -u origin master:gh-pages -f
