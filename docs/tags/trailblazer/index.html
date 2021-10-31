@@ -1,0 +1,84 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>trailblazer &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href=/tags/trailblazer/index.xml rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h1 class=nav-title>Ravi Wu</h1>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<h1>Tag trailblazer</h1>
+<div class=catalogue>
+<a href=https://raviwu.github.io/posts/customize-error-handlement-in-trailblazer-policy/ class=catalogue-item>
+<div>
+<time datetime="2017-01-14 13:25:31 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>在 Trailblazer 的 Policy 中透過客制 Exception 來處理複雜的「錯誤回應」</h2>
+<div class=catalogue-line></div>
+<p>
+為了盡量貼近 Trailblazer 的設計概念，許多原先會透過 Controller before_action 去處理的權限管控，盡量都搬進 Trailblazer 的 Policy 裡。
+Policy 採用類似 Pundit 的語法，典型的 Policy 如下：
+class Thing::Policy def initialize(user, thing) @user, @thing = user, thing end def create? (admin? || approved?) && @thing.persisted? end private def admin? @user.admin == true end def approved? @user.is_approved end end 在 Operation 中若要調用這隻 Policy 的話要宣告：
+class Thing::Create &lt; Trailblazer::Operation builds -> (params) { dispatched_class_accroding_to(params) } def self.dispatched_class_accroding_to(params) Thing::Create end include Trailblazer::Operation::Policy policy Thing::Policy, :create?
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/elementary-trailblazer/ class=catalogue-item>
+<div>
+<time datetime="2017-01-07 13:23:29 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>初探 Trailblazer 框架</h2>
+<div class=catalogue-line></div>
+<p>
+最近公司的 Rails 專案試用了 Trailblazer 這套整理 Rails 程式碼的框架。（目前使用的是 1.1 版）
+Trailblazer 是擺在 Rails 上的一套工具，雖然有本專書可以翻找，但實際上就是個自成一格的整理程式碼套路，除了要學新的 DSL 外，在 API 文件沒有寫得非常詳細，加上使用者也沒多到可以 stackoverflow 的情況下，假如開發需求和設計者 Nick Sutterer 設想的情況不一樣時，小小撞牆是難免的。
+Trailblazer 是模組化設計，所以並非所有模組需要安裝才能開始享受 Trailblazer 帶來的方便感，除了主要的 Operation / Policy / Contract / Cell 等稍微有摸過外，其他的眉眉角角尚待開發。稍微整理一下截至目前為止使用這套框架的個人認知，這套 Trailblazer 的目的是將原先 Rails 單純 MVC 架構下可能會散亂在 Controller / Model 層的商業邏輯，集中起來包在 Operation 的概念裡，（在理想狀況下）分別簡化日益肥大的 Controller / Model / View 邏輯：
+Controller 讓 controller 單純負責傳送 current_user / resource 到正確的 operation 並視操作結果導向相對應的路由 權限控管交給 Policy 處理，用 controller 塞給 operation 的 current_user 配合 operation 的 model!
+</p>
+</div>
+</a>
+</div>
+<div class=pagination>
+<span>1</span>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:46:50.322992847 +0000 UTC m=+0.219133976">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

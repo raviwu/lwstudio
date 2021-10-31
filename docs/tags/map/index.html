@@ -1,0 +1,70 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>map &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href=/tags/map/index.xml rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h1 class=nav-title>Ravi Wu</h1>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<h1>Tag map</h1>
+<div class=catalogue>
+<a href=https://raviwu.github.io/posts/go-map/ class=catalogue-item>
+<div>
+<time datetime="2020-10-26 14:42:56 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>Go | Map</h2>
+<div class=catalogue-line></div>
+<p>
+Go 的 map 是鍵值對的資料結構。
+// 宣告一個空白 map colors := map[string]string{} // 加入或修改鍵值對 colors["Yello"] = "#cc8500" // 刪除鍵值（鍵不存在時並不會噴錯誤） delete(colors, "Red") // 宣告一個空 map var numbers map[int]string numbers[1] = "One" // panic: runtime error: assignment ot entry in nil map 檢查鍵是否存在，如果指定的鍵不存在，會回傳零值給 value
+value, exists := colors["Blue"] if exists { fmt.Println(value) } else { fmt.Println(value) // "" } 迭代 map numbers := map[int]string{ 1: "one", 2: "two", 3: "three", } for key, value := range numbers { fmt.
+</p>
+</div>
+</a>
+</div>
+<div class=pagination>
+<span>1</span>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:46:50.306032637 +0000 UTC m=+0.202173766">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

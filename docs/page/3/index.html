@@ -1,0 +1,134 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta name=generator content="Hugo 0.88.1">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content>
+<title>Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href=/index.xml rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h1 class=nav-title>Ravi Wu</h1>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<div class=catalogue>
+<a href=https://raviwu.github.io/posts/migrate-push-notification-from-parse-to-aws-sns/ class=catalogue-item>
+<div>
+<time datetime="2016-06-24 05:05:44 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>在 rails 上實作轉移 Parse 手機推播服務到 Amazon SNS</h2>
+<div class=catalogue-line></div>
+<p>
+簡要說明 為了避免使用者因服務轉換而被迫強制更新，移轉過程採用漸進方式。
+如果不需要如此痛苦的同時使用兩種服務的捧油，可以參考這一篇的實作，直接用 AWS Mobile Hub 的服務做批次資料移轉。
+由於在轉換期需要同時支援兩邊服務運作，又要避免使用者重複收到相同的推播，需要實作「對同一裝置擇一服務進行推播」。本篇實作的概念是，使用者只有在用新版本的 APP 登入時，伺服器才會從 APP 取得 device_token 去註冊 Amazon SNS endpoint_arn，同時刪除 Parse 服務上的使用者的所有 Installation 紀錄。
+Parse 跟 Amazon SNS 的 API 邏輯有些不同，主要差別在於，Parse 只需要在同一 request 裡就可以達到「推播給符合某條件的 channels 組合，並且可以指定其中的特定 users 組合」，但是 Amazon 的推播就是 topic_arn / target_arn 兩種，要收到 topic_arn 的話要先讓 endpoint_arn 訂閱特定的 topic_arn，而 target_arn 則是一個 request 只能推播給單一 target_arn (endpoint_arn)。
+開發步驟 打包一隻 AmazonSnsWrapper 把 Amazon SDK 提供的 method 客製成符合需求的介面，專門負責跟 Amazon server 溝通。 新增 AmazonSnsInfo Model 以記錄使用者的 SNS 訂閱狀況。 新增 ParseInstallationWrapper 打包 Parse RESTful API 裡的 method，查詢使用者之前透過 APP 註冊的 Installations，並且刪除已經成功轉換到 Amazon SNS 的 Installation。 新增 update_push_subscription / logout API 來針對 APP 傳送的 device_token 做各種 push subscription / unsubscription 的操作。 新增 PushServicesWrapper 把所有 Push 行為的邏輯打包在一起方便做服務切換。 一、 AmazonSnsWrapper 首先，我們得先建好 Amazon SNS 服務中 endpoint_arn / topic_arn / subscription_arn 新增、查詢、訂閱與刪除等機制，我習慣把第三方 API 的互動包成一個 Ruby Class 方便測試跟管理，建一個 AmazonSnsWrapper 來打包 SDK 相關的程式碼。
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/implement-jwt-in-grape-api/ class=catalogue-item>
+<div>
+<time datetime="2016-06-10 05:05:44 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>Rails grape API 上實作 JWT 多重登入</h2>
+<div class=catalogue-line></div>
+<p>
+多重登入的需求，在服務本身允許「跨裝置體驗」或者是「接受不同 request agent (APP request / mobile browser)」的時候顯得重要。
+理想情況下，可以讓使用者在介面上面清楚知道目前帳號的登入狀態，並在登入數超過服務上限的時候，讓使用者自己選擇要移除登入授權的裝置，使用者流程大概會像（這篇文）那樣，要做到類似參考連結這樣的管理介面，需要我目前還不會的前端的配合建置與基本的 session 管理 API。本篇只先建置允許使用多重登入的資料結構與登入驗證 API。
+選擇用 JWT (Jason Web Token) 作為主要的憑證溝通，優點有一些：
+透過加密 payload 來比對資料庫內容的方式，可以不用在資料表中「直接存入」與憑證相關的訊息，加密跟解密只要透過協定就能進行調整。 payload 裡面塞入的訊息可以自訂，在各服務跟裝置之間交換加密過後的使用者資料。 signing key / protocol 可以在有資安疑慮時更換。 使用 Devise 的 Rails 捧油也可參考 devise_token_auth 這個 gem，整合效果在文件上面看起來很完善，但因為目前我手邊的系統絕大多數的 request 都來自 grape API endpoint ，比較過後，跟搞懂並駕馭 devise 設定比起來，我還是選擇自刻 JWT 較節省開發時間。
+在 Rails grape API 上實作 JWT 多重登入，分 4 個階段。
+建立 user_sessions 資料表跟 UserSession Model Setup，目前找得到的 Rails JWT 整合教學大多是用在 Controller / Rails View 上，為了之後如果要導入前端管理裝置時可以很方便地去刪除跟紀錄不要的 Session，我選擇了透過 UserSession 這個 model 來做媒介，之後要新增 API 的時候直接去對這個 table 做 query 跟各種欄位處理，盡量把 Session 管理跟目前龐大的 users table 切乾淨。 寫一隻自己的 JasonWebToken Service 把 jwt 的 code 包裝得更適合自己的系統使用：雖然 jwt 這隻 gem 的語法已經寫得很美，但還想更方便地只要把 headers 塞進去這個 wrapper 就可以得到 user object 回傳或者是指定的錯誤訊息。 做好資料結構跟 JasonWebToken Service 後，就可以開始使用準備好的工具來更換 Grape API 的登入跟檢查憑證機制，首先要在登入的 API output 提供 jwt 字串。 最後，在檢查憑證機制的 helper 裡使用 JasonWebToken class 去 decode request 裡面的 jwt。
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/use-paperclip-to-store-uri-in-rails/ class=catalogue-item>
+<div>
+<time datetime="2016-05-12 04:38:49 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>Rails 中使用 Paperclip 存 URI 附件</h2>
+<div class=catalogue-line></div>
+<p>
+使用 Rails APP + Paperclip Gem 做附件存取系統，靜態檔案的資料夾格式預設是跟著 id 跑（ /000/000/000/ 九碼化的 ID 切成 3 階資料夾），最近因為要做資料庫合併，大批的資料會被賦予新的 ID，原先放在 AWS S3 上面的靜態資料夾結構就會 mapping 錯誤，必須要依照新的 ID 去存放相對應的資料夾結構。
+由於部分圖片附件在存取時還會同步進行縮圖，如果要用 s3-cmd 這類的外部工具直接搬資料，得連各種不同 model 的縮圖定義一起處理，痛苦指數不低。
+原先預計要從 HTTP GET request 的 response body 裡直接塞 tempfile ：
+url = 'https://s3.amazonaws.com' path = '/BUCKET-NAME/MODEL/ATTACHMENT/000/016/222/original/FILE.jpg' conn = Faraday.new(:url => url) do |faraday| faraday.request :url_encoded faraday.response :logger faraday.adapter Faraday.default_adapter end response = conn.get path model.attachment = response.body 一直噴出各式各樣無法存入或者檔案格式錯誤的錯誤訊息。
+試過自行重組檔案的檔頭 ：
+attachment_file = { :filename => /^.
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/early-termination/ class=catalogue-item>
+<div>
+<time datetime="2016-04-15 04:22:50 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>程設風格 | 早期終止執行</h2>
+<div class=catalogue-line></div>
+<p>
+剛開始寫程式的時候，以為所謂邏輯判斷就是很多個若 A 則 B 包起來的複雜地圖。這樣的程式碼，很容易因為邏輯判斷太過複雜，很難一眼就看到到底目前程式會跑到哪一個 if 分支裡面執行。
+taget = Dog.new if target.is_a?(Animal) if target.has_four_legs? if target.is_a?(Dog) puts "wolf!" else puts "four leg animal can say yeah" end else puts "don't know what that is" end else puts "don't know what that is" end => "wolf!" 如果透過層層過濾只是要剔除一些情況讓程式不處理，例如有很多個分支其實是「不處理」或是「同樣的簡單處理」，例如上面的 puts "don't know what that is" ，可以改用「早期終止」的模式來改寫。
+def what_it_says(target) # 如果不符合條件的參數就會在此提早回傳值 return "don't know what that is" unless target.is_a?(Animal) && target.has_four_legs? # 符合資格的參數才會進入真正的必要判斷 if target.
+</p>
+</div>
+</a>
+<a href=https://raviwu.github.io/posts/command-line-tools-notes/ class=catalogue-item>
+<div>
+<time datetime="2016-03-27 04:07:31 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>終端機工具</h2>
+<div class=catalogue-line></div>
+<p>
+轉型後端工程師的路上，看了很多教學，裝了很多套件，用過很多軟體。目前用得還算不手殘的工具只有終端機（terminal）跟文本編輯器（text editor）。
+因為要經常性切換不同的 Git Branch，MacOX 本來附掛的 terminal 顯得有點陽春，需要極大注意力才能清楚知道自己究竟目前身在何處又在哪支 branch 裡。
+先烈做了很多很棒的工具改善工作體驗與視覺效果，iTerm 2 很是不錯，搭配上一些快捷熱鍵可以有效增加效率。
+Shortcut of iTerms2 windows and tabs command + T to open new tab
+shift + command + [ / ] to switch between tabs
+command + W to close the tab
+command + D to have vertical divided windows
+command + [ / ] to switch between windows
+cursor ctrl + a to go to the beginning of line
+</p>
+</div>
+</a>
+</div>
+<div class=pagination>
+<a href=/page/2/ class="left arrow">&#8592;</a>
+<span>3</span>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:46:50.282420248 +0000 UTC m=+0.178561377">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

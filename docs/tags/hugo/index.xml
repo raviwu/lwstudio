@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hugo on Ravi Wu</title><link>https://raviwu.github.io/tags/hugo/</link><description>Recent content in hugo on Ravi Wu</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><copyright>Copyright © 2020, Ravi Wu.</copyright><lastBuildDate>Sun, 31 Oct 2021 13:17:03 +0800</lastBuildDate><atom:link href="https://raviwu.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 GitHub Action 來發布 Hugo 網站</title><link>https://raviwu.github.io/posts/use-github-action-to-publish-hugo-site/</link><pubDate>Sun, 31 Oct 2021 13:17:03 +0800</pubDate><guid>https://raviwu.github.io/posts/use-github-action-to-publish-hugo-site/</guid><description>最近重拾翻譯，希望自己有限的時間可以著重在「翻譯」本身，需要經常更新翻譯進度。
+之前都是很手工藝要去 Blogger 貼，再自己用 InDesign 製作 epub/PDF，相當原始，花在使用工具的時間比用在翻譯時間多很多。
+研究了一番使用 Hugo + GitHub Page 為解決方案，改天再來寫一篇。
+這裡先紀錄一下，直接裝 GitHub Action 在 Push master 的時候能夠 Build public files 到 /docs 去，才不會有更新段落卻忘記 Build Page 更新網站。
+修改來自 lisez/hugo-auto-deploy.yml。順便連同本 Repo 的更新機制也換掉了，原始碼在此。
+前置工作：
+產一個 GitHub Personal Access Token 設定 Repo Secret 設定 GitHub Pages: Branch gh-pages / /docs name: Hugo Publish on: push: branches: - master jobs: hugo-publish: name: publish content to public site runs-on: ubuntu-latest steps: - name: checkout private repo uses: actions/checkout@v2 with: token: ${{ secrets.</description></item></channel></rss>

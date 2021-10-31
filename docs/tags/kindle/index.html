@@ -1,0 +1,73 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>kindle &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href=/tags/kindle/index.xml rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h1 class=nav-title>Ravi Wu</h1>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<h1>Tag kindle</h1>
+<div class=catalogue>
+<a href=https://raviwu.github.io/posts/tools-kcfu-for-kindle-clipping/ class=catalogue-item>
+<div>
+<time datetime="2017-01-28 13:33:09 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>工具 | Kindle "My Clippings.txt" 的轉檔 gem KCFU</h2>
+<div class=catalogue-line></div>
+<p>
+Kindle 的剪貼簿功能雖然在 Kindle 上很好用，但真的要抽出來另外處理書摘的時候還真的麻煩，因為 My Clippings.txt 就是一個很簡單的純文字檔，每次在 Kindle 上面 hightlight / bookmark / notes 時就會依照書的 title 去新增一段特定格式的文字段落，所以如果同時看很多本的時候，打開 My Clippings.txt 會發現裡面就依照 clippings 時序夾雜著來自不同書裡的內容，得再經過一些處理才能分成不同的來源。
+原先有找到 firewood 這個套件，不過沒辦法在我的電腦上使用 QQ，乾脆就自己刻個輪子吧。
+GitHub 上面的 kindleclippings 是用 Ruby 寫的，簡單又方便使用，站在小巨人的肩膀上刻了一個 kcfu 來做基本的拆分檔案，另外加配了一個陽春的 Markdown 格式轉換器方便做書摘。
+最簡單的用法是開一個資料夾，把你的 My Clippings.txt 放到裡面，再寫個小 Ruby 檔：
+# kcfu.rb require 'kcfu' parser = Kcfu::FileUtil.new parser.parse_file(File.expand_path("#{File.dirname(__FILE__)}/My Clippings.txt"), convert: :markdown) 然後安裝 KCFU（沒有安裝 Ruby 的同學若要服用請先安裝 rbenv 跟 ruby ）
+gem install kcfu # Under folder of your kcfu.rb and 'My Clippings.
+</p>
+</div>
+</a>
+</div>
+<div class=pagination>
+<span>1</span>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:46:50.305118699 +0000 UTC m=+0.201259828">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>github action &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href=/tags/github-action/index.xml rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h1 class=nav-title>Ravi Wu</h1>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<h1>Tag github action</h1>
+<div class=catalogue>
+<a href=https://raviwu.github.io/posts/use-github-action-to-publish-hugo-site/ class=catalogue-item>
+<div>
+<time datetime="2021-10-31 13:17:03 +0800 +0800" class=catalogue-time></time>
+<h2 class=catalogue-title>使用 GitHub Action 來發布 Hugo 網站</h2>
+<div class=catalogue-line></div>
+<p>
+最近重拾翻譯，希望自己有限的時間可以著重在「翻譯」本身，需要經常更新翻譯進度。
+之前都是很手工藝要去 Blogger 貼，再自己用 InDesign 製作 epub/PDF，相當原始，花在使用工具的時間比用在翻譯時間多很多。
+研究了一番使用 Hugo + GitHub Page 為解決方案，改天再來寫一篇。
+這裡先紀錄一下，直接裝 GitHub Action 在 Push master 的時候能夠 Build public files 到 /docs 去，才不會有更新段落卻忘記 Build Page 更新網站。
+修改來自 lisez/hugo-auto-deploy.yml。順便連同本 Repo 的更新機制也換掉了，原始碼在此。
+前置工作：
+產一個 GitHub Personal Access Token 設定 Repo Secret 設定 GitHub Pages: Branch gh-pages / /docs name: Hugo Publish on: push: branches: - master jobs: hugo-publish: name: publish content to public site runs-on: ubuntu-latest steps: - name: checkout private repo uses: actions/checkout@v2 with: token: ${{ secrets.
+</p>
+</div>
+</a>
+</div>
+<div class=pagination>
+<span>1</span>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:46:50.301517148 +0000 UTC m=+0.197658177">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

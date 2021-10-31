@@ -1,0 +1,118 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>使用 GitHub Action 來發布 Hugo 網站 &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h2 class=nav-title>Ravi Wu</h2>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<div class=post>
+<div class=post-info>
+<span></span>
+Ravi Wu
+<br>
+<span>&nbsp;</span><time datetime="2021-10-31 13:17:03 +0800 +0800"></time>
+</div>
+<h1 class=post-title>使用 GitHub Action 來發布 Hugo 網站</h1>
+<div class=post-line></div>
+<p>最近重拾翻譯，希望自己有限的時間可以著重在「翻譯」本身，需要經常更新翻譯進度。</p>
+<p>之前都是很手工藝要去 Blogger 貼，再自己用 InDesign 製作 epub/PDF，相當原始，花在使用工具的時間比用在翻譯時間多很多。</p>
+<p>研究了一番使用 Hugo + GitHub Page 為解決方案，改天再來寫一篇。</p>
+<p>這裡先紀錄一下，直接裝 GitHub Action 在 Push master 的時候能夠 Build public files 到 <code>/docs</code> 去，才不會有更新段落卻忘記 Build Page 更新網站。</p>
+<p>修改來自 <a href=https://gist.github.com/lisez/41cebe4eb9190a5c5e879fee5933beb1>lisez/hugo-auto-deploy.yml</a>。順便連同本 Repo 的更新機制也換掉了，<a href=https://github.com/raviwu/raviwu.github.io/blob/master/.github/workflows/deploy.yml>原始碼在此</a>。</p>
+<p>前置工作：</p>
+<ol>
+<li>產一個 <a href=https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token>GitHub Personal Access Token</a></li>
+<li>設定 <a href=https://docs.github.com/en/actions/security-guides/encrypted-secrets>Repo Secret</a></li>
+<li>設定 GitHub Pages: Branch <code>gh-pages</code> / <code>/docs</code></li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>name</span>: <span style=color:#ae81ff>Hugo Publish</span>
+
+<span style=color:#f92672>on</span>:
+  <span style=color:#f92672>push</span>:
+    <span style=color:#f92672>branches</span>:
+    - <span style=color:#ae81ff>master</span>
+
+<span style=color:#f92672>jobs</span>:
+  <span style=color:#f92672>hugo-publish</span>:
+     <span style=color:#f92672>name</span>: <span style=color:#ae81ff>publish content to public site</span>
+     <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+     <span style=color:#f92672>steps</span>:
+       - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>checkout private repo</span>
+         <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/checkout@v2</span>
+         <span style=color:#f92672>with</span>:
+           <span style=color:#f92672>token</span>: <span style=color:#ae81ff>${{ secrets.PUSH_REPO_TOKEN }}</span>
+
+       - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>checkout submodules</span>
+         <span style=color:#f92672>shell</span>: <span style=color:#ae81ff>bash</span>
+         <span style=color:#f92672>run</span>: |<span style=color:#e6db74>
+</span><span style=color:#e6db74>          auth_header=&#34;$(git config --local --get http.https://github.com/.extraheader)&#34;
+</span><span style=color:#e6db74>          git submodule sync --recursive
+</span><span style=color:#e6db74>          git -c &#34;http.extraheader=$auth_header&#34; -c protocol.version=2 submodule update --init --force --recursive --depth=1</span>          
+
+       - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>setup hugo</span>
+         <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>peaceiris/actions-hugo@v2</span>
+         <span style=color:#f92672>with</span>:
+           <span style=color:#f92672>hugo-version</span>: <span style=color:#ae81ff>latest</span>
+           <span style=color:#f92672>extended</span>: <span style=color:#66d9ef>true</span>
+
+       - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>build content to public site</span>
+         <span style=color:#f92672>run</span>: <span style=color:#ae81ff>hugo --minify --gc -t tale</span>
+
+       - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>deploy and publish updates</span>
+         <span style=color:#f92672>run</span>: |<span style=color:#e6db74>
+</span><span style=color:#e6db74>           git config --local user.email &#34;action@github.com&#34;
+</span><span style=color:#e6db74>           git config --local user.name &#34;GitHub Action&#34;
+</span><span style=color:#e6db74>           git add . -A
+</span><span style=color:#e6db74>           git commit -m &#34;[chore] Auto publish&#34;
+</span><span style=color:#e6db74>           git push -u origin master:gh-pages -f</span>           
+</code></pre></div><p>之後就可以專心寫作，推上 GitHub 後 Action 會接續 -f 發布到 <code>gh-pages</code> 的事宜。</p>
+</div>
+<div class=pagination>
+<a href=/posts/sast-scan-integration/ class="left arrow">&#8592;</a>
+<a href=# class=top>Top</a>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:46:50.239413148 +0000 UTC m=+0.135554277">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html><html lang=zh-tw>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Go | Map &#183; Ravi Wu</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=icon href=favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link href rel=alternate type=application/rss+xml title="Ravi Wu">
+</head>
+<body>
+<nav class=nav>
+<div class=nav-container>
+<a href=/>
+<h2 class=nav-title>Ravi Wu</h2>
+</a>
+<ul>
+<li>
+<a href=/posts/>
+<span>Posts</span>
+</a>
+</li>
+<li>
+<a href=/tags/>
+<span>Tags</span>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/raviwu>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a href=https://github.com/raviwu>
+<span>GitHub</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<main>
+<div class=post>
+<div class=post-info>
+<span></span>
+Ravi Wu
+<br>
+<span>&nbsp;</span><time datetime="2020-10-26 14:42:56 +0800 +0800"></time>
+</div>
+<h1 class=post-title>Go | Map</h1>
+<div class=post-line></div>
+<p>Go 的 map 是鍵值對的資料結構。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#75715e>// 宣告一個空白 map
+</span><span style=color:#75715e></span><span style=color:#a6e22e>colors</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>map</span>[<span style=color:#66d9ef>string</span>]<span style=color:#66d9ef>string</span>{}
+<span style=color:#75715e>// 加入或修改鍵值對
+</span><span style=color:#75715e></span><span style=color:#a6e22e>colors</span>[<span style=color:#e6db74>&#34;Yello&#34;</span>] = <span style=color:#e6db74>&#34;#cc8500&#34;</span>
+<span style=color:#75715e>// 刪除鍵值（鍵不存在時並不會噴錯誤）
+</span><span style=color:#75715e></span>delete(<span style=color:#a6e22e>colors</span>, <span style=color:#e6db74>&#34;Red&#34;</span>)
+
+<span style=color:#75715e>// 宣告一個空 map
+</span><span style=color:#75715e></span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>numbers</span> <span style=color:#66d9ef>map</span>[<span style=color:#66d9ef>int</span>]<span style=color:#66d9ef>string</span>
+<span style=color:#a6e22e>numbers</span>[<span style=color:#ae81ff>1</span>] = <span style=color:#e6db74>&#34;One&#34;</span>
+<span style=color:#75715e>// panic: runtime error: assignment ot entry in nil map
+</span></code></pre></div><p>檢查鍵是否存在，如果指定的鍵不存在，會回傳零值給 <code>value</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>value</span>, <span style=color:#a6e22e>exists</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>colors</span>[<span style=color:#e6db74>&#34;Blue&#34;</span>]
+
+<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>exists</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>value</span>)
+} <span style=color:#66d9ef>else</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>value</span>) <span style=color:#75715e>// &#34;&#34;
+</span><span style=color:#75715e></span>}
+</code></pre></div><h2 id=迭代-map>迭代 map</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>numbers</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>map</span>[<span style=color:#66d9ef>int</span>]<span style=color:#66d9ef>string</span>{
+    <span style=color:#ae81ff>1</span>: <span style=color:#e6db74>&#34;one&#34;</span>,
+    <span style=color:#ae81ff>2</span>: <span style=color:#e6db74>&#34;two&#34;</span>,
+    <span style=color:#ae81ff>3</span>: <span style=color:#e6db74>&#34;three&#34;</span>,
+}
+
+<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>key</span>, <span style=color:#a6e22e>value</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>numbers</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Key: %d Value: %s\n&#34;</span>, <span style=color:#a6e22e>key</span>, <span style=color:#a6e22e>value</span>)
+}
+</code></pre></div><h2 id=使用-map-為函數之參數>使用 map 為函數之參數</h2>
+<p>傳遞 map 到函數時，並不會另外複製新的 map 物件，函數對 map 參數的操作會反應到其他也指向該 map 的地方。</p>
+</div>
+<div class=pagination>
+<a href=/posts/go-slice/ class="left arrow">&#8592;</a>
+<a href=/posts/go-type/ class="right arrow">&#8594;</a>
+<a href=# class=top>Top</a>
+</div>
+</main>
+<footer>
+<span>
+&copy; <time datetime="2021-10-31 05:46:50.182489064 +0000 UTC m=+0.078630193">2021</time> Ravi Wu.
+</span>
+</footer>
+</body>
+</html>
